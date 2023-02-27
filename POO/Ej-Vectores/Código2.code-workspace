@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../Código"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "POO"
+	}
+}
