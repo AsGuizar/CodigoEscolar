@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Botones para ejecutar códigos JavaScript</h2>
+
+<button onclick="ejecutarCodigo1()">Código 1</button>
+<button onclick="ejecutarCodigo2()">Código 2</button>
+<button onclick="ejecutarCodigo3()">Código 3</button>
+<button onclick="ejecutarCodigo4()">Código 4</button>
+<button onclick="ejecutarCodigo5()">Código 5</button>
+<button onclick="ejecutarCodigo6()">Código 6</button>
+<button onclick="ejecutarCodigo7()">Código 7</button>
+<button onclick="ejecutarCodigo8()">Código 8</button>
+<button onclick="ejecutarCodigo9()">Código 9</button>
+<button onclick="ejecutarCodigo10()">Código 10</button>
+<button onclick="ejecutarCodigo11()">Código 11</button>
+<button onclick="ejecutarCodigo12()">Código 12</button>
+<button onclick="ejecutarCodigo13()">Código 13</button>
+<button onclick="ejecutarCodigo14()">Código 14</button>
+<button onclick="ejecutarCodigo15()">Código 15</button>
+
+<p id="demo"></p>
+
+<script>
+function ejecutarCodigo1() {
+  var cars = ["Saab", "Volvo", "BMW"];
+  document.getElementById("demo").innerHTML = cars;
+  <html lang="en" class="write">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=|">
+    <title>Document</title>
+  </head>
+  <body>
+                
+  </body>
+  </html>
+}
+
+function ejecutarCodigo2() {
+  var cars = new Array("Saab", "Volvo", "BMW");
+  document.getElementById("demo").innerHTML = cars;
+}
+
+function ejecutarCodigo3() {
+  var cars = ["Saab", "Volvo", "BMW"];
+  document.getElementById("demo").innerHTML = cars[0];
+}
+
+function ejecutarCodigo4() {
+  var cars = ["Saab", "Volvo", "BMW"];
+  cars[0] = "Opel";
+  document.getElementById("demo").innerHTML = cars;
+}
+
+function ejecutarCodigo5() {
+  var person = ["John", "Doe", 46];
+  document.getElementById("demo").innerHTML = person[0];
+}
+
+function ejecutarCodigo6() {
+  var person = {firstName:"John", lastName:"Doe", age:46};
+  document.getElementById("demo").innerHTML = person["firstName"];
+}
+
+function ejecutarCodigo7() {
+  var fruits = ["Banana", "Orange", "Apple", "Mango"];
+  document.getElementById("demo").innerHTML = fruits.length;
+}
+
+function ejecutarCodigo8() {
+  var fruits = ["Banana", "Orange", "Apple", "Mango"];
+  var first = fruits[0];
+  document.getElementById("demo").innerHTML = first;
+}
+
+function ejecutarCodigo9() {
+  var fruits = ["Banana", "Orange", "Apple", "Mango"];
+  var last = fruits[fruits.length-1];
+  document.getElementById("demo").innerHTML = last;
+}
+
+function ejecutarCodigo10() {
+  var fruits, text, fLen, i;
+  fruits = ["Banana", "Orange", "Apple", "Mango"];
+  fLen = fruits.length;
+  text = "<ul>";
+  for (i = 0; i < fLen; i++) {
+    text += "<li>" + fruits[i] + "</li>";
+  }
+  text += "</ul>";
+  document.getElementById("demo").innerHTML = text;
+}
+function ejecutarCodigo11() {
+        var fruits, text;
+
+        fruits = ["Banana", "Orange", "Apple", "Mango"];
+
+        text = "<ul>";
+
+        fruits.forEach(myFunction);
+
+        text += "</ul>";
+
+        document.getElementById("resultado").innerHTML = text;
+
+        function myFunction(value) {
+          text += "<li>" + value + "</li>";
+        }
+      }
+
+      function ejecutarCodigo12() {
+        var fruits = ["Banana", "Orange", "Apple", "Mango"];
+
+        fruits.push("Lemon");
+
+        document.getElementById("resultado").innerHTML = fruits;
+      }
+
+      function ejecutarCodigo13() {
+        var fruits = ["Banana", "Orange", "Apple", "Mango"];
+
+        fruits[fruits.length] = "Lemon";
+
+        document.getElementById("resultado").innerHTML = fruits;
+      }
+
+      function ejecutarCodigo14() {
+        var fruits, text, fLen, i;
+
+        fruits = ["Banana", "Orange", "Apple", "Mango"];
+
+        fruits[6] = "Lemon";
+
+        fLen = fruits.length;
+
+        text = "";
+
+        for (i = 0; i < fLen; i++) {
+          text += fruits[i] + "<br>";
+        }
+
+        document.getElementById("resultado").innerHTML = text;
+      }
+
+      function ejecutarCodigo15() {
+        var person = [];
+
+        person["firstName"] = "John";
+        person["lastName"] = "Doe";
+        person["age"] = 46;
+
+        document.getElementById("resultado").innerHTML =
+          person[0] + " " + person.length;
+      }
