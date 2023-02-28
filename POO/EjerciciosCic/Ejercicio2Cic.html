@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Valores enteros de un vector</title>
+</head>
+<body>
+
+	<h2>Ingrese la cantidad de números que desea:</h2>
+	<input type="number" id="cantidadNumeros">
+	<button onclick="ingresarNumeros()">Ingresar números</button>
+
+	<script>
+
+		var numeros = [];
+
+		function ingresarNumeros() {
+			var cantidad = document.getElementById("cantidadNumeros").value;
+			for (var i = 0; i < cantidad; i++) {
+				var numero = prompt("Ingrese el número " + (i + 1));
+				if (!isNaN(numero)) {
+					numeros.push(parseFloat(numero));
+				} else {
+					alert("Ingrese un número válido.");
+					return;
+				}
+			}
+			var enteros = 0;
+			for (var i = 0; i < numeros.length; i++) {
+				if (Number.isInteger(numeros[i])) {
+					enteros++;
+				}
+			}
+			alert("El vector contiene " + enteros + " valores enteros.");
+		}
+
+	</script>
+
+</body>
+</html>

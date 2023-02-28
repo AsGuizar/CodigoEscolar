@@ -4,28 +4,26 @@
 
 <body>
 
-<h2>Arreglos con JavaScript</h2>
+<h2>JavaScript ciclo For/Of</h2>
 
-<p>Si utiliza un índice con nombre al acceder a un arreglo, JavaScript redefinirá el arreglo en un objeto estándar, y algunos métodos y propiedades del arreglo producirán resultados indefinidos o incorrectos.</p>
-
-<p id="demo"></p>
+<p>La declaración for / of recorre los valores de un objeto iterable.</p>
 
 <script>
 
-var person = [];
+var txt = 'JavaScript';
 
-person["firstName"] = "John";
+var x;
 
-person["lastName"] = "Doe";
+for (x of txt) {
 
-person["age"] = 46;
+  document.write(x + "<br >");
 
-document.getElementById("demo").innerHTML =
-
-person[0] + " " + person.length;
+}
 
 </script>
 
 </body>
 
 </html>
+
+ 

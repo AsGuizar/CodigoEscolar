@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mayor y menor número de un vector</title>
+</head>
+<body>
+
+	<h2>Ingrese la cantidad de números que desea:</h2>
+	<input type="number" id="cantidadNumeros">
+	<button onclick="ingresarNumeros()">Ingresar números</button>
+
+	<script>
+
+		var numeros = [];
+
+		function ingresarNumeros() {
+			var cantidad = document.getElementById("cantidadNumeros").value;
+			for (var i = 0; i < cantidad; i++) {
+				var numero = prompt("Ingrese el número " + (i + 1));
+				numeros.push(parseFloat(numero));
+			}
+			var mayor = Math.max.apply(null, numeros);
+			var menor = Math.min.apply(null, numeros);
+			alert("El número mayor es " + mayor + " y el número menor es " + menor);
+		}
+
+	</script>
+
+</body>
+</html>
