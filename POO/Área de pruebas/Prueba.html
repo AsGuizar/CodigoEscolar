@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+
+<body>
+
+<h2>JavaScript "this"</h2>
+
+<p>Este ejemplo demuestra que en las funciones de flecha, la palabra clave "this" representa el objeto que posee la función, sin importar quién la llame.</p>
+
+<p>Haga clic en el botón para ejecutar nuevamente la función "hello" y verá que "this" todavía representa el objeto de la ventana.</p>
+
+<button id="btn">Pulsame!</button>
+
+<p id="demo"></p>
+
+<script>
+
+var hello;
+
+hello = () => {
+
+  document.getElementById("demo").innerHTML += this;
+
+}
+
+// El objeto de ventana llama a la función:
+
+window.addEventListener("load", hello);
+
+// Un objeto de botón llama a la función:
+
+document.getElementById("btn").addEventListener("click", hello);
+
+</script>
+
+</body>
+
+</html>
+

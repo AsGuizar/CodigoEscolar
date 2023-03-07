@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Calcular valor absoluto</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+	<h1>Calcular valor absoluto</h1>
+
+	<label for="numero">Número:</label>
+	<input type="number" id="numero" name="numero">
+
+	<button onclick="calcular()">Calcular</button>
+
+	<script>
+		function calcular() {
+			var numero = parseInt(document.getElementById("numero").value);
+			var valorAbsoluto = Math.abs(numero);
+			alert("El valor absoluto de " + numero + " es " + valorAbsoluto);
+		}
+	</script>
+
+</body>
+</html>

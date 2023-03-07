@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Encontrar el número mayor</title>
+</head>
+<body>
+	<h1>Encontrar el número mayor</h1>
+	<p>Ingrese una lista de números separados por comas:</p>
+	<form onsubmit="encontrarMayor(); return false;">
+		<input type="text" id="numeros" name="numeros">
+		<button type="submit">Encontrar el número mayor</button>
+	</form>
+	<table id="tablaNumeros">
+		<thead>
+			<tr>
+				<th>Números ingresados:</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+	<script>
+		function encontrarMayor() {
+			// Obtener los números ingresados por el usuario
+			var numeros = document.getElementById("numeros").value.split(",");
+			// Convertir los números a enteros
+			numeros = numeros.map(function(numero) {
+				return parseInt(numero);
+			});
+			// Encontrar el número mayor
+			var mayor = Math.max.apply(null, numeros);
+			// Mostrar los números ingresados en la tabla
+			var tabla = document.getElementById("tablaNumeros").getElementsByTagName("tbody")[0];
+			tabla.innerHTML = "";
+			for (var i = 0; i < numeros.length; i++) {
+				var fila = tabla.insertRow(i);
+				var celda = fila.insertCell(0);
+				celda.innerHTML = numeros[i];
+			}
+			// Mostrar el resultado en un alert
+			alert("El número mayor es: " + mayor);
+		}
+	</script>
+</body>
+</html>

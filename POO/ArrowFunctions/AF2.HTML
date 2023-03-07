@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Media geométrica</title>
+	<script>
+		function calcularMediaGeometrica(vector) {
+			let multiplicacion = 1;
+			for (let i = 0; i < vector.length; i++) {
+				multiplicacion *= vector[i];
+			}
+			return Math.pow(multiplicacion, 1 / vector.length);
+		}
+
+		function mostrarMediaGeometrica() {
+			let vector = document.getElementById("vector").value.split(",").map(Number);
+			let mediaGeometrica = calcularMediaGeometrica(vector);
+			alert("La media geométrica del vector es " + mediaGeometrica);
+		}
+	</script>
+</head>
+<body>
+	<h1>Media geométrica</h1>
+	<p>Ingresa los números separados por comas:</p>
+	<input type="text" id="vector">
+	<br><br>
+	<button onclick="mostrarMediaGeometrica()">Calcular media geométrica</button>
+</body>
+</html>

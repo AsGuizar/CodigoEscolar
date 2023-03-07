@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Calcular x1 y x2 de una ecuación de segundo grado</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+	<h1>Calcular x1 y x2 de una ecuación de segundo grado</h1>
+
+	<label for="a">Valor de a:</label>
+	<input type="number" id="a" name="a">
+
+	<label for="b">Valor de b:</label>
+	<input type="number" id="b" name="b">
+
+	<label for="c">Valor de c:</label>
+	<input type="number" id="c" name="c">
+
+	<button onclick="calcular()">Calcular</button>
+
+	<script>
+		function calcular() {
+			var a = document.getElementById("a").value;
+			var b = document.getElementById("b").value;
+			var c = document.getElementById("c").value;
+			var discriminante = b * b - 4 * a * c;
+
+			if (discriminante > 0) {
+				var x1 = (-b + Math.sqrt(discriminante)) / (2 * a);
+				var x2 = (-b - Math.sqrt(discriminante)) / (2 * a);
+				alert("Las raíces son x1 = " + x1 + " y x2 = " + x2);
+			} else if (discriminante === 0) {
+				var x = -b / (2 * a);
+				alert("La raíz doble es x = " + x);
+			} else {
+				alert("No hay soluciones reales");
+			}
+		}
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Menor número en un vector</title>
+</head>
+<body>
+	<h1>Menor número en un vector</h1>
+
+	<p>Ingrese los números separados por comas:</p>
+	<input type="text" id="numeros">
+	<br>
+	<button onclick="buscarMenor()">Buscar menor número</button>
+
+	<script>
+		function buscarMenor() {
+			var numeros = document.getElementById("numeros").value;
+			var arrayNumeros = numeros.split(",");
+			var menor = parseInt(arrayNumeros[0]);
+
+			for (var i = 0; i < arrayNumeros.length; i++) {
+				var num = parseInt(arrayNumeros[i]);
+				if (num < menor) {
+					menor = num;
+				}
+			}
+
+			alert("El número más pequeño es: " + menor);
+		}
+	</script>
+</body>
+</html>
