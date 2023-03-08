@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formula de Interpolacion Cuadratica</title>
+</head>
+<body>
+    <style>    
+    body {
+        background-color: #222;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    h1 {
+        color: #fff;
+        font-size: 36px;
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    h2 {
+        color: #fff;
+        font-size: 28px;
+        margin-top: 50px;
+        margin-bottom: 25px;
+    }
+
+    h3 {
+        color: #fff;
+        font-size: 20px;
+        margin-top: 25px;
+        margin-bottom: 10px;
+    }
+
+    h6 {
+        color: #aaa;
+        font-size: 14px;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #fff;
+        font-size: 18px;
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+
+    input {
+        background-color: #333;
+        border: none;
+        color: #fff;
+        font-size: 18px;
+        padding: 10px;
+        margin-top: 0;
+        margin-bottom: 20px;
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    button {
+        background-color: #ff0000;
+        border: none;
+        color: #fff;
+        font-size: 20px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #3e8e41;
+    }
+
+    #resultado {
+        font-size: 18px;
+        line-height: 1.5;
+        margin-top: 25px;
+    }
+
+    #resultado b {
+        color: #4CAF50;
+    }
+    </style>
+    
+    <h1>INTERPOLACION CUADRATICA</h1>
+
+    <div>
+        <h3>Nota:solo datos numericos validos</h3>
+        <p>f(x):</p>
+        <h6>Si no tienes esta dato solo escribe "No_Dato", tal cual esta aqui</h6>
+        <input type="text" id="f(x)"><br>
+        <p>f(x0):</p>
+        <input type="number" id="f(x0)"><br>
+        <p>f(x1):</p>
+        <input type="number" id="f(x1)"><br>
+        <p>f(x2):</p>
+        <input type="number" id="f(x2)"><br>
+        <p>x:</p>
+        <input type="number" id="x"><br>
+        <p>x0:</p>
+        <input type="number" id="x0"><br>
+        <p>x1:</p>
+        <input type="number" id="x1"><br>
+        <p>x2:</p>
+        <input type="number" id="x2"><br>
+        <p>Valor Exacto:</p>
+        <h6>Si no necesitas calcular el procentaje de error solo escribe "No_Necesito" tal cual esta aqui</h6>
+        <input type="text" id="EE"><br>
+        <br>
+        <button onclick="Formula_Interpolacion_Cuadratica()">Calcular</button>
+
+    </div>
+    <div>
+        <h2>RESULTADO:</h2>
+        <p id="resultado"></p>
+    </div>
+
+    <script>
+        function Formula_Interpolacion_Cuadratica() {
+    var resultado = "";
+    let b1;
+    let b2;
+    let f0 = parseFloat(document.getElementById("f(x0)").value);
+    let f1 = parseFloat(document.getElementById("f(x1)").value);
+    let f2 = parseFloat(document.getElementById("f(x2)").value);
+    let x = parseFloat(document.getElementById("x").value);
+    let x0 = parseFloat(document.getElementById("x0").value);
+    let x1 = parseFloat(document.getElementById("x1").value);
+    let x2 = parseFloat(document.getElementById("x2").value);
+    var fx = document.getElementById("f(x)").value;
+    var exacto_t = document.getElementById("EE").value;
+
+    // Validación de los inputs
+    if (isNaN(f0) || isNaN(f1) || isNaN(f2) || isNaN(x) || isNaN(x0) || isNaN(x1) || isNaN(x2)) {
+        alert("Por favor, asegúrate de llenar todos los campos con valores numéricos.");
+        return;
+    }
+    
+    // Validación de f(x)
+    if (fx == "No_Dato") {
+        fx = NaN;
+    } else {
+        fx = parseFloat(fx);
+    }
+    let b0 = f0;
+    b1 = (f1 - f0) / (x1-x0);
+    b2 = ((f2 - f1) / (x2 - x1) - b1) / (x2 - x0);
+    let f2x = b0 + b1*(x - x0) + b2*(x - x0)*(x - x1);
+    let redondeado = f2x;
+
+    // ----------------------No necesitar procentaje------------------------------------------
+    if (exacto_t == "No_Necesito"){
+        resultado += `Datos Ingresados:<br>f(x0) = ${f0}<br>f(x1) = ${f1}<br>f(x2) = ${f2}<br>x = ${x}<br>x0 = ${x0}<br>x1 = ${x1}<br>x2 = ${x2}<br>f(x) = ${fx}<br>DATOS OBTENIDOS:<br>b0 = ${b0}<br>b1 = ${b1}<br>b2 = ${b2}<br>f2x = ${f2x}<br>Error Relativo = ${exacto_t}%`;
+        document.getElementById("resultado").innerHTML = resultado;    
+    } else {
+        var exacto =  parseFloat(exacto_t);
+        var Error_relativo = (((exacto - redondeado)/exacto))*100 ;
+        if (Error_relativo < 0) {
+            Error_relativo = Error_relativo * -1;
+        }
+        resultado += `Datos Ingresados:<br>f(x0) = ${f0}<br>f(x1) = ${f1}<br>f(x2) = ${f2}<br>x = ${x}<br>x0 = ${x0}<br>x1 = ${x1}<br>x2 = ${x2}<br>f(x) = ${fx}<br>DATOS OBTENIDOS:<br>b0 = ${b0}<br>b1 = ${b1}<br>b2 = ${b2}<br>f2x = ${f2x.toFixed(4)}<br>Error Relativo = ${Error_relativo.toFixed(4)}%`;
+        document.getElementById("resultado").innerHTML = resultado;
+            }
+        }     
+    </script>
+</body>
+</html>
