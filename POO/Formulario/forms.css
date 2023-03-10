@@ -1,0 +1,19 @@
+body {
+    background-color: #d19999;
+    color: #ffffff;
+  }
+  
+  button {
+    background-color: #f5f5f5;
+    color: #000000;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #eea5a5;
+    color: #ffffff;
+  }
+  

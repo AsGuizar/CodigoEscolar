@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda pobresoft</title>
+</head>
+<body>
+    <link rel="stylesheet" href="forms.css"> 
+ <h2>Agenda pobresoft</h2> 
+ <h4 id="titulo2"></h4>  
+ <style>
+   <style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even){background-color: #f2f2f2}
+  
+  th {
+    background-color: #ff0000;
+    color: white;
+  }
+</style>
+
+  <script>
+
+    </script>
+
+ <label>Nombre</label>
+ <input type="text" id="nombre">
+ <br>
+ <label>Dirección</label>
+ <input type="text" id="direccion">
+<br>
+ <label>Telefono</label> 
+ <input type="text" id="telefono">  
+ <br>
+ <div id="barraguardar"style="display: none;">
+ <button id="guardarnuevo" onclick="guardar()" >Guardar</button>
+ <button id="cancelarguardar" onclick="cancelarguardarocultar()">Cancelar</button>
+ 
+</div>
+ <button onclick="nuevoregistro()" id="nuevo">Nuevo</button>
+ <button id="editar">Editar</button>
+ <button id="eliminar">Eliminar</button>
+ <button id="buscar">Buscar</button>
+ <br>
+ <div id="navegacion">
+ <button>Primero</button>
+ <button onclick="siguiente()">Siguiente</button>
+ <button onclick="anterior()">Anterior</button>
+ <button>Ultimo</button>
+</div>
+<div id="listado"></div>
+<table>
+    <thead>
+      <tr>
+        <th>Número de registro</th>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--Aquí se agregarán los datos de registro-->
+    </tbody>
+  </table>
+  
+ <script>
+let datos=[]    
+let registroactual=0
+let totalderegistros=0
+let titulo2=document.getElementById("titulo2")
+let nombre=document.getElementById("nombre") 
+let direccion=document.getElementById("direccion")
+let telefono=document.getElementById("telefono")
+let nuevo=document.getElementById("nuevo")
+let editar=document.getElementById("editar")
+let eliminar=document.getElementById("eliminar")
+let buscar=document.getElementById("buscar")
+let navegacion=document.getElementById("navegacion")
+let guardarnuevo=document.getElementById("guardarnuevo")
+let listado=document.getElementById("listado")
+
+function sololectura()
+{
+    nombre.readOnly = true
+    direccion.readOnly=true
+    telefono.readOnly=true
+}
+
+function siguiente()
+{
+if(registroactual<(totalderegistros-1))
+{
+registroactual++
+barra2()
+mostrarregistro()
+}
+
+}
+
+function anterior()
+{
+    if(registroactual>0)
+    {
+     registroactual--
+     barra2()
+     mostrarregistro()   
+    }
+}
+function Primero() {
+  registroactual = 0;
+  mostrarregistro();
+}
+
+function Ultimo() {
+  registroactual = totalderegistros - 1;
+  mostrarregistro();
+}
+
+function soloescritura()
+{
+    nombre.readOnly = false
+    direccion.readOnly=false
+    telefono.readOnly=false
+}
+function mostrarListado()
+{
+    let lista="<ul>"
+    for(x of datos)
+    lista+="<li>"+x.nombre+"</li>"
+    lista+="</ul>"
+    
+    listado.innerHTML=lista
+
+}
+function ocultarnuevo()
+{
+ nuevo.style.display="none";  
+ editar.style.display='none';
+ eliminar.style.display='none';
+ buscar.style.display='none';
+ navegacion.style.display='none';
+ barraguardar.style.display='block';
+ 
+
+}
+
+function cancelarguardarocultar()
+{
+ nuevo.style.display="inline";  
+ editar.style.display='inline';
+ eliminar.style.display='inline';
+ buscar.style.display='inline';
+ navegacion.style.display='inline';
+ barraguardar.style.display='none';
+ cancelarguardar.style.display="inline";
+ mostrarregistro()
+ sololectura()
+}
+
+function nuevoregistro()
+{
+    ocultarnuevo()
+    nombre.value=""
+    direccion.value=""
+    telefono.value=""
+    soloescritura()  
+}
+
+function mostrarregistro()
+{
+    nombre.value=datos[registroactual].nombre
+    direccion.value=datos[registroactual].direccion
+    telefono.value=datos[registroactual].telefono
+    mostrarListado();
+}
+
+function guardar()
+{
+persona={nombre:nombre.value,
+        direccion:direccion.value,
+        telefono:telefono.value}
+datos.push(persona)  
+   
+nombre.value=""
+direccion.value=""
+telefono.value=""
+registroactual=datos.length-1
+totalderegistros=datos.length
+barra2()    
+mostrarregistro()
+cancelarguardarocultar()
+}
+
+function barra2()
+ {
+    if(totalderegistros>0)
+    titulo2.innerHTML="Registro "+(registroactual+1)+" de "+totalderegistros;
+    else
+    titulo2.innerHTML="No hay registros para mostrar!!"
+
+    
+     
+}   
+
+ barra2()
+ mostrarListado()
+ function mostrarListado() {
+  let lista="<ul>"
+  for(x of datos)
+    lista+="<li>"+x.nombre+"</li>"
+  lista+="</ul>"
+
+  listado.innerHTML=lista
+
+  // Agregar los datos de registro a la tabla
+  let tbody = document.querySelector("table tbody");
+  tbody.innerHTML = "";
+  for(let i = 0; i < datos.length; i++) {
+    let registro = datos[i];
+    let tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${i + 1}</td>
+      <td>${registro.nombre}</td>
+      <td>${registro.direccion}</td>
+      <td>${registro.telefono}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+}
+
+ sololectura()
+
+
+ </script>
+</body>
+</html>
