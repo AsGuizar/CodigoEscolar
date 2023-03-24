@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Agenda pobresoft</title>
+    
+</head>
+<body>
+    <h2>Agenda pobresoft</h2> 
+    <h4 id="titulo2"></h4>  
+    <div id="toast-container"></div>
+    <div style="padding:5px;">
+        <label for="nombre">Nombre</label><br>
+        <input type="text" id="nombre" name="nombre">
+        <br>
+        <label>Dirección</label><br>
+        <input type="text" id="direccion">
+        <br>
+        <label>Telefono</label><br> 
+        <input type="text" id="telefono">  
+    </div>
+
+    <div id="barraguardar" style="display: none;">
+        <button class="button button-secondary" id="guardarnuevo" onclick="guardar()">Guardar</button>
+        <button class="button button-secondary" id="cancelarguardar" onclick="cancelarguardarocultar()">Cancelar</button>
+    </div>
+
+    <div id="barraacciones" style="padding:5px;">
+        <button class="button button-primary" onclick="nuevoregistro()" id="nuevo">Nuevo</button>
+        <button class="button button-primary" id="editar" onclick="editarregisto()">Editar</button>
+        <button class="button button-primary" id="eliminar" onclick="borrar()">Eliminar</button>
+    </div>
+
+    <div id="navegacion" style="margin-top: 5px;"> 
+        <button class="button button-primary" onclick="primero()">Primero</button>
+        <button class="button button-primary" onclick="siguiente()">Siguiente</button>
+        <button class="button button-primary" onclick="anterior()">Anterior</button>
+        <button class="button button-primary" onclick="ultimo()">Ultimo</button>
+    </div>
+
+    <div id="editarbarra" style="display: none; padding: 5px;">
+        <button class="button button-secondary" onclick="guardareditar()">Guardar</button>
+        <button class="button button-secondary" onclick="cancelareditar()">Cancelar</button>
+    </div>
+
+    <div id="barrabuscar" style="padding:5px;">
+        Buscar en
+        <input type="text" id="texto" style="width:100px;">
+        <select name="campos" id="campo" style="width:150px;">
+            <option value="nombre">Nombre</option>
+            <option value="direccion">Direccion</option>
+            <option value="telefono">Telefono</option>  
+        </select>
+        <button class="button button-primary" id="buscar" onclick="buscarvalor()">Buscar</button><br>
+    </div>
+
+    <div id="listado" style="padding:5px;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+                      <tbody id="tbody"></tbody>
+                    </table>
+                </div>
+                <script src="script.js"></script>
+              </body>
+              </html>

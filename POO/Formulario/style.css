@@ -1,0 +1,238 @@
+/* Body */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #1b1b1b;
+  color: #f1f1f1;
+}
+
+#listado {
+  padding: 5px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead th {
+  background-color: #660000; /* Change header background color to dark red */
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  color: #f1f1f1; /* Change header text color to white */
+}
+
+tbody td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  background-color: #262626; /* Change content background color to dark gray */
+  color: #f1f1f1; /* Change content text color to white */
+}
+
+tbody tr:nth-child(even) {
+  background-color: #2d2d2d; /* Change even rows background color to a slightly lighter shade of gray */
+}
+
+/* Page title */
+h2 {
+  text-align: center;
+}
+
+/* Form */
+form {
+  padding: 20px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Action buttons */
+#barraacciones {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+#barraacciones button {
+  margin-right: 10px;
+  background-color: #8B0000; /* Change button background color to dark red */
+  color: #f1f1f1; /* Change button text color to white */
+  font-size: 14px;
+  padding: 10px 20px; /* Reduce button padding */
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4); /* Add a darker shadow to the button */
+  transition: background-color 0.3s ease;
+}
+
+/* Navigation buttons */
+#navegacion {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+#navegacion button {
+  margin-right: 10px;
+  background-color: #8B0000; /* Change button background color to dark red */
+  color: #f1f1f1; /* Change button text color to white */
+  font-size: 14px;
+  padding: 10px 20px; /* Reduce button padding */
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4); /* Add a darker shadow to the button */
+  transition: background-color 0.3s ease;
+}
+
+/* Search bar */
+#barrabuscar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#texto {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333333;
+    }
+  
+#formulario {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+#formulario label {
+  color: #ff0000;
+  display: block;
+  margin-bottom: 10px;
+}
+
+#formulario input[type="text"], #formulario select {
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #0d0d0d;
+  color: #ffffff;
+}
+
+#formulario input[type="submit"] {
+  /* Cambiar el color de fondo */
+  background-color: #ffffff;
+  
+  /* Cambiar el color del texto */
+  color: white;
+  
+  /* Cambiar el tamaño de fuente */
+  font-size: 16px;
+  
+  /* Cambiar el borde del botón */
+  border: none;
+  
+  /* Añadir sombra al botón */
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  
+  /* Agregar un efecto de transición */
+  transition: background-color 0.3s ease;
+  
+  /* Establecer un margen */
+  margin-top: 10px;
+  
+  /* Establecer un padding */
+  padding: 12px 24px;
+  
+  /* Cambiar la forma del botón */
+  border-radius: 5px;
+}
+
+/* Cambiar el color de fondo al pasar el cursor por encima */
+#formulario input[type="submit"]:hover {
+  background-color: #ffffff;
+  }
+  
+  /* Estilos para los botones de la barra de acciones */
+  #barraacciones {
+  display: flex; /* Alinea los botones en una sola línea */
+  justify-content: space-between; /* Separa los botones con espacio */
+  margin: 5px 0; /* Agrega un margen arriba y abajo */
+  }
+  
+  #barraacciones button {
+  margin-right: 10px; /* Agrega un margen derecho a todos los botones, excepto al último */
+  background-color: #4d0000;
+  color: #fffdfd;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  }
+  
+  /* Estilos para los botones de navegación */
+  #navegacion {
+  display: flex; /* Alinea los botones en una sola línea */
+  justify-content: space-between; /* Separa los botones con espacio */
+  margin: 5px 0; /* Agrega un margen arriba y abajo */
+  }
+  
+  #navegacion button {
+  margin-right: 10px; /* Agrega un margen derecho a todos los botones, excepto al último */
+  background-color: #4d0000;
+  color: #bdb9b9;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  }
+  
+  /* Estilos para los botones de edición */
+  #editarbarra {
+  display: flex; /* Alinea los botones en una sola línea */
+  justify-content: space-between; /* Separa los botones con espacio */
+  margin: 5px 0; /* Agrega un margen arriba y abajo */
+  }
+  
+  #editarbarra button {
+  margin-right: 10px; /* Agrega un margen derecho a todos los botones, excepto al último */
+  background-color: #4d0000;
+  color: #ff0000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  }
+  
+  /* Estilos para los botones de la barra de guardar */
+  #barraguardar {
+  display: flex; /* Alinea los botones en una sola línea */
+  justify-content: flex-end; /* Alinea el último botón a la derecha */
+  margin: 5px 0; /* Agrega un margen arriba y abajo */
+  }
+  
+  #barraguardar button {
+  margin-left: 10px; /* Agrega un margen izquierdo a todos los botones, excepto al primero */
+  background-color: #bebebe;
+  color: #ff0000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  }

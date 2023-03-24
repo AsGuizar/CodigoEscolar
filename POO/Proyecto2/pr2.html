@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejemplo de herencia de clases en JavaScript</title>
+    <style>
+        .square {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            margin: 10px;
+        }
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 1px solid black;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button onclick="changeColor()">Cambiar color de cuadrados</button>
+    </div>
+    <script>
+        // Definimos la subclase Circulo
+        class Circulo extends Figura {
+            constructor(color, radio) {
+                super(color);
+                this.radio = radio;
+            }
+    
+            dibujar() {
+                console.log(`Dibujando circulo de color ${this.color} y radio ${this.radio}`);
+                let circleDiv = document.createElement('div');
+                circleDiv.className = 'circle';
+                circleDiv.style.backgroundColor = this.color;
+                circleDiv.style.width = this.radio * 2 + 'px';
+                circleDiv.style.height = this.radio * 2 + 'px';
+                circleDiv.style.borderRadius = '50%';
+                document.getElementById('cuadrados').appendChild(circleDiv);
+            }
+    
+            calcularArea() {
+                return Math.PI * Math.pow(this.radio, 2);
+            }
+    
+            calcularPerimetro() {
+                return 2 * Math.PI * this.radio;
+            }
+        }
+    
+        // Función para cambiar el color de los cuadrados en la página
+        function changeColor() {
+            let squares = document.getElementsByClassName('square');
+            for (let i = 0; i < squares.length; i++) {
+                squares[i].style.backgroundColor = getRandomColor();
+            }
+            let circles = document.getElementsByClassName('circle');
+            for (let i = 0; i < circles.length; i++) {
+                circles[i].style.backgroundColor = getRandomColor();
+            }
+        }
+    
+        // Función para generar un color aleatorio en formato hexadecimal
+        function getRandomColor() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    
+        // Función para dibujar un conjunto aleatorio de cuadrados y círculos en la página
+        function drawRandomFigures() {
+            let cuadradosDiv = document.getElementById('cuadrados');
+            for (let i = 0; i < 10; i++) {
+                let color = getRandomColor();
+                let lado = Math.floor(Math.random() * 100) + 50;
+                let radio = Math.floor(Math.random() * 50) + 25;
+                if (Math.random() < 0.5) {
+                    let cuadrado = new Cuadrado(color, lado);
+                    cuadrado.dibujar();
+                    cuadrado.calcularArea();
+                } else {
+                    let circulo = new Circulo(color, radio);
+                    circulo.dibujar();
+                    circulo.calcularArea();
+                    circulo.calcularPerimetro();
+                }
+            }
+        }
+    
+        // Añadimos una propiedad estática a la clase Figura para contar el número de instancias creadas
+        class Figura {
+            static count = 0;
+    
+            constructor(color) {
+                this.color = color;
+                Figura.count++;
+            }
+    
+            dibujar() {
+                console.log(`Dibujando figura de color ${this.color}`);
+            }
+    
+            calcularArea() {
+                console.log('Esta función debe ser implementada por las subclases');
+            }
+        }
+    
+        drawRandomFigures();
+    
+        // Mostramos el número de instancias creadas en la página
+        let countDiv = document.createElement('div');
+        countDiv.innerHTML = `Se han creado ${Figura.count} figuras`;
+        document.body.appendChild(countDiv);
+    </script>

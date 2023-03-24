@@ -1,40 +1,38 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
 <body>
+  <script>
+  class miClaseUno {
+    constructor(primero, segundo){
+        this.uno = primero;
+        this.dos = segundo;
+     this.tres = "Hola a todos";
+    };
+    miMetodoUno(){
+        return this.uno;
+    };
+    miMetodoDos(parametroUno, parametroDos){
+        document.write(
+            "El parametro UNO es: " + parametroUno + "<br>El parametro DOS es: " + parametroDos
+        );
+    };
+};
 
-<h2>JavaScript "this"</h2>
+class miClaseDos extends miClaseUno{
+    constructor(uno, dos, cuarto){
+        super (uno, dos)
+        this.cuatro = cuarto;
+    }
+};
 
-<p>Este ejemplo demuestra que en las funciones de flecha, la palabra clave "this" representa el objeto que posee la función, sin importar quién la llame.</p>
-
-<p>Haga clic en el botón para ejecutar nuevamente la función "hello" y verá que "this" todavía representa el objeto de la ventana.</p>
-
-<button id="btn">Pulsame!</button>
-
-<p id="demo"></p>
-
-<script>
-
-var hello;
-
-hello = () => {
-
-  document.getElementById("demo").innerHTML += this;
-
-}
-
-// El objeto de ventana llama a la función:
-
-window.addEventListener("load", hello);
-
-// Un objeto de botón llama a la función:
-
-document.getElementById("btn").addEventListener("click", hello);
-
+var ObjetoTres = new miClaseDos("Miguel", "Gonzales", 55);
+document.write( ObjetoTres.dos );
 </script>
-
 </body>
-
 </html>
-
