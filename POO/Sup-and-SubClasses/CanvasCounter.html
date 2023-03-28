@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Figuras Aleatorias</title>
+	<style>
+		#canvas {
+			width: 400px;
+			height: 400px;
+			border: 1px solid black;
+		}
+		.shape {
+			position: absolute;
+			border-radius: 50%;
+		}
+		.square {
+			background-color: blue;
+		}
+		.circle {
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<button onclick="drawFigures()">Dibujar Figuras</button>
+	<button onclick="window.location.href='SaSClasses.html'">Ir a la página 1</button>
+
+	<div id="canvas"></div>
+	<script>
+		class Figura {
+			static count = 0;
+			constructor(shape, size, color) {
+				this.shape = shape;
+				this.size = size;
+				this.color = color;
+				Figura.count++;
+			}
+			draw(x, y) {
+				const element = document.createElement("div");
+				element.classList.add("shape");
+				element.classList.add(this.shape);
+				element.style.width = this.size + "px";
+				element.style.height = this.size + "px";
+				element.style.backgroundColor = this.color;
+				element.style.top = y + "px";
+				element.style.left = x + "px";
+				document.getElementById("canvas").appendChild(element);
+			}
+		}
+
+		function drawFigures() {
+			const canvas = document.getElementById("canvas");
+			canvas.innerHTML = "";
+			const figures = [];
+			const shapes = ["square", "circle"];
+			const quantity = Math.floor(Math.random() * 10) + 1; // randomize quantity of figures created
+			for (let i = 0; i < quantity; i++) {
+				const shape = shapes[Math.floor(Math.random() * shapes.length)];
+				const size = Math.floor(Math.random() * 50) + 10;
+				const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+				const x = Math.floor(Math.random() * (canvas.offsetWidth - size));
+				const y = Math.floor(Math.random() * (canvas.offsetHeight - size));
+				const figure = new Figura(shape, size, color);
+				figure.draw(x, y);
+				figures.push(figure);
+			}
+			alert(`Se han creado ${figures.length} figuras`);
+		}
+	</script>
+</body>
+</html>

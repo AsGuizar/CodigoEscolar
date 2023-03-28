@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+                <title>Ejemplo de herencia de clases en JavaScript</title>
+
+                <style>
+
+                               .square {
+
+                                               width: 100px;
+
+                                               height: 100px;
+
+                                               border: 1px solid black;
+
+                                               margin: 10px;
+
+                               }
+                               
+
+                </style>
+
+</head>
+
+<body>
+
+                <div id="cuadrados"></div>
+                <div id="circulos"></div>
+                <button id="cambiar-color">Cambiar color</button>
+                <button onclick="window.location.href='CanvasCounter.html'">Ir a la página 2</button>
+
+
+
+ 
+
+                <script>
+
+document.getElementById("cambiar-color").addEventListener("click", function() {
+      // Obtener todos los cuadrados y círculos
+      let cuadrados = document.querySelectorAll(".square");
+      let circulos = document.querySelectorAll("div[style*=border-radius]");
+
+      // Cambiar el color de cada cuadrado y círculo al azar
+      cuadrados.forEach(function(cuadrado) {
+        cuadrado.style.backgroundColor = getRandomColor();
+      });
+
+      circulos.forEach(function(circulo) {
+        circulo.style.backgroundColor = getRandomColor();
+      });
+    });
+
+    // Función auxiliar para obtener un color aleatorio en formato hexadecimal
+    function getRandomColor() {
+      let letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+ 
+
+
+
+                                
+
+                               class Figura {
+
+                                               constructor(color) {
+
+                                                               this.color = color;
+
+                                               }
+
+ 
+
+                                               dibujar() {
+
+                                                               console.log(`Dibujando figura de color ${this.color}`);
+
+                                                               calcularArea()  // Este método debe ser implementado por cada subclase
+                                                               
+
+                                               }
+
+                               }
+
+ 
+
+                               // Definimos la subclase Cuadrado
+
+                               class Cuadrado extends Figura {
+
+                                               constructor(color, lado) {
+
+                                                               super(color);
+
+                                                               this.lado = lado;
+
+                                               }
+
+ 
+
+                                               dibujar() {
+
+                                                               console.log(`Dibujando cuadrado de color ${this.color} y lado ${this.lado}`);
+
+                                                               let squareDiv = document.createElement('div');
+
+                                                               squareDiv.className = 'square';
+
+                                                               squareDiv.style.backgroundColor = this.color;
+
+                                                               squareDiv.style.width = this.lado + 'px';
+
+                                                               squareDiv.style.height = this.lado + 'px';
+
+                                                               document.getElementById('cuadrados').appendChild(squareDiv);
+
+                                               }
+
+ 
+
+                                               calcularArea() {
+
+                                                               return this.lado * this.lado;
+
+                                               }
+
+                               }
+
+ 
+
+                               // Creamos una instancia de la clase Cuadrado y la dibujamos en la página
+
+                               let miCuadrado = new Cuadrado('red', 50);
+
+                               miCuadrado.dibujar();
+
+ 
+
+                               // Creamos otra instancia de la clase Cuadrado con diferentes propiedades y la dibujamos en la página
+
+                               let otroCuadrado = new Cuadrado('blue', 75);
+
+                               otroCuadrado.dibujar();
+
+ 
+
+                               // Calculamos el área del segundo cuadrado y lo mostramos en la consola
+
+                               let area = otroCuadrado.calcularArea();
+
+                               console.log(`El área del cuadrado azul es ${area}`);
+
+class Circulo extends Figura {
+  constructor(color, radio) {
+    super(color);
+    this.radio = radio;
+  }
+
+  dibujar() {
+    console.log(`Dibujando círculo de color ${this.color} y radio ${this.radio}`);
+    let circleDiv = document.createElement('div');
+    circleDiv.style.backgroundColor = this.color;
+    circleDiv.style.borderRadius = '50%';
+    circleDiv.style.width = this.radio * 2 + 'px';
+    circleDiv.style.height = this.radio * 2 + 'px';
+    document.getElementById('cuadrados').appendChild(circleDiv);
+  }
+
+  calcularPerimetro() {
+    return 2 * Math.PI * this.radio;
+  }
+  calcularArea() {
+    return Math.PI * this.radio * this.radio;
+    }
+    cambiarColor() {
+        let colores = ['red', 'green', 'blue', 'purple', 'yellow', 'orange'];
+        let nuevoColor = colores[Math.floor(Math.random() * colores.length)];
+        this.color = nuevoColor;
+      }
+    }
+
+let miCirculo = new Circulo('green', 30);
+miCirculo.dibujar();
+
+let otroCirculo = new Circulo('purple', 50);
+otroCirculo.dibujar();
+
+let perimetro = otroCirculo.calcularPerimetro();
+console.log(`El perímetro del círculo morado es ${perimetro}`);
+
+
+                </script>
+
+</body>
+
+</html>
