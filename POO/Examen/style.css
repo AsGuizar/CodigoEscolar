@@ -6,6 +6,10 @@ body {
   box-sizing: border-box;
   background-color: #1b1b1b;
   color: #f1f1f1;
+  border: 17px double #dddddd;
+  background-image: radial-gradient(ellipse, rgba(0, 0, 0, 0.73) 63%, rgba(84, 84, 84, 0.45) 88%);
+  box-shadow: 11px 7px 3px 3px rgba(128, 0, 0, 1);
+  
 }
 
 #listado {
@@ -90,6 +94,7 @@ input[type="text"] {
   margin-top: 20px;
   margin-bottom: 30px;
 }
+
 
 #navegacion button {
   margin-right: 10px;

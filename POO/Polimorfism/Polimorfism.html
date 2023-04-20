@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Áreas de figuras</h1>
+    <script>
+      class Rectangulo {
+        constructor(base, altura) {
+          this.base = base;
+          this.altura = altura;
+        }
+        calcularArea() {
+          return this.base * this.altura;
+        }
+      }
+
+      function calcularArea(figura) {
+        if (figura instanceof Cuadrado) {
+          return figura.lado * figura.lado;
+        } else if (figura instanceof Circulo) {
+          return Math.PI * figura.radio * figura.radio;
+        } else if (figura instanceof Triangulo) {
+          return (figura.base * figura.altura) / 2;
+        } else if (figura instanceof Rectangulo) {
+          return figura.calcularArea();
+        } else {
+          throw new Error("Figura no reconocida");
+        }
+      }
+
+      class Cuadrado {
+        constructor(lado) {
+          this.lado = lado;
+        }
+        calcularPerimetro() {
+          return this.lado * 4;
+        }
+      }
+
+      class Circulo {
+        constructor(radio) {
+          this.radio = radio;
+        }
+      }
+
+      class Triangulo {
+        constructor(base, altura) {
+          this.base = base;
+          this.altura = altura;
+        }
+      }
+
+      // Ejemplo de uso
+      const cuadrado = new Cuadrado(5);
+      console.log(calcularArea(cuadrado)); // 25
+
+      const circulo = new Circulo(3);
+      console.log(calcularArea(circulo)); // 28.274333882308138
+
+      const triangulo = new Triangulo(4, 6);
+      console.log(calcularArea(triangulo)); // 12
+    </script>
+  </body>
+</html>

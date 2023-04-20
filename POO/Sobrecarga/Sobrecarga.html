@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function promedio() {
+    if (arguments.length === 1 && Array.isArray(arguments[0])) {
+      const array = arguments[0];
+      const sum = array.reduce((acc, curr) => acc + curr, 0);
+      return sum / array.length;
+    } else if (arguments.length === 2 && Array.isArray(arguments[0]) && Array.isArray(arguments[1])) {
+      const array1 = arguments[0];
+      const array2 = arguments[1];
+      const sum = array1.concat(array2).reduce((acc, curr) => acc + curr, 0);
+      return sum / (array1.length + array2.length);
+    } else if (arguments.length === 2 && typeof arguments[0] === 'number' && typeof arguments[1] === 'number') {
+      return (arguments[0] + arguments[1]) / 2;
+    } else {
+      const sum = Array.from(arguments).reduce((acc, curr) => acc + curr, 0);
+      return sum / arguments.length;
+    }
+  }
+  
+    console.log(promedio());                 // NaN
+    console.log(promedio(2));                // 2
+    console.log(promedio(2, 4));             // 3
+    console.log(promedio(2, 4, 6));          // 4
+    console.log(promedio([2, 4, 6]));        // 4
+    console.log(promedio([2, 4], [6, 8]));   // 5
+    console.log(promedio(2, 4.5));           // 3.25
+    console.log(promedio(2, 4, "6"));        // 4
+
+
+    </script>
+</body>
+</html>

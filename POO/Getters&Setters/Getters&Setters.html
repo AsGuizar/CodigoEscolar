@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+class Persona {
+
+constructor(nombre, edad, fechaNacimiento) {
+  this._nombre = nombre;
+  this._edad = edad;
+  this._fechaNacimiento = fechaNacimiento;
+}
+
+// getter para obtener el nombre
+get nombre() {
+  return this._nombre;
+}
+
+// setter para modificar el nombre
+set nombre(nuevoNombre) {
+  this._nombre = nuevoNombre;
+}
+
+// getter para obtener la edad
+get edad() {
+  return this._edad;
+}
+
+// setter para modificar la edad
+set edad(nuevaEdad) {
+  if (nuevaEdad < 0) {
+    throw new Error("La edad no puede ser negativa");
+  }
+  this._edad = nuevaEdad;
+}
+
+// getter para obtener la fecha de nacimiento
+get fechaNacimiento() {
+  return this._fechaNacimiento;
+}
+
+// setter para modificar la fecha de nacimiento
+set fechaNacimiento(nuevaFechaNacimiento) {
+  this._fechaNacimiento = nuevaFechaNacimiento;
+}
+
+// getter para obtener la edad a partir de la fecha de nacimiento
+get edadCalculada() {
+  const diffMs = Date.now() - this._fechaNacimiento.getTime();
+  const ageDate = new Date(diffMs);
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+}
+
+// creando una instancia de Persona
+const persona1 = new Persona("Juan", 25, new Date("1998-03-15"));
+
+// obteniendo la edad y el nombre usando los getters
+console.log(persona1.nombre); // "Juan"
+console.log(persona1.edad); // 25
+console.log(persona1.fechaNacimiento); // "1998-03-15T00:00:00.000Z"
+
+// modificando la edad, el nombre y la fecha de nacimiento usando los setters
+persona1.nombre = "María";
+persona1.edad = 30;
+persona1.fechaNacimiento = new Date("1990-01-01");
+
+// obteniendo la edad, el nombre y la fecha de nacimiento actualizados
+console.log(persona1.nombre); // "María"
+console.log(persona1.edad); // 30
+console.log(persona1.fechaNacimiento); // "1990-01-01T00:00:00.000Z"
+console.log(persona1.edadCalculada); // 33
+
+    </script>
+</body>
+</html>
