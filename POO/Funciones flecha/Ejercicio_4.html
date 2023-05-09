@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Búsqueda de coincidencias con funciones de flecha</title>
+  </head>
+  <body>
+    <h1>Búsqueda de coincidencias con funciones de flecha</h1>
+    <p>El vector de números es [2, 8, 3, 10, 6].</p>
+    <p>El número a buscar es 8.</p>
+    <p>Se encontraron <span id="result"></span> coincidencias.</p>
+    
+    <script>
+      const numbers = [2, 8, 3, 10, 6];
+      const searchNumber = 8;
+      const matches = numbers.filter(number => number === searchNumber);
+      const numMatches = matches.length > 0 ? matches.length : -1;
+      document.getElementById("result").textContent = numMatches;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Media geométrica con funciones de flecha</title>
+  </head>
+  <body>
+    <h1>Media geométrica con funciones de flecha</h1>
+    <p>El vector de números es [2, 4, 6, 8, 10].</p>
+    <p>La media geométrica es <span id="result"></span>.</p>
+    
+    <script>
+      const numbers = [2, 4, 6, 8, 10];
+      const product = numbers.reduce((accumulator, currentValue) => accumulator * currentValue, 1);
+      const geometricMean = Math.pow(product, 1 / numbers.length);
+      document.getElementById("result").textContent = geometricMean.toFixed(2);
+    </script>
+  </body>
+</html>

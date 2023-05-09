@@ -1,14 +1,137 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Calculadora personalizada</title>
-  </head>
-  <body>
-    <h1>Calculadora personalizada</h1>
-    <custom-calculator></custom-calculator>
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora</title>
+  <script src="calculator.js"></script>
+</head>
+<body>
+  <calculator-component></calculator-component>
+  <calculator-component></calculator-component>
+  <calculator-component></calculator-component>
+  
+  <script>
+    class Calculator extends HTMLElement {
+    constructor() {
+      super();
+  
+      // Creamos el shadow DOM para el componente
+      const shadow = this.attachShadow({ mode: "open" });
+  
+      // Creamos el HTML del componente de la calculadora
+      const calculatorContainer = document.createElement("div");
+      calculatorContainer.classList.add("calculator-container");
+  
+      const display = document.createElement("div");
+      display.classList.add("display");
+      display.textContent = "0";
+      calculatorContainer.appendChild(display);
+  
+      const buttonContainer = document.createElement("div");
+      buttonContainer.classList.add("button-container");
+  
+      const buttonValues = [
+        "7",
+        "8",
+        "9",
+        "/",
+        "4",
+        "5",
+        "6",
+        "*",
+        "1",
+        "2",
+        "3",
+        "-",
+        "0",
+        ".",
+        "=",
+        "+"
+      ];
+  
+      buttonValues.forEach((buttonValue) => {
+        const button = document.createElement("button");
+        button.classList.add("button");
+        button.textContent = buttonValue;
+        button.addEventListener("click", () => {
+          this.handleButtonPress(buttonValue);
+        });
+        buttonContainer.appendChild(button);
+      });
+  
+      calculatorContainer.appendChild(buttonContainer);
+      shadow.appendChild(calculatorContainer);
+  
+      // Inicializamos el estado interno de la calculadora
+      this.currentValue = "";
+      this.operator = null;
+      this.previousValue = null;
+    }
+  
+    // Función para manejar la pulsación de botones
+    handleButtonPress(buttonValue) {
+      const display = this.shadowRoot.querySelector(".display");
+  
+      switch (buttonValue) {
+        case "+":
+        case "-":
+        case "*":
+        case "/":
+          this.handleOperator(buttonValue);
+          break;
+        case "=":
+          this.handleEqual();
+          break;
+        case "C":
+          this.currentValue = "";
+          this.operator = null;
+          this.previousValue = null;
+          display.textContent = "0";
+          break;
+        default:
+          this.currentValue += buttonValue;
+          display.textContent = this.currentValue;
+          break;
+      }
+    }
+  
+    // Función para manejar la selección de operador
+    handleOperator(operator) {
+      this.operator = operator;
+      this.previousValue = this.currentValue;
+      this.currentValue = "";
+    }
+  
+    // Función para manejar la operación de igual
+    handleEqual() {
+      const display = this.shadowRoot.querySelector(".display");
+      let result;
+  
+      switch (this.operator) {
+        case "+":
+          result = parseFloat(this.previousValue) + parseFloat(this.currentValue);
+          break;
+        case "-":
+          result = parseFloat(this.previousValue) - parseFloat(this.currentValue);
+          break;
+        case "*":
+          result = parseFloat(this.previousValue) * parseFloat(this.currentValue);
+          break;
+        case "/":
+          result = parseFloat(this.previousValue) / parseFloat(this.currentValue);
+          break;
+      }
+  
+      display.textContent = result;
+      this.currentValue = result;
+      this.operator = null;
+      this.previousValue = null;
+    }
+  }
+  
+  // Registramos el componente en el DOM
+  customElements.define("calculator-component", Calculator);
 
-    <script src="WebComponent.js">
-      customElements.define("custom-calculator", Calculator);
-    </script>
-  </body>
+  </script>
+</body>
 </html>

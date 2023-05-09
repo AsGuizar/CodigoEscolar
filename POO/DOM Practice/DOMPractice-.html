@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agregar a una lista</title>
+    <style>
+      body {
+    background-color: #111;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+        background-color: #222;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    input[type="text"] {
+        margin-bottom: 10px;
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button.add-btn {
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      background-color: #333;
+      color: #f2f2f2;
+      cursor: pointer;
+  }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+
+    li {
+        margin-bottom: 5px;
+        font-size: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .name {
+        font-weight: bold;
+    }
+
+    .address {
+        color: #999;
+    }
+
+    .phone {
+        font-style: italic;
+    }
+
+    button.remove-btn {
+        background-color: #FF4136;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .highlight {
+        background-color: green;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+      <label for="name" style="color: #ffa500;">Ingresa un nombre:</label>
+      <input type="text" id="name" placeholder="Nombre">
+      <label for="address" style="color: #ffa500;">Ingresa una dirección:</label>
+      <input type="text" id="address" placeholder="Dirección">
+      <label for="phone" style="color: #ffa500;">Ingresa un teléfono:</label>
+      <input type="text" id="phone" placeholder="Teléfono">
+      <button onclick="addName()" class="add-btn">Agregar</button>
+      <label for="searchName" style="color: #ffa500;">Buscar un nombre:</label>
+      <input type="text" id="searchName" placeholder="Nombre a buscar">
+      <button onclick="highlightNames()" class="add-btn">Buscar</button>
+      <table>
+          <thead>
+              <tr>
+                  <th style="color: #ffa500;">Nombre</th>
+                  <th style="color: #ffa500;">Dirección</th>
+                  <th style="color: #ffa500;">Teléfono</th>
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody id="nameListTable"></tbody>
+      </table> 
+  </div>
+    <script>
+        function addName() {
+            const nameInput = document.getElementById("name").value;
+            const addressInput = document.getElementById("address").value;
+            const phoneInput = document.getElementById("phone").value;
+            const nameListTable = document.getElementById("nameListTable");
+
+            // Creamos una nueva fila de tabla y le asignamos los valores del input
+            const newRow = document.createElement("tr");
+            const nameCell = document.createElement("td");
+            nameCell.textContent = nameInput;
+        newRow.appendChild(nameCell);
+
+        const addressCell = document.createElement("td");
+        addressCell.textContent = addressInput;
+        newRow.appendChild(addressCell);
+
+        const phoneCell = document.createElement("td");
+        phoneCell.textContent = phoneInput;
+        newRow.appendChild(phoneCell);
+
+        const removeCell = document.createElement("td");
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Eliminar";
+        removeButton.classList.add("remove-btn");
+        removeButton.addEventListener("click", function() {
+            newRow.remove();
+        });
+        removeCell.appendChild(removeButton);
+        newRow.appendChild(removeCell);
+
+        // Agregamos la nueva fila a la tabla
+        nameListTable.appendChild(newRow);
+
+        // Limpiamos los inputs
+        document.getElementById("name").value = "";
+        document.getElementById("address").value = "";
+        document.getElementById("phone").value = "";
+    }
+
+    function highlightNames() {
+        const searchName = document.getElementById("searchName").value;
+        const nameListTable = document.getElementById("nameListTable");
+        const rows = nameListTable.getElementsByTagName("tr");
+
+        for (let i = 0; i < rows.length; i++) {
+            const name = rows[i].getElementsByTagName("td")[0];
+            if (name) {
+                if (name.textContent.includes(searchName)) {
+                    rows[i].classList.add("highlight");
+                } else {
+                    rows[i].classList.remove("highlight");
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

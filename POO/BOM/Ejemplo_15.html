@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p> Haga clic en "Iniciar temporizador" para iniciar el temporizador: </p>
+<p id = "demo"> </p>
+<button onclick = "var myVar = setInterval (myTimer, 1000);"> Iniciar temporizador </button>
+
+<button onclick = "clearInterval (myVar)"> Detener temporizador </button>
+
+<script>
+
+function myTimer() {
+
+  var d = nuevo objeto de fecha ();
+
+  document.getElementById ("demo"). innerHTML = d.toLocaleTimeString ();
+
+}
+
+</script>
+</body>
+</html>

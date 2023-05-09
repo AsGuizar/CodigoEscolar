@@ -7,60 +7,6 @@ class Calculator extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
 
     // Añadimos el HTML de la calculadora al shadow DOM
-    shadow.innerHTML = `
-      <style>
-        /* Estilos para la calculadora */
-        .calculator {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          grid-gap: 10px;
-          padding: 10px;
-          background-color: #eee;
-          border: 1px solid #ccc;
-        }
-        .calculator button {
-          font-size: 20px;
-          padding: 10px;
-          background-color: #fff;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          cursor: pointer;
-        }
-        .calculator button:hover {
-          background-color: #ccc;
-        }
-        .calculator button:active {
-          background-color: #aaa;
-        }
-        .calculator input {
-          font-size: 20px;
-          padding: 10px;
-          text-align: right;
-        }
-      </style>
-      <div class="calculator">
-        <input type="text" id="display" readonly>
-        <button id="clear">C</button>
-        <button id="backspace">&larr;</button>
-        <button id="divide">/</button>
-        <button id="seven">7</button>
-        <button id="eight">8</button>
-        <button id="nine">9</button>
-        <button id="multiply">*</button>
-        <button id="four">4</button>
-        <button id="five">5</button>
-        <button id="six">6</button>
-        <button id="subtract">-</button>
-        <button id="one">1</button>
-        <button id="two">2</button>
-        <button id="three">3</button>
-        <button id="add">+</button>
-        <button id="negate">+/-</button>
-        <button id="zero">0</button>
-        <button id="decimal">.</button>
-        <button id="equals">=</button>
-      </div>
-    `;
 
     // Obtenemos referencias a los elementos de la calculadora
     this.display = shadow.querySelector("#display");

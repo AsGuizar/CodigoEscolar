@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funcion para sumar dos valores</title>
+</head>
+<body>
+    <h1>FUNCION PARA SUMAR DOS VALORES</h1> <br>
+    <p>Ingresa numero [a]:</p>
+    <input type="text" id="a">
+    <p>Ingresa numero [b]:</p>
+    <input type="text" id="b">
+    <p>Ingresa numero [c]:</p>
+    <input type="text" id="c"> <br>
+    <button onclick="Formula_General()">Formula General</button>
+    <p>Resultado</p>
+    <p id="valor"></p>
+    
+    <script>
+        const Formula_General = () => {
+            let texto = "";
+    
+            let a = parseFloat(document.getElementById("a").value);
+            let b = parseFloat(document.getElementById("b").value);
+            let c = parseFloat(document.getElementById("c").value);
+
+            if (a == 0) {
+                alert("Dato no valido para valor de A");
+            } else {
+                let r1 = (Math.pow(b,2)-(4*a*c));
+                let r2 = (Math.pow(b,2)-(4*a*c));
+                
+                if ((4*a*c)>(b*b)) {
+                    alert("Raiz imaginaria, dato no valido");
+                } else {
+                    let x1 = ((-b) - (Math.sqrt(r1))) / (2 * a);
+                    let x2 = ((-b) + (Math.sqrt(r2))) / (2 * a);
+                    texto += (`Datos:\n A:${a}\n B:${b}\n C:${c}\n X1:${x1}\n X2:${x2}\n`);
+                    document.getElementById("valor").innerHTML = texto;
+                }
+            }
+        };
+    </script>
+</body>
+</html>

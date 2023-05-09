@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Valor mayor con funciones de flecha</title>
+  </head>
+  <body>
+    <h1>Valor mayor con funciones de flecha</h1>
+    <p>El vector de números es [2, 8, 3, 10, 6].</p>
+    <p>El valor mayor es <span id="result"></span>.</p>
+    
+    <script>
+      const numbers = [2, 8, 3, 10, 6];
+      const maxNumber = Math.max(...numbers);
+      document.getElementById("result").textContent = maxNumber;
+    </script>
+  </body>
+</html>
