@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculadora de Método de Bisección</title>
+    <style>
+      /* Estilos generales */
+       /* Estilos generales */
+        * {
+        box-sizing: border-box;
+        }
+
+        body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        color: #fff;
+        background-color: #333;
+        }
+
+        h1 {
+        margin-top: 0;
+        padding: 20px;
+        text-align: center;
+        background-color: #6b4d57;
+        }
+
+        form {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #4b4b4b;
+        border: 1px solid #333;
+        border-radius: 5px;
+        }
+
+        form label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        }
+
+        form input[type="text"],
+        form input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #333;
+        border-radius: 3px;
+        background-color: #f2f2f2;
+        color: #333;
+        }
+
+        form button[type="button"] {
+        display: block;
+        margin: 0 auto;
+        padding: 10px 20px;
+        background-color: #6b4d57;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        color: #fff;
+        }
+
+        #resultado {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #4b4b4b;
+        border: 1px solid #333;
+        border-radius: 5px;
+        text-align: center;
+        color: #fff;
+        }
+
+        #instrucciones {
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          width: 250px;
+          padding: 20px;
+          background-color: rgba(242, 242, 242, 0.5);
+          border: none;
+          border-radius: 5px;
+          font-size: 14px;
+          line-height: 1.5;
+          color: #fff;
+        }
+
+        #instrucciones h3 {
+          margin-top: 0;
+          font-size: 18px;
+          font-weight: bold;
+          color: #fff;
+        }
+
+        #instrucciones p {
+          margin-bottom: 10px;
+        }
+
+        #instrucciones ol {
+          margin-left: 20px;
+        }
+
+        #instrucciones li {
+          margin-bottom: 5px;
+        }
+
+        </style>
+        </head>
+        <body>
+        <h1>Calculadora de Método de Bisección</h1>
+        <form>
+      <label for="funcion">Función:</label>
+      <input type="text" id="funcion" required /><br />
+
+      <label for="limite-inferior">Límite inferior:</label>
+      <input type="number" id="limite-inferior" step="any" required /><br />
+
+      <label for="limite-superior">Límite superior:</label>
+      <input type="number" id="limite-superior" step="any" required /><br />
+
+      <label for="tolerancia">Tolerancia:</label>
+      <input type="number" id="tolerancia" step="any" value="0.001" /><br />
+
+      <label for="iteraciones-maximas">Iteraciones máximas:</label>
+      <input type="number" id="iteraciones-maximas" value="100" /><br />
+
+      <button type="button" onclick="calcular()">Calcular</button>
+    </form>
+
+    <div id="instrucciones">
+      <h3>Cómo usar la calculadora del Método de Bisección</h3>
+      <p>Para calcular el punto donde la función f(x) = 4x^2 - 5x corta el eje x dentro del intervalo [1, 1.6]:</p>
+      <ol>
+        <li>Introduce la función en el campo "Función" como "4*x^2-5*x".</li>
+        <li>Introduce el límite inferior en el campo "Límite inferior" como "1".</li>
+        <li>Introduce el límite superior en el campo "Límite superior" como "1.6".</li>
+        <li>Haz clic en el botón "Calcular".</li>
+      </ol>
+    </div>
+    
+
+    <div id="resultado"></div>
+
+    <script>
+        function calcular() {
+  // Obtener los valores de los campos del formulario
+    const funcion = document.getElementById("funcion").value;
+    const limiteInferior = parseFloat(document.getElementById("limite-inferior").value);
+    const limiteSuperior = parseFloat(document.getElementById("limite-superior").value);
+    const tolerancia = parseFloat(document.getElementById("tolerancia").value);
+    const iteracionesMaximas = parseInt(document.getElementById("iteraciones-maximas").value);
+
+    // Verificar que los límites sean válidos
+    if (limiteInferior >= limiteSuperior) {
+        alert("El límite inferior debe ser menor que el límite superior.");
+        return;
+    }
+
+    // Definir la función a partir de la cadena ingresada
+    const f = new Function("x", "return " + funcion);
+
+    // Inicializar las variables
+    let a = limiteInferior;
+    let b = limiteSuperior;
+    let fa = f(a);
+    let fb = f(b);
+    let c = (a + b) / 2;
+    let fc = f(c);
+    let i = 1;
+
+    // Iterar hasta que se cumpla la condición de parada o se alcance el número máximo de iteraciones
+    while (Math.abs(b - a) > tolerancia && i <= iteracionesMaximas) {
+        if (fa * fc < 0) {
+        b = c;
+        fb = fc;
+        } else {
+        a = c;
+        fa = fc;
+        }
+        c = (a + b) / 2;
+        fc = f(c);
+        i++;
+    }
+
+    // Mostrar el resultado en el elemento con el ID "resultado"
+    const resultadoElemento = document.getElementById("resultado");
+    resultadoElemento.innerHTML = `La raíz aproximada es: ${c.toFixed(6)}<br />Se alcanzó en ${i} iteraciones.`;
+    }
+
+    </script>
+  </body>
+</html>

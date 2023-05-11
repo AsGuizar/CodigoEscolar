@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculadora del Método de la Secante</title>
+  </head>
+  <style>
+   /* Estilos para el cuerpo de la página */
+/* Estilos para el cuerpo de la página */
+body {
+  background-color: #222;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor de la calculadora */
+.calculator-container {
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 500px;
+  padding: 20px;
+}
+
+/* Estilos para los encabezados */
+h1 {
+        margin-top: 0;
+        padding: 20px;
+        text-align: center;
+        background-color: #6b4d57;
+        }
+
+/* Estilos para los campos de entrada */
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"] {
+  border: none;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 2px #ccc;
+  font-size: 16px;
+  padding: 10px;
+  width: 100%;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Estilos para el botón de calcular */
+button {
+  background-color: #ff7f50;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 3px 0 #c66;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #ff6347;
+  box-shadow: 0 3px 0 #a44;
+}
+
+/* Estilos para los resultados */
+#resultado {   
+        margin-top: 0;
+        padding: 20px;
+        text-align: center;
+        background-color: #6b4d57;
+        }
+
+/* Estilos para el modo oscuro */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #111;
+    color: #ddd;
+  }
+  
+  input[type="text"],
+  input[type="number"] {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  button {
+    background-color: #f50;
+    box-shadow: 0 3px 0 #c33;
+  }
+  
+  button:hover {
+    background-color: #e03;
+    box-shadow: 0 3px 0 #a33;
+  }
+  
+  .calculator-container {
+  background-color: #000000;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.calculator-container:hover {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+}
+
+
+  </style>
+  <body>
+    <h1>Calculadora del Método de la Secante</h1>
+    <div class="calculator-container"> 
+    <form>
+      <label for="funcion">Función:</label>
+      <input type="text" id="funcion" name="funcion"><br><br>
+      <label for="x0">x0:</label>
+      <input type="number" id="x0" name="x0"><br><br>
+      <label for="x1">x1:</label>
+      <input type="number" id="x1" name="x1"><br><br>
+      <label for="tolerancia">Tolerancia:</label>
+      <input type="number" id="tolerancia" name="tolerancia"><br><br>
+      <label for="iteraciones">Iteraciones:</label>
+      <input type="number" id="iteraciones" name="iteraciones"><br><br>
+      <button type="button" onclick="calcular()">Calcular</button>
+    </form>
+    </div>
+    <br>
+    <h2>Resultados:</h2>
+    <p id="resultado"></p>
+    <script>
+      function calcular() {
+        // Obtener los valores de los inputs
+        var funcion = document.getElementById("funcion").value;
+        var x0 = parseFloat(document.getElementById("x0").value);
+        var x1 = parseFloat(document.getElementById("x1").value);
+        var tolerancia = parseFloat(document.getElementById("tolerancia").value);
+        var iteraciones = parseInt(document.getElementById("iteraciones").value);
+        
+        // Calcular la raíz con el método de la secante
+        var i = 0;
+        var xi = x1;
+        var xi_1 = x0;
+        var fxi = eval(funcion.replace(/x/g, "xi"));
+        var fxi_1 = eval(funcion.replace(/x/g, "xi_1"));
+        var error = Math.abs((xi - xi_1) / xi);
+        while (error > tolerancia && i < iteraciones) {
+          var x_temp = xi;
+          xi = xi - fxi * (xi - xi_1) / (fxi - fxi_1);
+          xi_1 = x_temp;
+          fxi = eval(funcion.replace(/x/g, "xi"));
+          fxi_1 = eval(funcion.replace(/x/g, "xi_1"));
+          error = Math.abs((xi - xi_1) / xi);
+          i++;
+        }
+        
+        // Mostrar el resultado
+        if (i === iteraciones) {
+          document.getElementById("resultado").innerHTML = "No se encontró la raíz en " + iteraciones + " iteraciones.";
+        } else {
+          document.getElementById("resultado").innerHTML = "La raíz es " + xi.toFixed(4) + " con un error de " + error.toFixed(4) + " después de " + i + " iteraciones.";
+        }
+      }
+    </script>
+  </body>
+</html>
+
