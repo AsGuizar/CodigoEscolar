@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM</title>
+</head>
+<body onload="checkCookie()">
+    <h1>Browser Object Model (BOM)- El objeto ventana(window) JavaScript: el modelo de objetos del navegador</h1>
+
+    <!-- ---------------------------------- 1 ---------------------------------- -->
+    <p id="demo1"></p>
+
+    <script>
+        var w = window.innerWidth
+        || document.documentElement.clientWidth
+        || document.body.clientWidth;
+
+        
+        var h = window.innerHeight
+        || document.documentElement.clientHeight
+        || document.body.clientHeight;
+
+        var x = document.getElementById("demo1");
+        x.innerHTML = "Ancho de la ventana interna del navegador:" + w + ", altura:" + h + ".";
+    </script>
+
+    <!-- ---------------------------------- 2 ---------------------------------- -->
+    <h2>Ancho de la ventana</h2>
+    <p id="demo2"></p>
+    <script>
+        document.getElementById ("demo2"). innerHTML =
+            "Ancho de pantalla:" + screen.width;
+    </script>
+
+    <!-- ---------------------------------- 3 ---------------------------------- -->
+    <h2>Altura de la ventana</h2>
+    <p id="demo3"></p>
+    <script>
+        document.getElementById ("demo3"). innerHTML =
+            "Ancho de pantalla:" + screen.height;
+    </script>
+
+    <!-- ---------------------------------- 4 ---------------------------------- -->
+    <h2>Ancho de pantalla de ventana disponible</h2>
+    <p id="demo4"></p>
+    <script>
+        document.getElementById ("demo4"). innerHTML =
+            "Ancho de pantalla disponible:" + screen.availWidth;
+    </script>
+
+    <!-- ---------------------------------- 5 ---------------------------------- -->
+    <h2>Altura de pantalla de ventana disponible</h2>
+    <p id="demo5"></p>
+    <script>
+        document.getElementById ("demo5"). innerHTML =
+            "Ancho de pantalla disponible:" + screen.availHeight;
+    </script>
+
+    <!-- ---------------------------------- 6 ---------------------------------- -->
+    <h2>Profundidad de color de la pantalla de la ventana</h2>
+    <p id="demo6"></p>
+    <script>
+        document.getElementById ("demo6"). innerHTML =
+            "Profundidad de color de pantalla:" + screen.colorDepth;
+    </script>
+    
+    <!-- ---------------------------------- 7 ---------------------------------- -->
+    <h2>Ventana Pantalla Profundidad de píxeles</h2>
+    <p id="demo7"></p>
+    <script>
+        document.getElementById ("demo7"). innerHTML =
+            "Profundidad de píxeles de la pantalla:" + screen.pixelDepth;
+    </script>
+    
+    <hr>
+
+    <!-- ---------------------------------- 8 ---------------------------------- -->
+    <h2>Ubicación de la ventana(página actual)</h2>
+    <p id="demo8"></p>
+    <script>
+        document.getElementById ("demo8"). innerHTML =
+            "La ubicación de la página es " + window.location.href;
+    </script>
+
+    <!-- ---------------------------------- 9 ---------------------------------- -->
+    <h2>Nombre de ruta de ubicación de ventana(pagina actual)</h2>
+    <p id="demo9"></p>
+    <script>
+        document.getElementById ("demo9"). innerHTML =
+            "Ruta de la página es " + window.location.pathname;
+    </script>
+
+    <!-- --------------------------------- 10 ---------------------------------- -->
+    <h2>Protocolo de ubicación de ventanas</h2>
+    <p id="demo10"></p>
+    <script>
+        document.getElementById ("demo10"). innerHTML =
+            "Protocolo de página es " + window.location.protocol;
+    </script>
+
+    <!-- --------------------------------- 11 ---------------------------------- -->
+    <h2>Puerto de ubicación de ventana</h2>
+    <p id="demo11"></p>
+    <script>
+        document.getElementById ("demo11"). innerHTML =
+            "El número de puerto es " + window.location.port;
+    </script>
+
+    <hr>
+
+    <!-- --------------------------------- 12 ---------------------------------- -->
+    <h2> El objeto window.location </h2>
+    <input type = "button" value = "Cargar nuevo documento" onclick = "newDoc()">
+
+    <script>
+        function newDoc() {
+            window.location.assign("https://www.w3schools.com")
+        }
+    </script>
+
+    <!-- --------------------------------- 13 ---------------------------------- -->
+    <h2>window.history.back</h2>
+    <input type="button" value="Anterior" onclick="goBack()">
+
+    <script>
+        function goBack() {
+            window.history.back()
+        }
+    </script>
+
+    <!-- --------------------------------- 14 ---------------------------------- -->
+    <h2>window.history.forward</h2>
+    <input type="button" value="Adelante" onclick="goForward()">
+
+    <script>
+        function goForward() {
+            window.history.forward()
+        }
+    </script>
+
+    <hr>
+
+    <!-- --------------------------------- 15 ---------------------------------- -->
+    <h2>Cookies</h2>
+    <p id = "demo15"> </p>
+
+    <script>
+        document.getElementById ("demo15"). innerHTML =
+        "cookiesEnabled es " + navigator.cookieEnabled;
+    </script>
+
+    <!-- --------------------------------- 16 ---------------------------------- -->
+    <h2>Nombre de la aplicación del navegador</h2>
+    <p id = "demo16"> </p>
+
+    <script>
+        document.getElementById ("demo16"). innerHTML =
+        "navigator.appName es " + navigator.appName;
+    </script>
+
+    <!-- --------------------------------- 17 ---------------------------------- -->
+    <h2>Nombre del código de la aplicación del navegador</h2>
+    <p id = "demo17"> </p>
+
+    <script>
+        document.getElementById ("demo17"). innerHTML =
+        "navigator.appCodeName es " + navigator.appCodeName;
+    </script>
+
+    <!-- --------------------------------- 18 ---------------------------------- -->
+    <h2>El motor del navegador</h2>
+    <p id = "demo18"> </p>
+
+    <script>
+        document.getElementById ("demo18"). innerHTML =
+        "navigator.product es " + navigator.product;
+    </script>
+
+    <!-- --------------------------------- 19 ---------------------------------- -->
+    <h2>La versión del navegador</h2>
+    <p id = "demo19"> </p>
+
+    <script>
+        document.getElementById ("demo19"). innerHTML = navigator.appVersion;
+    </script>
+
+    <!-- --------------------------------- 20 ---------------------------------- -->
+    <h2>La plataforma del navegador</h2>
+    <p id = "demo20"> </p>
+
+    <script>
+        document.getElementById ("demo20"). innerHTML = navigator.platform;
+    </script>
+
+    <!-- --------------------------------- 21 ---------------------------------- -->
+    <h2>El idioma del navegador</h2>
+    <p id = "demo21"> </p>
+
+    <script>
+        document.getElementById ("demo21"). innerHTML = navigator.language;
+    </script>
+
+    <!-- --------------------------------- 22 ---------------------------------- -->
+    <h2>¿Está el navegador en línea?</h2>
+    <p id = "demo22"> </p>
+
+    <script>
+        document.getElementById ("demo22"). innerHTML = navigator.onLine;
+    </script>
+
+    <!-- --------------------------------- 23 ---------------------------------- -->
+    <h2>¿Java está habilitado?</h2>
+    <p id = "demo23"> </p>
+
+    <script>
+        document.getElementById ("demo23"). innerHTML = navigator.javaEnabled ();
+    </script>
+
+    <hr>
+
+    <!-- --------------------------------- 24 ---------------------------------- -->
+    <h2>Cuadro de alerta</h2>
+    <script>
+        //alert ("¡Soy un cuadro de alerta!");
+    </script>
+
+    <!-- --------------------------------- 25 ---------------------------------- -->
+    <h2>Caja de confirmar</h2>
+    <script>
+        /*
+        if (confirm("Presione un botón!")) {
+            txt = "¡Presionó OK!";
+        } 
+        else {
+            txt = "Presionó Cancelar!";
+        }
+        */
+    </script>
+
+    <!-- --------------------------------- 26 ---------------------------------- -->
+    <h2>Caja de aviso</h2>
+    <script>
+        /*
+        var person = prompt ("Ingrese su nombre", "Harry Potter");
+
+        if (persona == nulo || persona == "") {
+            txt = "El usuario canceló la solicitud";
+        }
+        else{
+            txt = "Hola" + persona + "! ¿Cómo estás hoy?";
+        }
+        */
+    </script>
+
+    <!-- --------------------------------- 27 ---------------------------------- -->
+    <h2>Saltos de línea</h2>
+    <script>
+        //alert ("Hola \n ¿Cómo estás?"); 
+    </script>
+
+    <hr>
+
+    <!-- --------------------------------- 28 ---------------------------------- -->
+    <h2>El método setTimeout ()</h2>
+    <p> Haga clic en "Pruébelo". Espere 3 segundos y la página alertará "Hola". </p>
+    <button onclick = "setTimeout (myFunction28, 3000);"> Pruébelo </button>
+
+    <script>
+        function myFunction28() {
+        alert('Hello');
+        }
+    </script>
+
+    <!-- --------------------------------- 29 ---------------------------------- -->
+    <h2>¿Cómo detener la ejecución?</h2>
+    <p> Haga clic en "Pruébelo". Espera 3 segundos La página alertará "Hola". </p>
+    <p> Haga clic en "Detener" para evitar que se ejecute la primera función. </p>
+    <p> (Debe hacer clic en "Detener" antes de que pasen los 3 segundos). </p>
+    <button onclick = "myVar = setTimeout (myFunction29, 3000)"> Pruébelo </button>
+    <button onclick = "clearTimeout (myVar)"> Detenerlo </button>
+
+    <script>
+        function myFunction29() {
+            alert("Hello");
+        }
+    </script>
+
+    <!-- --------------------------------- 30 ---------------------------------- -->
+    <h2>El método setInterval ()</h2>
+    <p> Un script en esta página inicia este reloj: </p>
+    <p id="demo30"></p>
+
+    <script>
+    var myVar = setInterval(myTimer, 1000);
+
+        function myTimer() {
+            var d = new Date();
+            document.getElementById("demo30").innerHTML = d.toLocaleTimeString();
+        }
+    </script>
+
+    <!-- --------------------------------- 31 ---------------------------------- -->
+    <h2>¿Cómo detener la ejecución?</h2>
+    <p> Un script en esta página inicia este reloj: </p>
+    <p id = "demo31"> </p>
+    <button onclick = "clearInterval (myVar)"> Tiempo de parada </button>
+
+    
+    <script>
+        var myVar = setInterval(myTimer ,1000);
+
+        function myTimer() {
+            var d2 = new Date();
+            document.getElementById("demo31").innerHTML = d2.toLocaleTimeString();
+        }
+    </script>
+
+
+    <hr>
+
+    <!-- --------------------------------- 32 ---------------------------------- -->
+    <h2>Cookies</h2>
+
+    <h3>Una función para configurar una cookie</h3>
+
+    <script>
+        function setCookie (cname, cvalue, exdays) {
+            var d3 = new Date();
+            d3.setTime (d.getTime () + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires =" + d3.toUTCString ();
+            document.cookie = cname + "=" + cvalue + ";" + caduca + "; ruta = /";
+        }
+    </script>
+    
+    <!-- --------------------------------- 33 ---------------------------------- -->
+    <h3>Una función para obtener una cookie</h3>
+    
+    <script>
+        function getCookie (cname) {
+
+            var nombre = cname + "=";
+            var decodedCookie = decodeURIComponent (document.cookie);
+            var ca = decodedCookie.split (';');
+
+            for(var i = 0; i <ca.length; i ++) {
+
+                var c = ca [i];
+                
+                while (c.charAt (0) == '') {
+                    c = c. subcadena (1);
+                }
+
+                if (c.indexOf (name) == 0) {
+                    return c.substring (name.length, c.length);
+                }
+            }
+            return "";
+        }
+    </script>
+
+    <!-- --------------------------------- 34 ---------------------------------- -->
+    <h3>Una función para verificar una cookie</h3>
+
+    <script>
+        function checkCookie () {
+
+             var user = getCookie ("nombre de usuario");
+
+            if (user != "") {
+                alerta ("Bienvenido de nuevo" + user);
+            }
+            else{
+
+                username = prompt ("Ingrese su nombre:", "");
+
+                if (username != "" && username != null) {
+                    setCookie ("nombre de usuario", username, 365);
+                }
+            }
+        }
+    </script>
+
+    <!-- --------------------------------- 35 ---------------------------------- -->
+    <h3>Todos juntos ahora</h3>
+    
+    <script>
+
+        function setCookie(cname,cvalue,exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+ 
+
+        function getCookie(cname) {
+
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }  
+
+        function checkCookie() {
+
+            var user=getCookie("username");
+
+            if (user != "") {
+                alert("Welcome again " + user);
+            } 
+            else {
+                user = prompt("Please enter your name:","");
+
+                if (user != "" && user != null) {
+                    setCookie("username", user, 30);
+                }
+            }
+        }
+</script>
+
+</body>
+</html>

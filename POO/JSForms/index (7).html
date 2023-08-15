@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios</title>
+</head>
+<body>
+    <!-- ---------------------------------- 1 ---------------------------------- -->
+    <h2>Validar contenido de un formulario</h2>
+
+    <form name="myForm" action="/action_page.php" onsubmit="return validateForm()" method="post">
+        Nombre: <input type="text" name="fname">
+        <input type="submit" value="Enviar">
+    </form>
+
+    <script>
+        function validateForm() {
+            var x = document.forms["myForm"]["fname"].value;
+            
+            if (x == "") {
+                alert("Name must be filled out");
+                return false;
+            }
+        }
+    </script>
+    <hr>
+    
+    <!-- ---------------------------------- 2 ---------------------------------- -->
+    <h2> JavaScript puede validar la entrada </h2>
+    <p> Ingrese un número entre 1 y 10: </p>
+    <input id = "numb">
+    <button type = "button" onclick = "myFunction1 ()"> Enviar </button>
+    <p id="demo1"></p>
+
+    <script>
+        function myFunction1() {
+            var x, text;
+
+            // Get the value of the input field with id="numb"
+            x = document.getElementById("numb").value;
+
+            // If x is Not a Number or less than one or greater than 10
+            if (isNaN(x) || x < 1 || x > 10) {
+                text = "Entrada no valida";
+            } else {
+                text = "Entrada correcta";
+            }
+            document.getElementById("demo1").innerHTML = text;
+        }
+    </script>
+    <hr>
+
+    <!-- ---------------------------------- 3 ---------------------------------- -->
+    <h2>Validación del formulario por el navegador</h2>
+    
+    <form action="/action_page.php" method="post">
+        <input type="text" name="fname" required>
+        <input type="submit" value="Enviar">
+    </form>
+    
+    <p>Si hace clic en enviar, sin completar el campo de texto,
+    su navegador mostrará un mensaje de error.</p>
+    <hr>
+
+    <!-- ---------------------------------- 4 ---------------------------------- -->
+    <h2>Ejemplo validación de restricciones</h2>
+    <p> Ingrese un número y haga clic en Aceptar: </p>
+    <input id = "id1" type = "number" min = "100" max = "300" requerido>
+    <button onclick = "myFunction2 ()"> OK </button>
+    <p> Si el número es menor que 100 o mayor que 300, se mostrará un mensaje de error. </p>
+    <p id="demo2"></p>
+
+    <script>
+
+        function myFunction2() {
+            var inpObj = document.getElementById("id1");
+
+            if (!inpObj.checkValidity()) {
+                document.getElementById("demo2").innerHTML = inpObj.validationMessage;
+            } else {
+                document.getElementById("demo2").innerHTML = "Input OK";
+            }
+        }
+    </script>
+    <hr>
+
+    <!-- ---------------------------------- 5 ---------------------------------- -->
+    <h2>rangeOverflow</h2>
+    <p> Ingrese un número y haga clic en Aceptar: </p>
+    <input id = "id3" type = "number" max = "100">
+    <button onclick = "myFunction3 ()"> OK </button>
+    <p> Si el número es mayor que 100 (el atributo máximo de la entrada), se mostrará un mensaje de error. </p>
+    <p id="demo3"></p>
+
+    <script>
+        function myFunction3() {
+            var txt = "";
+
+            if (document.getElementById("id3").validity.rangeOverflow) {
+                txt = "El valor es muy grande";
+            } else {
+                txt = "Entrada correcta";
+            }
+            document.getElementById("demo3").innerHTML = txt;
+        }
+    </script>
+    <hr>
+    <!-- ---------------------------------- 6 ---------------------------------- -->
+    <h2>rangeUnderflow</h2>
+    <p> Ingrese un número y haga clic en Aceptar: </p>
+    <input id = "id4" type = "number" min = "100">
+    <button onclick = "myFunction4 ()"> OK </button>
+    <p> Si el número es menor que 100 (el atributo min de la entrada), se mostrará un mensaje de error. </p>
+    <p id="demo4"></p>
+
+    <script>
+
+        function myFunction4() {
+            var txt = "";
+
+            if (document.getElementById("id4").validity.rangeUnderflow) {
+                txt = "El valor es muy pequeño";
+            } else {
+                txt = "Entrada correcta";
+            }
+            document.getElementById("demo4").innerHTML = txt;
+        }
+    </script>
+</body>
+</html>

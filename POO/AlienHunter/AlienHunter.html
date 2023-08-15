@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mars Attack</title>
+    <style>
+        body {
+            background-color: #000000;
+            margin: 0;
+            overflow: hidden;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+       
+        #game-container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            margin: 0 auto;
+            border: 2px solid #ffffff;
+        }
+       
+        #ship {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 70px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-image: url('pngwing.com.png');
+        }
+       
+        .invader {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-image: url('alien.png');
+        }
+       
+        #bullets-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+       
+        .bullet {
+            position: absolute;
+            width: 5px;
+            height: 15px;
+            background-color: #008cff;
+        }
+
+        #hud {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="ship"></div>
+        <div id="bullets-container"></div>
+    </div>
+
+    <div id="hud">
+        <span id="kill-counter">Kills: 0</span><br>
+        <span id="life-counter">Lives: 3</span>
+    </div>
+
+    <script>
+        window.onload = function() {
+            var gameContainer = document.getElementById("game-container");
+            var ship = document.getElementById("ship");
+            var bulletsContainer = document.getElementById("bullets-container");
+            var killCounter = document.getElementById("kill-counter");
+            var lifeCounter = document.getElementById("life-counter");
+
+            var shipX = gameContainer.offsetWidth / 2 - ship.offsetWidth / 2;
+            var bullets = [];
+            var invaders = [];
+            var kills = 0;
+            var lives = 3;
+
+            function moveShip(e) {
+                shipX = e.clientX - gameContainer.offsetLeft - ship.offsetWidth / 2;
+                ship.style.left = shipX + "px";
+            }
+
+            function shoot() {
+                var bullet = document.createElement("div");
+                bullet.className = "bullet";
+                bullet.style.left = shipX + ship.offsetWidth / 2 - bullet.offsetWidth / 2 + "px";
+                bullet.style.bottom = ship.offsetHeight + "px";
+                bulletsContainer.appendChild(bullet);
+                bullets.push(bullet);
+            }
+
+            function moveBullets() {
+                for (var i = 0; i < bullets.length; i++) {
+                    var bullet = bullets[i];
+                    var bulletY = parseInt(bullet.style.bottom);
+                    bullet.style.bottom = bulletY + 5 + "px";
+
+                    for (var j = 0; j < invaders.length; j++) {
+                        var invader = invaders[j];
+                        if (checkCollision(bullet, invader)) {
+                            invaders.splice(j, 1);
+                            invader.parentNode.removeChild(invader);
+                            bulletsContainer.removeChild(bullet);
+                            bullets.splice(i, 1);
+                            kills++;
+                            killCounter.innerText = "Kills: " + kills;
+                            break;
+                        }
+                    }
+
+                    if (bulletY >= gameContainer.offsetHeight) {
+                        bulletsContainer.removeChild(bullet);
+                        bullets.splice(i, 1);
+                    }
+                }
+            }
+
+            function generateInvader() {
+                var invader = document.createElement("div");
+                invader.className = "invader";
+                invader.style.left = Math.random() * (gameContainer.offsetWidth - invader.offsetWidth) + "px";
+                invader.style.top = -invader.offsetHeight + "px";
+                gameContainer.appendChild(invader);
+                invaders.push(invader);
+
+                var invaderInterval = setInterval(function() {
+                    var invaderY = parseInt(invader.style.top);
+                    invader.style.top = invaderY + 5 + "px";
+
+                    if (checkCollision(invader, ship)) {
+                        clearInterval(invaderInterval);
+                        lives--;
+                        lifeCounter.innerText = "Lives: " + lives;
+                        if (lives === 0) {
+                            endGame();
+                        } else {
+                            resetShip();
+                        }
+                    }
+
+                    if (invaderY >= gameContainer.offsetHeight) {
+                        clearInterval(invaderInterval);
+                        invader.parentNode.removeChild(invader);
+                        invaders.splice(invaders.indexOf(invader), 1);
+                        lives--;
+                        lifeCounter.innerText = "Lives: " + lives;
+                        if (lives === 0) {
+                            endGame();
+                        }
+                    }
+                }, 30);
+            }
+
+            function checkCollision(element1, element2) {
+                var rect1 = element1.getBoundingClientRect();
+                var rect2 = element2.getBoundingClientRect();
+                return (
+                    rect1.top < rect2.bottom &&
+                    rect1.bottom > rect2.top &&
+                    rect1.left < rect2.right &&
+                    rect1.right > rect2.left
+                );
+            }
+
+            function resetShip() {
+                ship.style.left = shipX + "px";
+            }
+
+            function endGame() {
+                alert("Game Over");
+                // Aquí puedes realizar otras acciones al finalizar el juego
+            }
+
+            document.addEventListener("mousemove", moveShip);
+            document.addEventListener("click", shoot);
+
+            function gameLoop() {
+                moveBullets();
+                requestAnimationFrame(gameLoop);
+            }
+
+            setInterval(generateInvader, 2000);
+            gameLoop();
+        };
+    </script>
+</body>
+</html>

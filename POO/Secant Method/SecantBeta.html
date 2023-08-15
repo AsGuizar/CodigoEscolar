@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora del Método de la Secante</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: center;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora del Método de la Secante</h1>
+
+  <form id="secantForm">
+    <label for="func">Función:</label>
+    <input type="text" id="func" required><br>
+
+    <label for="x0">Punto inicial x0:</label>
+    <input type="number" step="any" id="x0" required><br>
+
+    <label for="x1">Punto inicial x1:</label>
+    <input type="number" step="any" id="x1" required><br>
+
+    <label for="tol">Tolerancia:</label>
+    <input type="number" step="any" id="tol" required><br>
+
+    <label for="minError">Error mínimo (%):</label>
+    <input type="number" step="any" id="minError" required><br>
+
+    <label for="maxIter">Número máximo de iteraciones:</label>
+    <input type="number" id="maxIter" required><br>
+
+    <input type="submit" value="Calcular">
+  </form>
+
+  <h2>Resultados</h2>
+
+  <table id="resultsTable">
+    <tr>
+      <th>Iteración</th>
+      <th>x0</th>
+      <th>x1</th>
+      <th>x2</th>
+      <th>f(x0)</th>
+      <th>f(x1)</th>
+      <th>f(x2)</th>
+      <th>Error Relativo (%)</th>
+    </tr>
+  </table>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.1/math.min.js"></script>
+  <script>
+    document.getElementById('secantForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      calculateSecant();
+    });
+
+    function calculateSecant() {
+      var func = document.getElementById('func').value;
+      var x0 = parseFloat(document.getElementById('x0').value);
+      var x1 = parseFloat(document.getElementById('x1').value);
+      var tol = parseFloat(document.getElementById('tol').value);
+      var minError = parseFloat(document.getElementById('minError').value);
+      var maxIter = parseInt(document.getElementById('maxIter').value);
+
+      var table = document.getElementById('resultsTable');
+      clearTable(table);
+
+      var iteration = 1;
+      var error = Infinity;
+
+      while (iteration <= maxIter && error >= minError) {
+        var f0 = evaluateFunction(func, x0);
+        var f1 = evaluateFunction(func, x1);
+
+        var x2 = x1 - (f1 * (x1 - x0)) / (f1 - f0);
+        var f2 = evaluateFunction(func, x2);
+
+        error = calculateError(x2, x1);
+
+        addTableRow(table, iteration, x0, x1, x2, f0, f1, f2, error);
+
+        x0 = x1;
+        x1 = x2;
+
+        iteration++;
+      }
+    }
+
+    function evaluateFunction(func, x) {
+      try {
+        var scope = { x: x };
+        var compiledFunc = math.compile(func);
+        var result = compiledFunc.evaluate(scope);
+        return result;
+      } catch (error) {
+        console.error("Error al evaluar la función:", error);
+        return NaN;
+      }
+    }
+
+    function addTableRow(table, iteration, x0, x1, x2, f0, f1, f2, error) {
+      var row = table.insertRow();
+      row.insertCell().innerHTML = iteration;
+      row.insertCell().innerHTML = x0.toFixed(4);
+      row.insertCell().innerHTML = x1.toFixed(4);
+      row.insertCell().innerHTML = x2.toFixed(4);
+      row.insertCell().innerHTML = f0.toFixed(4);
+      row.insertCell().innerHTML = f1.toFixed(4);
+      row.insertCell().innerHTML = f2.toFixed(4);
+      row.insertCell().innerHTML = error.toFixed(4);
+    }
+
+    function calculateError(x2, x1) {
+      return Math.abs((x2 - x1) / x2) * 100;
+    }
+
+    function clearTable(table) {
+      while (table.rows.length > 1) {
+        table.deleteRow(1);
+      }
+    }
+  </script>
+</body>
+</html>

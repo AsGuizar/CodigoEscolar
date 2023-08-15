@@ -1,51 +1,32 @@
 <!DOCTYPE html>
-
 <html>
+<head>
+  <title>Temperatura de Colima</title>
+  <script>
+    function obtenerTemperatura() {
+      var lat = 19.2433; // Latitude of Colima
+      var lon = -103.7247; // Longitude of Colima
+    //  var apiKey = ":Aquí iría mi api key, pero es algo privado y no permite compartirlo";
 
+      var url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          var temperatura = data.main.temp - 273.15; // Convert temperature from Kelvin to Celsius
+          document.getElementById("temperatura").textContent = "La temperatura actual en Colima es: " + temperatura.toFixed(1) + "°C";
+        })
+        .catch(error => {
+          console.log('Error:', error);
+        });
+    }
+  </script>
+</head>
 <body>
+  <h1>Temperatura de Colima</h1>
 
- 
+  <button onclick="obtenerTemperatura()">Obtener temperatura</button>
 
-<h2>JavaScript HTML DOM!</h2>
-
- 
-
-<p> ¡Hola mundo! </p>
-
- 
-
-<p> ¡Hola Noruega! </p>
-
- 
-
-<p> Haga clic en el botón para cambiar el color de todos los elementos p. </p>
-
- 
-
-<button onclick = "myFunction ()"> Pruébelo </button>
-
- 
-
-<script>
-
-function myFunction() {
-
-  var myNodelist = document.querySelectorAll("p");
-
-  var i;
-
-  for (i = 0; i < myNodelist.length; i++) {
-
-    myNodelist[i].style.color = "red";
-
-  }
-
-}
-
-</script>
-
- 
-
+  <p id="temperatura"></p>
 </body>
-
 </html>
