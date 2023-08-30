@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+     // Declara un array con 6 datos
+let datos = [1, 2, 3, 4, 5, 6];
+
+// Función para girar el array hacia atrás
+function girarHaciaAtras(arr) {
+  let ultimoDato = arr[arr.length - 1];
+
+  // Desplazar los elementos hacia la derecha
+  for (let i = arr.length - 1; i > 0; i--) {
+    arr[i] = arr[i - 1];
+  }
+
+  arr[0] = ultimoDato;
+}
+
+console.log("Array original:", datos);
+girarHaciaAtras(datos);
+console.log("Array después de girar:", datos);
+girarHaciaAtras(datos);
+console.log("Array después de otro giro:", datos);
+
+    </script>
+</body>
+</html>
+

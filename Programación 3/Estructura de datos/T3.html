@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T3</title>
+</head>
+<body>
+    <script>
+let suma = 0;
+let cuantos = prompt("Ingrese el valor de cuantos:");
+cuantos = parseInt(cuantos); // Convertir a número entero
+let den = 1, sig = 1;
+
+for (let i = 1; i <= cuantos; i++, den += 2, sig *= -1) {
+    suma += 4 / den * sig;
+}
+
+alert("La sumatoria es: " + suma);
+
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+

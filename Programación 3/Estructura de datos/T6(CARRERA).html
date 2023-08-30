@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    class Dado {
+    lanzar() {
+        return Math.floor(Math.random() * 6) + 1;
+    }
+}
+
+class Jugador {
+    constructor(numero) {
+      this.numero = numero;
+      this.posicion = 0;
+      this.movimientos = [];
+    }
+  
+    avanzar(eldado) {
+      const dado = eldado.lanzar();
+      let avance = 0;
+      
+      switch (dado) {
+        case 1:
+          avance = 3;
+          break;
+        case 2:
+        case 3:
+          avance = 1;
+          break;
+        case 4:
+        case 5:
+        case 6:
+          avance = 2;
+          break;
+      }
+  
+      this.posicion += avance;
+      this.movimientos.push(`Avance: ${avance} casillas, Posición: ${this.posicion}`);
+    }
+  }
+  
+  function simularCarrera() {
+    const corredor1 = new Jugador(1);
+    const corredor2 = new Jugador(2);
+    const dado=new Dado()
+    while (corredor1.posicion < 100 && corredor2.posicion < 100) {
+      corredor1.avanzar(dado);
+      corredor2.avanzar(dado);
+    }
+  
+    console.log("Movimientos del Corredor 1:", corredor1.movimientos);
+    console.log("Movimientos del Corredor 2:", corredor2.movimientos);
+  
+    if (corredor1.posicion >= 100 && corredor2.posicion >= 100) {
+      console.log("¡Empate!");
+    } else if (corredor1.posicion >= 100) {
+      console.log("¡Corredor 1 ganó!");
+    } else {
+      console.log("¡Corredor 2 ganó!");
+    }
+  }
+  
+  simularCarrera();
+
+  </script>
+</body>
+</html>
+  

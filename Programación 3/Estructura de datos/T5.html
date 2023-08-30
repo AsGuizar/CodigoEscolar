@@ -1,0 +1,14 @@
+class Dado {
+    lanzar() {
+        return Math.floor(Math.random() * 6) + 1;
+    }
+}
+
+const dado = new Dado();
+
+console.log("Lanzando el dado 10 veces:");
+
+for (let i = 0; i < 10; i++) {
+    const resultado = dado.lanzar();
+    console.log(`Lanzamiento ${i + 1}: ${resultado}`);
+}

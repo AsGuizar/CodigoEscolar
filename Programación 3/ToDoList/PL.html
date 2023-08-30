@@ -1,0 +1,55 @@
+// Function to simulate random events
+function simulateRandomEvent() {
+  const events = [
+    "Meeting with team lead",
+    "Tech talk presentation",
+    "Lunch with colleagues",
+    "Code review session",
+    "Networking event",
+    "Emergency bug fix",
+    "Client demo",
+    "Brainstorming session",
+    "Team-building activity",
+    "Deadline extension",
+  ];
+
+  const randomEvent = events[Math.floor(Math.random() * events.length)];
+  return randomEvent;
+}
+
+// Define the to-do list array
+let toDoList = [
+  "Check emails and respond",
+  "Review project requirements",
+  "Code debugging",
+  "Prepare for morning standup",
+  "Conference call with remote team",
+  "Complete task for sprint",
+  "Submit expense report",
+  "Document new feature",
+  "Attend scrum meeting",
+  "Review design mockups",
+];
+
+// Simulate the life of the office worker
+function simulateOfficeLife() {
+  console.log("Starting the workday...");
+
+  for (let i = 0; i < toDoList.length; i++) {
+    console.log(`[Task ${i + 1}] ${toDoList[i]}`);
+
+    // Simulate a random event
+    if (Math.random() < 0.3) {
+      const randomEvent = simulateRandomEvent();
+      console.log(`   [Event] ${randomEvent}`);
+    }
+
+    // Simulate completing the task
+    console.log(`   [Done] Completed task ${i + 1}`);
+  }
+
+  console.log("Workday is over.");
+}
+
+// Start the simulation
+simulateOfficeLife();

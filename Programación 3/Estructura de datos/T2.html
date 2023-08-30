@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2</title>
+</head>
+<body>
+    <script>
+         
+         class Punto {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+            
+
+    obtenerFormato() {
+        return `(${this.x},${this.y})`;
+    }
+
+    calcularDistancia(otroPunto) {
+        const dx = this.x - otroPunto.x;
+        const dy = this.y - otroPunto.y;
+        const distancia = Math.sqrt(dx ** 2 + dy ** 2);
+        return distancia;
+    }
+}
+
+// Obtener valores del usuario
+const x1 = parseFloat(prompt("Ingrese la coordenada X del primer punto:"));
+const y1 = parseFloat(prompt("Ingrese la coordenada Y del primer punto:"));
+const x2 = parseFloat(prompt("Ingrese la coordenada X del segundo punto:"));
+const y2 = parseFloat(prompt("Ingrese la coordenada Y del segundo punto:"));
+
+// Crear instancias de la clase Punto
+const punto1 = new Punto(x1, y1);
+const punto2 = new Punto(x2, y2);
+
+// Calcular y mostrar la distancia entre los puntos
+const distancia = punto1.calcularDistancia(punto2);
+alert(`La distancia entre ${punto1.obtenerFormato()} y ${punto2.obtenerFormato()} es ${distancia.toFixed(2)}`);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sueldos</title>
+</head>
+<body>
+    <script>
+        // Definimos la variable sueldo
+var sueldo;
+
+// Leemos el sueldo desde el usuario
+sueldo = parseFloat(prompt("Ingrese el sueldo:"));
+
+// Aplicamos el aumento de acuerdo a la tabla
+if (sueldo <= 1000) {
+    sueldo *= 1.18; // Aumento del 18%
+} else if (sueldo <= 1200) {
+    sueldo *= 1.15; // Aumento del 15%
+} else if (sueldo <= 1450) {
+    sueldo *= 1.12; // Aumento del 12%
+} else if (sueldo <= 1600) {
+    sueldo *= 1.10; // Aumento del 10%
+} else {
+    sueldo *= 1.08; // Aumento del 8%
+}
+
+// Mostramos el sueldo nuevo incluido el aumento
+alert("El sueldo nuevo es: " + sueldo);
+
+</script>
+    
+</body>
+</html>

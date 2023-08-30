@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T4</title>
+</head>
+<body>
+    <script>
+    function estimateE(iterations) {
+        let e = 1;
+        let factorial = 1;
+    
+        for (let i = 1; i <= iterations; i++) {
+            factorial *= i;
+            e += 1 / factorial;
+        }
+    
+        return e;
+    }
+    
+    const iterations = 10; // Puedes ajustar la cantidad de iteraciones según lo preciso que quieras que sea la estimación
+    const estimatedE = estimateE(iterations);
+    alert(`El valor estimado de e después de ${iterations} iteraciones es: ${estimatedE}`);
+    
+    </script>
+
+
+    
+</body>
+</html>
+    
