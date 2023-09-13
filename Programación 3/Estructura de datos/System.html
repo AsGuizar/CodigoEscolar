@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario de Productos</title>
+</head>
+<body>
+    <h1>Inventario de Productos</h1>
+    <form id="product-form">
+        <label for="code">Código:</label>
+        <input type="text" id="code" required><br>
+
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" required><br>
+
+        <label for="quantity">Cantidad:</label>
+        <input type="number" id="quantity" required><br>
+
+        <label for="price">Precio:</label>
+        <input type="number" id="price" required><br>
+
+        <label for="position">Posición de Inserción:</label>
+        <input type="number" id="position" value="0"><br>
+
+        <button type="button" onclick="addProduct()">Agregar Producto</button>
+        <button type="button" onclick="deleteProductByCode()">Eliminar Producto</button>
+        <button type="button" onclick="searchProductByCode()">Buscar Producto</button>
+        <button type="button" onclick="clearHistory()">Limpiar</button>
+    </form>
+
+    <h2>Detalle de Operaciones</h2>
+    <ul id="operation-history"></ul>
+
+    <script>
+        const inventory = [];
+
+        function addProduct() {
+            const code = document.getElementById('code').value;
+            const name = document.getElementById('name').value;
+            const quantity = document.getElementById('quantity').value;
+            const price = document.getElementById('price').value;
+            let position = (document.getElementById('position').value);
+
+            const product = { code, name, quantity, price };
+
+            if (position < 0 || position > inventory.length) {
+                position = inventory.length; // Colocar al final si la posición no es válida
+            }
+
+            // Mover los objetos a la derecha para hacer espacio para el nuevo producto
+            for (let i = inventory.length; i > position; i--) {
+                inventory[i] = inventory[i - 1];
+            }
+
+            inventory[position] = product; // Colocar el nuevo producto en la posición
+
+            document.getElementById('operation-history').innerHTML += `<li>Producto Agregado: Código: ${code}, Nombre: ${name}, Cantidad: ${quantity}, Precio: ${price}, Posición: ${position}</li>`;
+
+            document.getElementById('product-form').reset();
+        }
+
+        function deleteProductByCode() {
+            const codeToDelete = document.getElementById('code').value;
+            const indexToDelete = inventory.findIndex(product => product.code === codeToDelete);
+
+            if (indexToDelete !== -1) {
+                const deletedProduct = inventory.splice(indexToDelete, 1)[0];
+                document.getElementById('operation-history').innerHTML += `<li>Producto Eliminado: Código: ${deletedProduct.code}</li>`;
+                document.getElementById('product-form').reset();
+            } else {
+                alert('Producto no encontrado');
+            }
+        }
+
+        function searchProductByCode() {
+    const codeToSearch = document.getElementById('code').value;
+    const foundProduct = inventory.find((product, index) => product.code === codeToSearch);
+
+    if (foundProduct) {
+        const { code, name, quantity, price } = foundProduct;
+        const position = inventory.indexOf(foundProduct);
+        alert(`Producto encontrado: Código: ${code}, Nombre: ${name}, Cantidad: ${quantity}, Precio: ${price}, Posición: ${position}`);
+        document.getElementById('product-form').reset();
+    } else {
+        alert('Producto no encontrado')
+            }
+        }
+
+        function clearHistory() {
+            document.getElementById('operation-history').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
