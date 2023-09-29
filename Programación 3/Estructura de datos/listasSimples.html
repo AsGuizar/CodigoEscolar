@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo</title>
+</head>
+<body>
+    <script>
+        class Alumno {
+    constructor(ncta, nombre) {
+        this.ncta = ncta;
+        this.nombre = nombre;
+        this.siguiente = null;
+    }
+
+    infoHtml() {
+        return `<p>Número de Cuenta: ${this.ncta}, Nombre: ${this.nombre}</p>`;
+    }
+    }
+
+    class Grupo {
+    constructor() {
+        this.primero = null;
+    }
+
+    agregar(nuevo) {
+        if (this.primero == null) {
+        this.primero = nuevo;
+        } else {
+        let ultimo = this.primero;
+        while (ultimo.siguiente != null) {
+            ultimo = ultimo.siguiente;
+        }
+        ultimo.siguiente = nuevo;
+        }
+    }
+
+    listar() {
+        let resultado = "<h2>Lista de Alumnos:</h2>";
+        let actual = this.primero;
+        while (actual != null) {
+        resultado += actual.infoHtml();
+        actual = actual.siguiente;
+        }
+        return resultado;
+    }
+    }
+
+    // Crear un grupo y agregar alumnos
+    let miGrupo = new Grupo();
+
+    let nuevo = new Alumno(1, 'Ana');
+    miGrupo.agregar(nuevo);
+
+    nuevo = new Alumno(2, 'Bertha');
+    miGrupo.agregar(nuevo);
+
+    nuevo = new Alumno(3, 'Carlos');
+    miGrupo.agregar(nuevo);
+
+    // Listar los alumnos en HTML
+    document.getElementById("alumnos").innerHTML = miGrupo.listar();
+
+
+    </script>
+</body>
+</html>

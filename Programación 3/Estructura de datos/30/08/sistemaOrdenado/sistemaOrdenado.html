@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario de Productos</title>
+</head>
+<body>
+    <h2>Gestión de Inventario de Productos</h2>
+    <!-- Formulario para ingresar datos del producto -->
+    <form id="product-form">
+        <!-- Campos de entrada para datos del producto -->
+        <label for="codigo">Código<input type="number" id="codigo"></label>
+        <br><br>
+        <label for="nombre">Nombre<input type="text" id="nombre"></label>
+        <br><br>
+        <label for="cantidad">Cantidad<input type="number" id="cantidad"></label>
+        <br><br>
+        <label for="costo">Costo<input type="number" id="costo"></label>
+        <br><br>
+        <!-- Botones para realizar operaciones -->
+        <button type="button" id="btnAdd">Agregar nuevo producto</button>
+        <button type="button" id="btnEliminar">Eliminar producto por código</button>
+        <button type="button" id="btnBuscar">Buscar producto por código</button>
+        <button type="button" id="btnListar">Recuperar todos los productos</button>
+        <button type="button" id="btnListarInverso">Recuperar todos los productos en orden inverso</button>
+    </form>
+
+    <!-- Contenedor para mostrar actividades y resultados -->
+    <div id="actividades"></div>
+
+    <script>
+        class Producto {
+            constructor(codigo, nombre, cantidad, costo) {
+                this.codigo = codigo;
+                this.nombre = nombre;
+                this.cantidad = cantidad;
+                this.costo = costo;
+            }
+        }
+
+        class Inventario {
+            constructor() {
+                this.productos = [];
+            }
+
+            agregarProducto(producto) {
+                // Buscar la posición donde debe insertarse el producto manteniendo el orden ascendente
+                let index = 0;
+                while (index < this.productos.length && this.productos[index].codigo < producto.codigo) {
+                    index++;
+                }
+
+                // Crear un nuevo array para agregar el producto
+                const nuevoArray = [];
+
+                // Usar push para agregar los productos anteriores antes de la posición
+                for (let i = 0; i < index; i++) {
+                    nuevoArray.push(this.productos[i]);
+                }
+
+                // Agregar el nuevo producto con push
+                nuevoArray.push(producto);
+
+                // Usar push nuevamente para agregar los productos después de la posición
+                for (let i = index; i < this.productos.length; i++) {
+                    nuevoArray.push(this.productos[i]);
+                }
+
+                // Reemplazar el array anterior con el nuevo array ordenado
+                this.productos = nuevoArray;
+            }
+
+            eliminarProducto(codigo) {
+                for (let i = 0; i < this.productos.length; i++) {
+                    if (this.productos[i].codigo === codigo) {
+                        // Usar pop para eliminar el último producto del array
+                        const productoEliminado = this.productos[i];
+                        this.productos.pop();
+                        return productoEliminado;
+                    }
+                }
+                // Si no se encuentra el producto, devolver null
+                return null;
+            }
+
+            buscarProducto(codigo) {
+                for (let i = 0; i < this.productos.length; i++) {
+                    if (this.productos[i].codigo === codigo) {
+                        return this.productos[i];
+                    }
+                }
+                // Si no se encuentra el producto, devolver null
+                return null;
+            }
+
+            listarProductos() {
+                const copiaProductos = [];
+                while (this.productos.length > 0) {
+                    copiaProductos.push(this.productos.pop());
+                }
+                while (copiaProductos.length > 0) {
+                    this.productos.push(copiaProductos.pop());
+                }
+                return this.productos;
+            }
+
+            listarProductosInverso() {
+        // Crear una copia invertida del array utilizando push
+        const productosInverso = [];
+        for (let i = this.productos.length - 1; i >= 0; i--) {
+            productosInverso.push(this.productos[i]);
+        }
+        return productosInverso;
+    }
+
+        }
+
+        const miInventario = new Inventario();
+        const resultDiv = document.getElementById("actividades");
+
+        document.getElementById("btnAdd").addEventListener("click", () => {
+            const codigo = parseInt(document.getElementById("codigo").value);
+            const nombre = document.getElementById("nombre").value;
+            const cantidad = parseInt(document.getElementById("cantidad").value);
+            const costo = parseFloat(document.getElementById("costo").value);
+
+            if (isNaN(codigo) || isNaN(cantidad) || isNaN(costo)) {
+                resultDiv.textContent = "Por favor, ingrese valores válidos.";
+                return;
+            }
+
+            const nuevoProducto = new Producto(codigo, nombre, cantidad, costo);
+            miInventario.agregarProducto(nuevoProducto);
+
+            resultDiv.textContent = "Producto agregado correctamente.";
+        });
+
+        document.getElementById("btnEliminar").addEventListener("click", () => {
+            const codigo = parseInt(document.getElementById("codigo").value);
+            const productoEliminado = miInventario.eliminarProducto(codigo);
+
+            if (productoEliminado) {
+                resultDiv.textContent = `Producto eliminado: ${productoEliminado.nombre}`;
+            } else {
+                resultDiv.textContent = "Producto no encontrado o no se puede eliminar.";
+            }
+        });
+
+        document.getElementById("btnBuscar").addEventListener("click", () => {
+            const codigo = parseInt(document.getElementById("codigo").value);
+            const productoBuscado = miInventario.buscarProducto(codigo);
+
+            if (productoBuscado) {
+                resultDiv.textContent = `Producto encontrado: Código: ${productoBuscado.codigo}, Nombre: ${productoBuscado.nombre}, Cantidad: ${productoBuscado.cantidad}, Costo: $${productoBuscado.costo}`;
+            } else {
+                resultDiv.textContent = "Producto no encontrado.";
+            }
+        });
+
+        document.getElementById("btnListar").addEventListener("click", () => {
+            const productos = miInventario.listarProductos();
+            mostrarProductos(productos);
+        });
+
+        document.getElementById("btnListarInverso").addEventListener("click", () => {
+            const productosInverso = miInventario.listarProductosInverso();
+            mostrarProductos(productosInverso);
+        });
+
+        function mostrarProductos(productos) {
+            if (productos.length === 0) {
+                resultDiv.textContent = "No hay productos en el inventario.";
+            } else {
+                resultDiv.innerHTML = "<h2>Productos en el Inventario:</h2>";
+                for (let i = 0; i < productos.length; i++) {
+                    resultDiv.innerHTML += `<p>${i + 1}. Código: ${productos[i].codigo}, Nombre: ${productos[i].nombre}, Cantidad: ${productos[i].cantidad}, Costo: $${productos[i].costo}</p>`;
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>

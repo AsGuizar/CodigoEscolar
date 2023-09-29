@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Colecta Teleton 3I</title>
+    <style>
+      /* Style the body */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #e7d6bd; /* A light peach background color */
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Style the header */
+    h1 {
+        color: #000000; /* Pink header text color */
+        font-size: 24px;
+        margin-top: 20px;
+    }
+
+    /* Style the table */
+    table {
+        border-collapse: collapse;
+        width: 80%;
+        margin: 20px auto;
+        background-color: #fff;
+        border: 2px solid #191115;
+        border-radius: 10px;
+    }
+
+    /* Style the table headers */
+    th {
+        background-color: #9e9e8a;
+        color: #fff;
+        padding: 10px;
+    }
+
+    /* Style the table cells */
+    td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    /* Style the Save and Load buttons */
+    button {
+        background-color: #ff69b4;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #ff1493; /* Darker pink on hover */
+    }
+
+    </style>
+</head>
+<body>
+    <h1>Colecta Teleton 3I</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Money Paid ($)</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- JavaScript will populate and update this table -->
+        </tbody>
+    </table>
+
+    <button id="save-button">Save Data</button>
+    <button id="load-button">Load Data</button>
+
+    <script>
+        // Function to generate the table rows with editable name and money paid fields
+        function generateTable() {
+            const tableBody = document.getElementById("table-body");
+
+            for (let i = 1; i <= 20; i++) {
+                const person = `Person ${i}`;
+
+                const row = document.createElement("tr");
+                const nameCell = document.createElement("td");
+                const moneyPaidCell = document.createElement("td");
+                const nameInput = document.createElement("input");
+                const moneyPaidInput = document.createElement("input");
+
+                nameInput.type = "text";
+                nameInput.value = person;
+                moneyPaidInput.type = "number";
+                moneyPaidInput.min = "0";
+                moneyPaidInput.value = "0";
+                nameInput.classList.add("name-input");
+                moneyPaidInput.classList.add("money-input");
+
+                nameCell.appendChild(nameInput);
+                moneyPaidCell.appendChild(moneyPaidInput);
+
+                row.appendChild(nameCell);
+                row.appendChild(moneyPaidCell);
+
+                tableBody.appendChild(row);
+            }
+        }
+
+        // Function to save the data to local storage
+        function saveData() {
+            const tableRows = document.querySelectorAll("#table-body tr");
+            const data = [];
+
+            tableRows.forEach((row) => {
+                const name = row.querySelector(".name-input").value;
+                const moneyPaid = row.querySelector(".money-input").value;
+
+                data.push({ name, moneyPaid });
+            });
+
+            localStorage.setItem("personData", JSON.stringify(data));
+            alert("Data has been saved.");
+        }
+
+        // Function to load the data from local storage
+        function loadData() {
+            const data = localStorage.getItem("personData");
+            if (data) {
+                const parsedData = JSON.parse(data);
+                const tableBody = document.getElementById("table-body");
+
+                // Clear the existing table
+                tableBody.innerHTML = "";
+
+                // Populate the table with the loaded data
+                parsedData.forEach((item) => {
+                    const row = document.createElement("tr");
+                    const nameCell = document.createElement("td");
+                    const moneyPaidCell = document.createElement("td");
+                    const nameInput = document.createElement("input");
+                    const moneyPaidInput = document.createElement("input");
+
+                    nameInput.type = "text";
+                    nameInput.value = item.name;
+                    moneyPaidInput.type = "number";
+                    moneyPaidInput.min = "0";
+                    moneyPaidInput.value = item.moneyPaid;
+                    nameInput.classList.add("name-input");
+                    moneyPaidInput.classList.add("money-input");
+
+                    nameCell.appendChild(nameInput);
+                    moneyPaidCell.appendChild(moneyPaidInput);
+
+                    row.appendChild(nameCell);
+                    row.appendChild(moneyPaidCell);
+
+                    tableBody.appendChild(row);
+                });
+
+                alert("Data has been loaded.");
+            } else {
+                alert("No saved data found.");
+            }
+        }
+
+        // Call the function to generate the table
+        generateTable();
+
+        // Attach event listeners to the save and load buttons
+        document.getElementById("save-button").addEventListener("click", saveData);
+        document.getElementById("load-button").addEventListener("click", loadData);
+    </script>
+</body>
+</html>

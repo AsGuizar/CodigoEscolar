@@ -7,7 +7,9 @@
 </head>
 <body>
     <h2>Producto</h2>
+    <!-- Formulario para ingresar datos del producto -->
     <form id="product-form">
+        <!-- Campos de entrada para datos del producto -->
         <label for="codigo">Código<input type="text" id="codigo"></label>
         <br><br>
         <label for="nombre">Nombre<input type="text" id="nombre"></label>
@@ -18,6 +20,7 @@
         <br><br>
         <label for="position">Posición<input type="text" id="position" value="0"></label>
         <br><br>
+        <!-- Botones para realizar operaciones -->
         <button type="button" id="btnAdd">Agregar producto</button>
         <button type="button" id="btnEliminar">Eliminar producto</button>
         <button type="button" id="btnInsertar">Insertar en posición</button>
@@ -29,22 +32,27 @@
         <button type="reset">Cancelar</button>
     </form>
 
+    <!-- Contenedor para mostrar detalles y resultados -->
     <div id="detalles"></div>
 
     <script>
+        // Clase que representa el inventario de productos
         class Inventario {
             constructor() {
                 this.datos = [];
             }
 
+            // Método para agregar un producto al inventario
             agregar(producto) {
                 this.datos.push(producto);
             }
 
+            // Método para eliminar el último producto del inventario
             eliminar() {
                 this.datos.pop();
             }
 
+            // Método para insertar un producto en una posición específica del inventario
             insertarEnPosicion(producto, position) {
                 if (position < 0) {
                     position = 0;
@@ -68,6 +76,7 @@
                 this.datos = newArray;
             }
 
+            // Método para buscar un producto por su código
             buscar(codigo) {
                 for (let i = 0; i < this.datos.length; i++) {
                     if (this.datos[i].codigo === codigo) {
@@ -77,9 +86,11 @@
                 return null;
             }
 
+            // Método para modificar los detalles de un producto en el inventario
             modificar(codigo, nuevoNombre, nuevaCantidad, nuevoPrecio) {
                 for (let i = 0; i < this.datos.length; i++) {
                     if (this.datos[i].codigo === codigo) {
+                        // Actualizar los detalles del producto
                         this.datos[i].nombre = nuevoNombre;
                         this.datos[i].cantidad = nuevaCantidad;
                         this.datos[i].precio = nuevoPrecio;
@@ -88,48 +99,63 @@
                 }
             }
 
+            // Método para listar todos los productos en el inventario
             listar() {
                 return this.datos;
             }
         }
 
+        // Crear una instancia del inventario
         const miInventario = new Inventario();
         const detalles = document.getElementById("detalles");
 
+        // Agregar un evento al botón "Agregar producto"
         document.getElementById("btnAdd").addEventListener("click", () => {
+            // Recoger los datos del formulario
             const codigo = document.getElementById("codigo").value;
             const nombre = document.getElementById("nombre").value;
             const cantidad = document.getElementById("cantidad").value;
             const precio = document.getElementById("precio").value;
 
+            // Crear un nuevo producto y agregarlo al inventario
             const nuevoProducto = { codigo, nombre, cantidad, precio };
             miInventario.agregar(nuevoProducto);
 
+            // Reiniciar el formulario
             document.getElementById("product-form").reset();
         });
 
+        // Agregar un evento al botón "Eliminar producto"
         document.getElementById("btnEliminar").addEventListener("click", () => {
+            // Eliminar el último producto del inventario
             miInventario.eliminar();
         });
 
+        // Agregar un evento al botón "Insertar en posición"
         document.getElementById("btnInsertar").addEventListener("click", () => {
+            // Recoger los datos del formulario
             const codigo = document.getElementById("codigo").value;
             const nombre = document.getElementById("nombre").value;
             const cantidad = document.getElementById("cantidad").value;
             const precio = document.getElementById("precio").value;
             const position = parseInt(document.getElementById("position").value);
 
+            // Crear un nuevo producto y insertarlo en la posición especificada
             const nuevoProducto = { codigo, nombre, cantidad, precio };
             miInventario.insertarEnPosicion(nuevoProducto, position);
 
+            // Reiniciar el formulario
             document.getElementById("product-form").reset();
         });
 
+        // Agregar un evento al botón "Buscar producto"
         document.getElementById("btnBuscar").addEventListener("click", () => {
+            // Buscar un producto por código
             const codigo = document.getElementById("codigo").value;
             const resultadoBusqueda = miInventario.buscar(codigo);
 
             if (resultadoBusqueda) {
+                // Mostrar los detalles del producto encontrado
                 const producto = resultadoBusqueda.producto;
                 const posicion = resultadoBusqueda.posicion;
                 detalles.textContent = `Producto encontrado en posición ${posicion}: Código: ${producto.codigo}, Nombre: ${producto.nombre}, Cantidad: ${producto.cantidad}, Precio: ${producto.precio}`;
@@ -138,17 +164,23 @@
             }
         });
 
+        // Agregar un evento al botón "Modificar producto"
         document.getElementById("btnModificar").addEventListener('click', () => {
+            // Modificar un producto en el inventario
             const codigoModificar = document.getElementById('codigo').value;
             const nuevoNombre = document.getElementById('nombre').value;
             const nuevaCantidad = document.getElementById('cantidad').value;
             const nuevoPrecio = document.getElementById('precio').value;
 
             miInventario.modificar(codigoModificar, nuevoNombre, nuevaCantidad, nuevoPrecio);
+
+            // Mostrar un mensaje de confirmación
             mostrarMensaje(`Producto con código ${codigoModificar} modificado.`);
         });
 
+        // Agregar un evento al botón "Listar"
         document.getElementById("btnListar").addEventListener("click", () => {
+            // Listar todos los productos en el inventario
             const productos = miInventario.listar();
             detalles.innerHTML = "<h2>Productos en el Inventario:</h2>";
 
