@@ -45,31 +45,21 @@
             }
 
             agregarProducto(producto) {
-                // Buscar la posición donde debe insertarse el producto manteniendo el orden ascendente
-                let index = 0;
-                while (index < this.productos.length && this.productos[index].codigo < producto.codigo) {
-                    index++;
-                }
+            this._agregarRecursivo(producto, 0);
+        }
 
-                // Crear un nuevo array para agregar el producto
-                const nuevoArray = [];
-
-                // Usar push para agregar los productos anteriores antes de la posición
-                for (let i = 0; i < index; i++) {
-                    nuevoArray.push(this.productos[i]);
-                }
-
-                // Agregar el nuevo producto con push
-                nuevoArray.push(producto);
-
-                // Usar push nuevamente para agregar los productos después de la posición
-                for (let i = index; i < this.productos.length; i++) {
-                    nuevoArray.push(this.productos[i]);
-                }
-
-                // Reemplazar el array anterior con el nuevo array ordenado
-                this.productos = nuevoArray;
+        _agregarRecursivo(producto, index) {
+            // Caso base: cuando llegamos al final del array o el código es mayor que el código actual
+            if (index === this.productos.length || producto.codigo < this.productos[index].codigo) {
+                // Insertamos el producto en la posición actual
+                this.productos.splice(index, 0, producto);
+            } else {
+                // Caso recursivo: el código del producto es mayor que el código actual
+                // Llamamos recursivamente a la función para avanzar en el array
+                this._agregarRecursivo(producto, index + 1);
             }
+        }
+
 
             eliminarProducto(codigo) {
                 for (let i = 0; i < this.productos.length; i++) {
@@ -106,12 +96,12 @@
             }
 
             listarProductosInverso() {
-        // Crear una copia invertida del array utilizando push
-        const productosInverso = [];
-        for (let i = this.productos.length - 1; i >= 0; i--) {
+            // Crear una copia invertida del array utilizando push
+            const productosInverso = [];
+            for (let i = this.productos.length - 1; i >= 0; i--) {
             productosInverso.push(this.productos[i]);
-        }
-        return productosInverso;
+            }
+            return productosInverso;
     }
 
         }

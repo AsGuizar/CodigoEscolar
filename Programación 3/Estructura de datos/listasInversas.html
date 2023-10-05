@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario de Productos</title>
+</head>
+<body>
+    <h2>Gestión de Inventario de Productos</h2>
+    <!-- Formulario para ingresar datos del producto -->
+    <form id="product-form">
+        <!-- Campos de entrada para datos del producto -->
+        <label for="codigo">Código<input type="number" id="codigo"></label>
+        <br><br>
+        <label for="nombre">Nombre<input type="text" id="nombre"></label>
+        <br><br>
+        <label for="cantidad">Cantidad<input type="number" id="cantidad"></label>
+        <br><br>
+        <label for="costo">Costo<input type="number" id="costo"></label>
+        <br><br>
+        <!-- Botones para realizar operaciones -->
+        <button type="button" id="btnAdd">Agregar nuevo producto</button>
+        <button type="button" id="btnEliminar">Eliminar producto por código</button>
+        <button type="button" id="btnBuscar">Buscar producto por código</button>
+        <button type="button" id="btnInsertar">Insertar producto en posición</button>
+        <button type="button" id="btnListar">Recuperar todos los productos</button>
+        <button type="button" id="btnListarInverso">Recuperar todos los productos en orden inverso</button>
+    </form>
+
+    <!-- Contenedor para mostrar actividades y resultados -->
+    <div id="actividades"></div>
+
+    <script>
+        class Producto {
+            constructor(codigo, nombre, cantidad, costo) {
+                this.codigo = codigo;
+                this.nombre = nombre;
+                this.cantidad = cantidad;
+                this.costo = costo;
+                this.siguiente = null;
+            }
+
+            infoHtml() {
+                return `<p>Código: ${this.codigo}, Nombre: ${this.nombre}, Cantidad: ${this.cantidad}, Costo: $${this.costo}</p>`;
+            }
+        }
+
+        class Inventario {
+            constructor() {
+                this.primero = null;
+                this.ultimo = null;
+            }
+
+            agregarProducto(producto) {
+                if (this.primero === null) {
+                    this.primero = producto;
+                    this.ultimo = producto;
+                } else {
+                    this.ultimo.siguiente = producto;
+                    this.ultimo = producto;
+                }
+            }
+
+            buscarProducto(codigo) {
+                let actual = this.primero;
+                while (actual !== null) {
+                    if (actual.codigo === codigo) {
+                        return actual;
+                    }
+                    actual = actual.siguiente;
+                }
+                return null; // No se encontró el producto
+            }
+
+            insertarProductoEnPosicion(producto, posicion) {
+                if (posicion < 0) {
+                    return; // Posición inválida
+                }
+
+                if (posicion === 0) {
+                    producto.siguiente = this.primero;
+                    this.primero = producto;
+                    if (this.ultimo === null) {
+                        this.ultimo = producto;
+                    }
+                    return;
+                }
+
+                let actual = this.primero;
+                let anterior = null;
+                let index = 0;
+
+                while (actual !== null && index < posicion) {
+                    anterior = actual;
+                    actual = actual.siguiente;
+                    index++;
+                }
+
+                if (index === posicion) {
+                    anterior.siguiente = producto;
+                    producto.siguiente = actual;
+                    if (actual === null) {
+                        this.ultimo = producto;
+                    }
+                }
+            }
+
+            eliminarProducto(codigo) {
+                if (this.primero === null) {
+                    return null; // Lista vacía
+                }
+
+                if (this.primero.codigo === codigo) {
+                    const productoEliminado = this.primero;
+                    this.primero = this.primero.siguiente;
+                    if (this.primero === null) {
+                        this.ultimo = null;
+                    }
+                    return productoEliminado;
+                }
+
+                let actual = this.primero;
+                let anterior = null;
+
+                while (actual !== null && actual.codigo !== codigo) {
+                    anterior = actual;
+                    actual = actual.siguiente;
+                }
+
+                if (actual === null) {
+                    return null; // Producto no encontrado
+                }
+
+                anterior.siguiente = actual.siguiente;
+
+                if (actual === this.ultimo) {
+                    this.ultimo = anterior;
+                }
+
+                return actual;
+            }
+
+            listarProductos() {
+                let resultado = "<h2>Productos en el Inventario:</h2>";
+                let actual = this.primero;
+                while (actual !== null) {
+                    resultado += actual.infoHtml();
+                    actual = actual.siguiente;
+                }
+                return resultado;
+            }
+
+            listarProductosInverso() {
+                const productosInverso = [];
+                let actual = this.primero;
+                while (actual !== null) {
+                    productosInverso.unshift(actual);
+                    actual = actual.siguiente;
+                }
+                return productosInverso;
+            }
+        }
+
+        const miInventario = new Inventario();
+        const resultDiv = document.getElementById("actividades");
+
+        document.getElementById("btnAdd").addEventListener("click", () => {
+            // Obtener datos del formulario y crear un nuevo producto
+            const codigo = parseInt(document.getElementById("codigo").value);
+            const nombre = document.getElementById("nombre").value;
+            const cantidad = parseInt(document.getElementById("cantidad").value);
+            const costo = parseFloat(document.getElementById("costo").value);
+
+            if (isNaN(codigo) || isNaN(cantidad) || isNaN(costo)) {
+                // Manejar errores aquí
+                alert("Por favor, ingrese valores válidos.");
+                return;
+            }
+
+            const nuevoProducto = new Producto(codigo, nombre, cantidad, costo);
+
+            // Agregar el producto al inventario
+            miInventario.agregarProducto(nuevoProducto);
+
+            // Actualizar la lista en el HTML
+            resultDiv.innerHTML = miInventario.listarProductos();
+        });
+
+        document.getElementById("btnBuscar").addEventListener("click", () => {
+            const codigo = parseInt(document.getElementById("codigoBuscar").value);
+
+            if (isNaN(codigo)) {
+                // Manejar errores aquí
+                alert("Por favor, ingrese un código válido para buscar.");
+                return;
+            }
+
+            const productoBuscado = miInventario.buscarProducto(codigo);
+
+            if (productoBuscado) {
+                alert(`Producto encontrado: Código: ${productoBuscado.codigo}, Nombre: ${productoBuscado.nombre}, Cantidad: ${productoBuscado.cantidad}, Costo: $${productoBuscado.costo}`);
+            } else {
+                alert("Producto no encontrado.");
+            }
+        });
+
+        document.getElementById("btnInsertar").addEventListener("click", () => {
+            // Obtener datos del formulario y crear un nuevo producto
+            const codigo = parseInt(document.getElementById("codigo").value);
+            const nombre = document.getElementById("nombre").value;
+            const cantidad = parseInt(document.getElementById("cantidad").value);
+            const costo = parseFloat(document.getElementById("costo").value);
+            const posicion = parseInt(document.getElementById("posicion").value);
+
+            if (isNaN(codigo) || isNaN(cantidad) || isNaN(costo) || isNaN(posicion)) {
+                // Manejar errores aquí
+                alert("Por favor, ingrese valores válidos.");
+                return;
+            }
+
+            const nuevoProducto = new Producto(codigo, nombre, cantidad, costo);
+
+            // Insertar el producto en la posición especificada
+            miInventario.insertarProductoEnPosicion(nuevoProducto, posicion);
+
+            // Actualizar la lista en el HTML
+            resultDiv.innerHTML = miInventario.listarProductos();
+        });
+
+    </script>
+</body>
+</html>

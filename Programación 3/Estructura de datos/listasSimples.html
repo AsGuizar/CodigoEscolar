@@ -3,48 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grupo</title>
+    <title>Lista de Alumnos</title>
 </head>
 <body>
-    <script>
-        class Alumno {
-    constructor(ncta, nombre) {
-        this.ncta = ncta;
-        this.nombre = nombre;
-        this.siguiente = null;
-    }
+    <h1>Lista de Alumnos</h1>
 
-    infoHtml() {
-        return `<p>Número de Cuenta: ${this.ncta}, Nombre: ${this.nombre}</p>`;
-    }
+    <!-- Botones para interactuar con la lista de alumnos -->
+    <button onclick="agregarAlumno()">Agregar Alumno</button>
+    <button onclick="buscarAlumno()">Buscar Alumno</button>
+    <button onclick="insertarAlumno()">Insertar Alumno</button>
+    <button onclick="eliminarAlumno()">Eliminar Alumno</button>
+    <button onclick="listarAlumnos()">Listar Alumnos</button>
+    <button onclick="listarAlumnosInvertido()">Listar Alumnos Invertido</button>
+
+    <!-- Divs para mostrar resultados -->
+    <div id="resultados"></div>
+    <div id="alumnos"></div>
+    <div id="alumnosInvertido"></div>
+
+    <script>
+            class Alumno {
+        constructor(ncta, nombre) {
+            this.ncta = ncta;
+            this.nombre = nombre;
+            this.siguiente = null;
+        }
+
+        infoHtml() {
+            return `<p>Número de Cuenta: ${this.ncta}, Nombre: ${this.nombre}</p>`;
+        }
     }
 
     class Grupo {
-    constructor() {
-        this.primero = null;
-    }
+        constructor() {
+            this.primero = null;
+            this.ultimo = null;
+        }
 
-    agregar(nuevo) {
-        if (this.primero == null) {
-        this.primero = nuevo;
-        } else {
-        let ultimo = this.primero;
-        while (ultimo.siguiente != null) {
-            ultimo = ultimo.siguiente;
+        agregar(nuevo) {
+            if (this.primero === null) {
+                this.primero = nuevo;
+                this.ultimo = nuevo;
+            } else {
+                this.ultimo.siguiente = nuevo;
+                this.ultimo = nuevo;
+            }
         }
-        ultimo.siguiente = nuevo;
-        }
-    }
 
-    listar() {
-        let resultado = "<h2>Lista de Alumnos:</h2>";
-        let actual = this.primero;
-        while (actual != null) {
-        resultado += actual.infoHtml();
-        actual = actual.siguiente;
+        AgregarInicio(nuevo) {
+            nuevo.siguiente = this.primero;
+            this.primero = nuevo;
         }
-        return resultado;
-    }
+
+        ExtraerInicio() {
+            if (this.primero === null) {
+                return null;
+            }
+
+            const elementoExtraido = this.primero;
+            this.primero = this.primero.siguiente;
+            if (this.primero === null) {
+                this.ultimo = null;
+            }
+            return elementoExtraido;
+        }
+
+        ExtraerUltimo() {
+            if (this.primero === null) {
+                return null;
+            }
+
+            if (this.primero.siguiente === null) {
+                const elementoExtraido = this.primero;
+                this.primero = null;
+                this.ultimo = null;
+                return elementoExtraido;
+            }
+
+            let actual = this.primero;
+            while (actual.siguiente.siguiente !== null) {
+                actual = actual.siguiente;
+            }
+
+            const elementoExtraido = actual.siguiente;
+            actual.siguiente = null;
+            this.ultimo = actual;
+            return elementoExtraido;
+        }
+
+        buscar(ncta) {
+            let actual = this.primero;
+            while (actual !== null) {
+                if (actual.ncta === ncta) {
+                    return actual;
+                }
+                actual = actual.siguiente;
+            }
+            return null;
+        }
+
+        insertar(nuevo, posicion) {
+            if (posicion === 0) {
+                this.AgregarInicio(nuevo);
+            } else {
+                let actual = this.primero;
+                let anterior = null;
+                let contador = 0;
+                while (actual !== null && contador < posicion) {
+                    anterior = actual;
+                    actual = actual.siguiente;
+                    contador++;
+                }
+                if (contador === posicion) {
+                    anterior.siguiente = nuevo;
+                    nuevo.siguiente = actual;
+                } else {
+                    console.log("Posición inválida");
+                }
+            }
+        }
+
+        eliminar(ncta) {
+            let actual = this.primero;
+            let anterior = null;
+            while (actual !== null) {
+                if (actual.ncta === ncta) {
+                    if (anterior === null) {
+                        this.primero = actual.siguiente;
+                        if (this.ultimo === actual) {
+                            this.ultimo = null;
+                        }
+                    } else {
+                        anterior.siguiente = actual.siguiente;
+                        if (this.ultimo === actual) {
+                            this.ultimo = anterior;
+                        }
+                    }
+                    return actual;
+                }
+                anterior = actual;
+                actual = actual.siguiente;
+            }
+            return null;
+        }
+
+        listar() {
+            let resultado = "<h2>Lista de Alumnos:</h2>";
+            let actual = this.primero;
+            while (actual !== null) {
+                resultado += actual.infoHtml();
+                actual = actual.siguiente;
+            }
+            return resultado;
+        }
+
+        listarInvertido() {
+            let resultado = "<h2>Lista de Alumnos en Orden Invertido:</h2>";
+            let pila = [];
+            let actual = this.primero;
+            while (actual !== null) {
+                pila.push(actual);
+                actual = actual.siguiente;
+            }
+            while (pila.length > 0) {
+                actual = pila.pop();
+                resultado += actual.infoHtml();
+            }
+            return resultado;
+        }
     }
 
     // Crear un grupo y agregar alumnos
@@ -59,9 +185,58 @@
     nuevo = new Alumno(3, 'Carlos');
     miGrupo.agregar(nuevo);
 
-    // Listar los alumnos en HTML
-    document.getElementById("alumnos").innerHTML = miGrupo.listar();
+    // Agregar al principio de la lista
+    nuevo = new Alumno(0, 'David');
+    miGrupo.AgregarInicio(nuevo);
 
+    // Funciones para interactuar con la lista de alumnos
+    function agregarAlumno() {
+        const ncta = prompt("Ingrese el número de cuenta:");
+        const nombre = prompt("Ingrese el nombre del alumno:");
+        const nuevoAlumno = new Alumno(parseInt(ncta), nombre);
+        miGrupo.agregar(nuevoAlumno);
+        listarAlumnos();
+    }
+
+    function buscarAlumno() {
+        const ncta = parseInt(prompt("Ingrese el número de cuenta a buscar:"));
+        const alumnoBuscado = miGrupo.buscar(ncta);
+        if (alumnoBuscado) {
+            document.getElementById("resultados").innerHTML = `Alumno encontrado: ${alumnoBuscado.infoHtml()}`;
+        } else {
+            document.getElementById("resultados").innerHTML = "Alumno no encontrado";
+        }
+    }
+
+    function insertarAlumno() {
+        const ncta = parseInt(prompt("Ingrese el número de cuenta del nuevo alumno:"));
+        const nombre = prompt("Ingrese el nombre del nuevo alumno:");
+        const posicion = parseInt(prompt("Ingrese la posición en la lista para insertar el alumno:"));
+        const nuevoAlumno = new Alumno(ncta, nombre);
+        miGrupo.insertar(nuevoAlumno, posicion);
+        listarAlumnos();
+    }
+
+    function eliminarAlumno() {
+        const ncta = parseInt(prompt("Ingrese el número de cuenta del alumno a eliminar:"));
+        const alumnoEliminado = miGrupo.eliminar(ncta);
+        if (alumnoEliminado) {
+            document.getElementById("resultados").innerHTML = `Alumno eliminado: ${alumnoEliminado.infoHtml()}`;
+        } else {
+            document.getElementById("resultados").innerHTML = "Alumno no encontrado";
+        }
+        listarAlumnos();
+    }
+
+    function listarAlumnos() {
+        const listaAlumnos = miGrupo.listar();
+        document.getElementById("alumnos").innerHTML = listaAlumnos;
+    }
+
+    function listarAlumnosInvertido() {
+        const listaAlumnosInvertido = miGrupo.listarInvertido();
+        document.getElementById("alumnosInvertido").innerHTML = listaAlumnosInvertido;
+    }
 
     </script>
 </body>
