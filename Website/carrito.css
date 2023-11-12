@@ -1,0 +1,110 @@
+/* Estilos para la página de carrito de compras */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+#carrito-lista {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#carrito-lista h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#carrito-items {
+    list-style: none;
+    padding: 0;
+}
+
+#carrito-items li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#carrito-items li img {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+}
+
+#carrito-items li h3 {
+    font-size: 18px;
+}
+
+#carrito-items li p {
+    margin: 0;
+}
+
+#total-carrito {
+    text-align: right;
+}
+
+#total-precio {
+    font-weight: bold;
+}
+
+#vaciar-carrito {
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#formulario-compra {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#formulario-compra h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#formulario-compra label {
+    font-weight: bold;
+}
+
+#formulario-compra input, #formulario-compra textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#formulario-compra button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}

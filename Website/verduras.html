@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verduras - Frutería El Sabor Natural</title>
+    <link rel="stylesheet" href="verduras.css">
+</head>
+<body>
+    <header>
+        <h1>Frutería El Sabor Natural</h1>
+        <p>Tu fuente de verduras frescas y saludables</p>
+    </header>
+    <script src="fruteria.js"></script>
+    <div class="carrito-icon">
+        <img src="carrito-icon.png" alt="Carrito de compras">
+        <span class="contador-carrito">0</span>
+    </div>
+    </header>
+
+    <section id="producto-detalle">
+        <h2>Verduras</h2>
+        <div class="producto">
+            <img src="zanahoria.jpg" alt="Zanahoria">
+            <h3>Zanahoria</h3>
+            <p>Precio: $1.29/kg</p>
+            <button id="agregar-al-carrito-zanahoria">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+            <img src="brocoli.jpg" alt="Brócoli">
+            <h3>Brócoli</h3>
+            <p>Precio: $2.99/kg</p>
+            <button id="agregar-al-carrito-brocoli">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+            <img src="cebolla.jpg" alt="Cebolla">
+            <h3>Cebolla</h3>
+            <p>Precio: $0.89/kg</p>
+            <button id="agregar-al-carrito-cebolla">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+            <img src="espinaca.jpg" alt="Espinaca">
+            <h3>Espinaca</h3>
+            <p>Precio: $2.49/kg</p>
+            <button id="agregar-al-carrito-espinaca">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+            <img src="tomate.jpg" alt="Tomate">
+            <h3>Tomate</h3>
+            <p>Precio: $1.19/kg</p>
+            <button id="agregar-al-carrito-tomate">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+            <img src="pimiento.jpg" alt="Pimiento">
+            <h3>Pimiento</h3>
+            <p>Precio: $1.99/kg</p>
+            <button id="agregar-al-carrito-pimiento">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+            <img src="calabaza.jpg" alt="Calabaza">
+            <h3>Calabaza</h3>
+            <p>Precio: $0.79/kg</p>
+            <button id="agregar-al-carrito-calabaza">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+            <img src="apio.jpg" alt="Apio">
+            <h3>Apio</h3>
+            <p>Precio: $1.29/kg</p>
+            <button id="agregar-al-carrito-apio">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+            <img src="judia-verde.jpg" alt="Judía Verde">
+            <h3>Judía Verde</h3>
+            <p>Precio: $2.49/kg</p>
+            <button id="agregar-al-carrito-judia-verde">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+            <img src="col.jpg" alt="Col">
+            <h3>Col</h3>
+            <p>Precio: $0.99/kg</p>
+            <button id="agregar-al-carrito-col">Agregar al carrito</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>Contáctanos: <a href="contacto.html">Envíanos un mensaje</a></p>
+    </footer>
+    
+    <script>
+        document.querySelector("#agregar-al-carrito-zanahoria").addEventListener("click", function() {
+            agregarAlCarrito({
+                nombre: "Zanahoria",
+                precio: 1.29,
+                imagen: "zanahoria.jpg",
+            });
+        });
+    
+        document.querySelector("#agregar-al-carrito-brocoli").addEventListener("click", function() {
+            agregarAlCarrito({
+                nombre: "Brócoli",
+                precio: 2.99,
+                imagen: "brocoli.jpg",
+            });
+        });
+    
+        document.querySelector("#agregar-al-carrito-cebolla").addEventListener("click", function() {
+            agregarAlCarrito({
+                nombre: "Cebolla",
+                precio: 0.89,
+                imagen: "cebolla.jpg",
+            });
+        });
+    
+        document.querySelector("#agregar-al-carrito-espinaca").addEventListener("click", function() {
+            agregarAlCarrito({
+                nombre: "Espinaca",
+                precio: 2.49,
+                imagen: "espinaca.jpg",
+            });
+        });
+    
+        document.querySelector("#agregar-al-carrito-tomate").addEventListener("click", function() {
+            agregarAlCarrito({
+                nombre: "Tomate",
+                precio: 1.19,
+                imagen: "tomate.jpg",
+            });
+        });
+    
+        document.querySelector("#agregar-al-carrito-pimiento").addEventListener("click", function() {
+            agregarAlCarrito({
+                nombre: "Pimiento",
+                precio: 1.99,
+                imagen: "pimiento.jpg",
+            });
+        });
+    
+        document.querySelector("#agregar-al-carrito-calabaza").addEventListener("click", function() {
+            agregarAlCarrito({
+                nombre: "Calabaza",
+                precio: 0.79,
+                imagen: "calabaza.jpg",
+            });
+        });
+    
+        document.querySelector("#agregar-al-carrito-apio").addEventListener("click", function() {
+            agregarAlCarrito({
+                nombre: "Apio",
+                precio: 1.29,
+                imagen: "apio.jpg",
+            });
+        });
+    
+        document.querySelector("#agregar-al-carrito-judia-verde").addEventListener("click", function() {
+            agregarAlCarrito({
+                nombre: "Judía Verde",
+                precio: 2.49,
+                imagen: "judia-verde.jpg",
+            });
+        });
+    
+        document.querySelector("#agregar-al-carrito-col").addEventListener("click", function() {
+            agregarAlCarrito({
+                nombre: "Col",
+                precio: 0.99,
+                imagen: "col.jpg",
+            });
+        });
+    </script>
+    
+</body>
+</html>

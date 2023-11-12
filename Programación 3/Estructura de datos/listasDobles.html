@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventario de Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Inventario de Productos</h1>
+
+    <h2>Lista de Productos</h2>
+    <table>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Costo</th>
+            <th>Acciones</th>
+        </tr>
+        <tbody id="product-list">
+            <!-- Aquí se mostrará la lista de productos -->
+        </tbody>
+    </table>
+
+    <h2>Acciones</h2>
+    <form id="product-form">
+        <label for="code">Código:</label>
+        <input type="number" id="code" required>
+        <label for "name">Nombre:</label>
+        <input type="text" id="name" required>
+        <label for="quantity">Cantidad:</label>
+        <input type="number" id="quantity" required>
+        <label for="cost">Costo:</label>
+        <input type="number" id="cost" required>
+        <button type="button" onclick="addProduct()">Agregar nuevo producto</button>
+        <button type="button" onclick="deleteProduct()">Eliminar producto</button>
+        <button type="button" onclick="searchProduct()">Buscar producto</button>
+        <button type="button" onclick="listProducts()">Listar</button>
+        <button type="button" onclick="listInvertedProducts()">Listar inverso</button>
+    </form>
+
+    <script>
+        class Node {
+            constructor(data) {
+                this.data = data;
+                this.next = null;
+                this.previous = null;
+            }
+        }
+
+        class LinkedList {
+            constructor() {
+                this.first = null;
+            }
+
+            add(newNode) {
+                const newNodeCode = newNode.data.code;
+                if (this.first == null || newNodeCode < this.first.data.code) {
+                    newNode.next = this.first;
+                    if (this.first !== null) {
+                        this.first.previous = newNode;
+                    }
+                    this.first = newNode;
+                } else {
+                    let current = this.first;
+                    while (current.next !== null && current.next.data.code < newNodeCode) {
+                        current = current.next;
+                    }
+                    newNode.next = current.next;
+                    if (current.next !== null) {
+                        current.next.previous = newNode;
+                    }
+                    newNode.previous = current;
+                    current.next = newNode;
+                }
+            }
+
+            list() {
+                if (this.first == null) {
+                    return "";
+                } else {
+                    return this._recList(this.first);
+                }
+            }
+
+            _recList(node) {
+                if (node.next == null) {
+                    return JSON.stringify(node.data);
+                } else {
+                    return JSON.stringify(node.data) + ' ' + this._recList(node.next);
+                }
+            }
+
+            search(data) {
+                let aux = this.first;
+                while (aux != null) {
+                    if (aux.data.code == data) {
+                        return aux;
+                    }
+                    aux = aux.next;
+                }
+                return null;
+            }
+
+            extract(data) {
+                let nodeToRemove = this.search(data);
+                if (nodeToRemove != null) {
+                    if (nodeToRemove.previous !== null) {
+                        nodeToRemove.previous.next = nodeToRemove.next;
+                    }
+                    if (nodeToRemove.next !== null) {
+                        nodeToRemove.next.previous = nodeToRemove.previous;
+                    }
+                    if (nodeToRemove == this.first) {
+                        this.first = nodeToRemove.next;
+                    }
+                    nodeToRemove.previous = null;
+                    nodeToRemove.next = null;
+                    return JSON.stringify(nodeToRemove.data);
+                }
+                return null;
+            }
+
+            invertedList() {
+                let result = '';
+                let aux = this.first;
+                while (aux != null && aux.next != null) {
+                    aux = aux.next;
+                }
+                while (aux != null) {
+                    result += JSON.stringify(aux.data);
+                    if (aux.previous !== null) {
+                        result += ' ';
+                    }
+                    aux = aux.previous;
+                }
+                return result;
+            }
+        }
+
+        let group = new LinkedList();
+
+        function addProduct() {
+            const code = parseInt(document.getElementById("code").value);
+            const name = document.getElementById("name").value;
+            const quantity = parseInt(document.getElementById("quantity").value);
+            const cost = parseFloat(document.getElementById("cost").value);
+
+            const newProduct = new Node({ code, name, quantity, cost });
+            group.add(newProduct);
+
+            // Limpia los campos del formulario
+            document.getElementById("code").value = "";
+            document.getElementById("name").value = "";
+            document.getElementById("quantity").value = "";
+            document.getElementById("cost").value = "";
+
+            // Actualiza la lista de productos en la interfaz
+            listProducts();
+        }
+
+        function deleteProduct() {
+            const code = parseInt(document.getElementById("code").value);
+            const deletedProduct = group.extract(code);
+
+            if (deletedProduct !== null) {
+                alert(`Producto eliminado: ${deletedProduct}`);
+            } else {
+                alert("Producto no encontrado");
+            }
+
+            // Actualiza la lista de productos en la interfaz
+            listProducts();
+        }
+
+        function searchProduct() {
+            const code = parseInt(document.getElementById("code").value);
+            const product = group.search(code);
+
+            if (product !== null) {
+                alert(`Producto encontrado: Código ${product.data.code}, Nombre ${product.data.name}, Cantidad ${product.data.quantity}, Costo ${product.data.cost}`);
+            } else {
+                alert("Producto no encontrado");
+            }
+        }
+
+        function listProducts() {
+            const productListElement = document.getElementById("product-list");
+            productListElement.innerHTML = "";
+
+            let current = group.first;
+            while (current !== null) {
+                const product = current.data;
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${product.code}</td>
+                    <td>${product.name}</td>
+                    <td>${product.quantity}</td>
+                    <td>${product.cost}</td>
+                    <td><button type="button" onclick="deleteProductByCode(${product.code})">Eliminar</button></td>
+                `;
+
+                productListElement.appendChild(row);
+                current = current.next;
+            }
+        }
+
+        function listInvertedProducts() {
+            const productListElement = document.getElementById("product-list");
+            productListElement.innerHTML = "";
+
+            let current = group.first;
+            while (current !== null && current.next !== null) {
+                current = current.next;
+            }
+
+            while (current !== null) {
+                const product = current.data;
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${product.code}</td>
+                    <td>${product.name}</td>
+                    <td>${product.quantity}</td>
+                    <td>${product.cost}</td>
+                    <td><button type="button" onclick="deleteProductByCode(${product.code})">Eliminar</button></td>
+                `;
+
+                productListElement.appendChild(row);
+                current = current.previous;
+            }
+        }
+
+        function deleteProductByCode(code) {
+            const deletedProduct = group.extract(code);
+
+            if (deletedProduct !== null) {
+                alert(`Producto eliminado: ${deletedProduct}`);
+            } else {
+                alert("Producto no encontrado");
+            }
+
+            // Actualiza la lista de productos en la interfaz
+            listProducts();
+        }
+    </script>
+</body>
+</html>
+t=ini
+t=t="sig sig sig sig sig">
+ini.sig.sig=
