@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expression Evaluator</title>
+</head>
+<body>
+    <h2>Expression Evaluator</h2>
+    <label for="expression">Enter Expression:</label>
+    <input type="text" id="expression" placeholder="e.g., 53*42+/" />
+    <br><br>
+    <button onclick="buildTree()">Build Tree</button>
+    <button onclick="preOrderTraversal()">Preorder Traversal</button>
+    <button onclick="postOrderTraversal()">Postorder Traversal</button>
+    <button onclick="evaluatePreOrder()">Evaluate Preorder</button>
+    <button onclick="evaluatePostOrder()">Evaluate Postorder</button>
+
+    <script>
+        class Nodo {
+            constructor(valor) {
+                this.valor = valor;
+                this.izquierda = null;
+                this.derecha = null;
+            }
+        }
+
+        function construirArbol(expresion) {
+            const pila = [];
+            
+            for (let i = expresion.length - 1; i >= 0; i--) {
+                const caracter = expresion[i];
+
+                if (esOperador(caracter)) {
+                    const nodo = new Nodo(caracter);
+                    nodo.izquierda = pila.pop();
+                    nodo.derecha = pila.pop();
+                    pila.push(nodo);
+                } else {
+                    pila.push(new Nodo(parseInt(caracter)));
+                }
+            }
+
+            return pila[0];
+        }
+
+        function esOperador(caracter) {
+            const operadores = ['+', '-', '*', '/'];
+            return operadores.includes(caracter);
+        }
+
+        function recorridoPreOrder(arbol) {
+            if (arbol !== null) {
+                console.log(arbol.valor);
+                recorridoPreOrder(arbol.izquierda);
+                recorridoPreOrder(arbol.derecha);
+            }
+        }
+
+        function recorridoPostOrder(arbol) {
+            if (arbol !== null) {
+                recorridoPostOrder(arbol.izquierda);
+                recorridoPostOrder(arbol.derecha);
+                console.log(arbol.valor);
+            }
+        }
+
+        function resolverPreOrder(arbol) {
+            if (arbol !== null) {
+                if (esOperador(arbol.valor)) {
+                    const izquierda = resolverPreOrder(arbol.izquierda);
+                    const derecha = resolverPreOrder(arbol.derecha);
+                    return realizarOperacion(arbol.valor, izquierda, derecha);
+                } else {
+                    return arbol.valor;
+                }
+            }
+        }
+
+        function resolverPostOrder(arbol) {
+            if (arbol !== null) {
+                if (esOperador(arbol.valor)) {
+                    const izquierda = resolverPostOrder(arbol.izquierda);
+                    const derecha = resolverPostOrder(arbol.derecha);
+                    return realizarOperacion(arbol.valor, izquierda, derecha);
+                } else {
+                    return arbol.valor;
+                }
+            }
+        }
+
+        function realizarOperacion(operador, izquierda, derecha) {
+            switch (operador) {
+                case '+':
+                    return izquierda + derecha;
+                case '-':
+                    return izquierda - derecha;
+                case '*':
+                    return izquierda * derecha;
+                case '/':
+                    return izquierda / derecha;
+            }
+        }
+
+        let arbol; // Declare arbol outside the functions for global access
+
+        function buildTree() {
+            const expression = document.getElementById('expression').value;
+            arbol = construirArbol(expression);
+            alert("Tree built successfully. Open the console to see the preorder and postorder traversals.");
+        }
+
+        function preOrderTraversal() {
+            console.log("Recorrido Preorder:");
+            recorridoPreOrder(arbol);
+        }
+
+        function postOrderTraversal() {
+            console.log("\nRecorrido Postorder:");
+            recorridoPostOrder(arbol);
+        }
+
+        function evaluatePreOrder() {
+            const resultadoPreOrder = resolverPreOrder(arbol);
+            alert("Resultado de la expresión en Preorder: " + resultadoPreOrder);
+        }
+
+        function evaluatePostOrder() {
+            const resultadoPostOrder = resolverPostOrder(arbol);
+            alert("Resultado de la expresión en Postorder: " + resultadoPostOrder);
+        }
+    </script>
+</body>
+</html>

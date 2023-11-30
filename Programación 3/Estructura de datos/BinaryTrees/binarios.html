@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Configuración del documento -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expresiones Aritméticas</title>
+</head>
+<body>
+  <!-- Interfaz de usuario -->
+  <label for="expressionInput">Ingrese la expresión aritmética:</label>
+  <input type="text" id="expressionInput" placeholder="Ejemplo: 4-2+4*3/6-2*3*4" />
+  <button onclick="performOperations()">Realizar Operaciones</button>
+
+  <script>
+    // Definición de la clase TreeNode para representar un nodo en el árbol
+    class TreeNode {
+      constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+      }
+    }
+
+    // Función que verifica si un carácter es un operador
+    function isOperator(char) {
+      return ['+', '-', '*', '/'].includes(char);
+    }
+
+    // Función que devuelve la precedencia de un operador
+    function getOperatorPrecedence(operator) {
+      switch (operator) {
+        case '+':
+        case '-':
+          return 1;
+        case '*':
+        case '/':
+          return 2;
+        default:
+          return 0;
+      }
+    }
+
+    // Función que construye el árbol de expresiones a partir de una expresión dada
+    function buildExpressionTree(expression) {
+      const stack = [];
+      const operators = [];
+
+      for (let i = 0; i < expression.length; i++) {
+        const char = expression[i];
+
+        if (isOperator(char)) {
+          // Construye el árbol según la precedencia de los operadores
+          while (operators.length > 0 && getOperatorPrecedence(operators[operators.length - 1]) >= getOperatorPrecedence(char)) {
+            const operator = operators.pop();
+            const node = new TreeNode(operator);
+            node.right = stack.pop();
+            node.left = stack.pop();
+            stack.push(node);
+          }
+          operators.push(char);
+        } else {
+          // Agrega operandos al stack
+          stack.push(new TreeNode(parseInt(char)));
+        }
+      }
+
+      // Procesa los operadores restantes en el stack
+      while (operators.length > 0) {
+        const operator = operators.pop();
+        const node = new TreeNode(operator);
+        node.right = stack.pop();
+        node.left = stack.pop();
+        stack.push(node);
+      }
+
+      return stack.pop(); // El último elemento en el stack es la raíz del árbol
+    }
+
+    // Funciones para recorrer el árbol en preorden y postorden
+    function preorderTraversal(node) {
+      if (node !== null) {
+        console.log(node.value);
+        preorderTraversal(node.left);
+        preorderTraversal(node.right);
+      }
+    }
+
+    function postorderTraversal(node) {
+      if (node !== null) {
+        postorderTraversal(node.left);
+        postorderTraversal(node.right);
+        console.log(node.value);
+      }
+    }
+
+    // Funciones para evaluar expresiones en preorden y postorden
+    function evaluatePreorder(node) {
+      if (node === null) {
+        return 0;
+      }
+
+      if (!isOperator(node.value)) {
+        return node.value;
+      }
+
+      const left = evaluatePreorder(node.left);
+      const right = evaluatePreorder(node.right);
+
+      return performOperation(node.value, left, right);
+    }
+
+    function evaluatePostorder(node) {
+      if (node === null) {
+        return 0;
+      }
+
+      if (!isOperator(node.value)) {
+        return node.value;
+      }
+
+      const left = evaluatePostorder(node.left);
+      const right = evaluatePostorder(node.right);
+
+      return performOperation(node.value, left, right);
+    }
+
+    // Función que realiza operaciones aritméticas
+    function performOperation(operator, operand1, operand2) {
+      switch (operator) {
+        case '+':
+          return operand1 + operand2;
+        case '-':
+          return operand1 - operand2;
+        case '*':
+          return operand1 * operand2;
+        case '/':
+          return operand1 / operand2;
+        default:
+          return 0;
+      }
+    }
+
+    // Función principal que realiza las operaciones al hacer clic en el botón
+    function performOperations() {
+      const expressionInput = document.getElementById('expressionInput');
+      const expression = expressionInput.value;
+
+      console.log('Expresión original:', expression);
+
+      const tree = buildExpressionTree(expression);
+
+      console.log('Recorrido Preorder:');
+      preorderTraversal(tree);
+
+      console.log('Recorrido Postorder:');
+      postorderTraversal(tree);
+
+      const resultPreorder = evaluatePreorder(tree);
+      console.log('Resultado Preorder:', resultPreorder);
+
+      const resultPostorder = evaluatePostorder(tree);
+      console.log('Resultado Postorder:', resultPostorder);
+    }
+  </script>
+</body>
+</html>
