@@ -1,0 +1,84 @@
+    // Definimos una estructura llamada Person para representar los datos de una persona
+    struct Person {
+    unsigned long accountNumber; // Número de cuenta (tipo unsigned long para manejar grandes números de cuenta)
+    String fullName;             // Nombre completo de la persona
+    String career;               // Carrera de la persona
+    String university;           // Universidad de la persona
+    String phoneNumber;          // Número de teléfono de la persona
+    String emailAddress;         // Dirección de correo electrónico de la persona
+    };
+
+    // Creamos un arreglo de estructuras Person para almacenar los datos de varias personas
+    Person people[5] = {
+    // Inicializamos el arreglo con los datos de 5 personas
+    {12345678, "Ana Garcia", "Computer Engineering", "National Autonomous University of Mexico", "5555555555", "ana.garcia@unam.mx"},
+    {87654321, "Juan Perez", "Medicine", "National Polytechnic Institute", "5555555556", "juan.perez@ipn.mx"},
+    {98765432, "Maria Lopez", "Law", "Autonomous University of Nuevo Leon", "5555555557", "maria.lopez@uanl.mx"},
+    {45678901, "Pedro Martinez", "Business Administration", "University of Guadalajara", "5555555558", "pedro.martinez@udg.mx"},
+    {23456789, "Sofia Gonzalez", "Psychology", "Ibero-American University", "5555555559", "sofia.gonzalez@uia.mx"}
+    };
+
+    // Función para imprimir el número de cuenta en diferentes bases
+    void convertToDifferentBases(unsigned long accountNumber) {
+    Serial.print("Account number: ");
+    Serial.println(accountNumber);
+    
+    Serial.print("Octal: ");
+    Serial.println(accountNumber, OCT);
+    
+    Serial.print("Binary: ");
+    Serial.println(accountNumber, BIN);
+    
+    Serial.print("Decimal: ");
+    Serial.println(accountNumber);
+    
+    Serial.print("Hexadecimal: ");
+    Serial.println(accountNumber, HEX);
+    }
+
+    // Función para mostrar la información de una persona dado su número de cuenta
+    void displayPersonInformation(unsigned long accountNumber) {
+    // Iteramos sobre el arreglo de personas para buscar la coincidencia del número de cuenta
+    for (int i = 0; i < 5; i++) {
+        if (people[i].accountNumber == accountNumber) { // Si encontramos la persona con el número de cuenta dado
+        // Imprimimos la información de la persona
+        Serial.print("Account number: ");
+        Serial.println(accountNumber);
+        Serial.print("Full Name: ");
+        Serial.println(people[i].fullName);
+        Serial.print("Career: ");
+        Serial.println(people[i].career);
+        Serial.print("University: ");
+        Serial.println(people[i].university);
+        Serial.print("Phone Number: ");
+        Serial.println(people[i].phoneNumber);
+        Serial.print("Email Address: ");
+        Serial.println(people[i].emailAddress);
+        return; // Salimos de la función una vez que se muestra la información
+        }
+    }
+    // Si no se encontró la persona con el número de cuenta dado, imprimimos un mensaje de error
+    Serial.print("Person with account number ");
+    Serial.print(accountNumber);
+    Serial.println(" not found.");
+    }
+
+    void setup() {
+    Serial.begin(9600); // Inicializamos la comunicación serial a 9600 baudios
+    Serial.println("Enter the account number:"); // Imprimimos un mensaje solicitando ingresar el número de cuenta
+    }
+
+    void loop() {
+    if (Serial.available() > 0) { // Verificamos si hay datos disponibles en el puerto serial
+        String input = Serial.readStringUntil('\n'); // Leemos la entrada del usuario hasta que se presione Enter
+        input.trim(); // Eliminamos espacios en blanco alrededor de la cadena
+        unsigned long accountNumber = input.toInt(); // Convertimos la cadena a un número entero largo sin signo
+        if (accountNumber != 0) { // Si el número de cuenta es válido (diferente de cero)
+        convertToDifferentBases(accountNumber); // Mostramos el número de cuenta en diferentes bases
+        displayPersonInformation(accountNumber); // Mostramos la información de la persona correspondiente al número de cuenta
+        } else { // Si el número de cuenta no es válido
+        Serial.println("Invalid account number. Please enter a valid number."); // Imprimimos un mensaje de error
+        }
+        Serial.println("\nEnter another account number:"); // Solicitamos ingresar otro número de cuenta
+    }
+    }
