@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de inicio de sesión</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    #loginContainer {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    label, input {
+      margin-bottom: 10px;
+    }
+
+    input[type="submit"] {
+      background-color: #000;
+      color: #fff;
+      cursor: pointer;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      padding: 5px;
+      border: 1px solid #ddd;
+      display: inline-block;
+      border-radius: 5px;
+    }
+
+    .valid {
+      color: green;
+      border-color: green;
+    }
+
+    .invalid {
+      color: red;
+      border-color: red;
+    }
+
+    /* Estilos para el toast */
+    .toast {
+      visibility: hidden;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      padding: 16px;
+      z-index: 1;
+      transition: visibility 0s, opacity 0.5s linear;
+      opacity: 0;
+    }
+
+    .show {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="loginContainer">
+    <h1>Inicio de sesión</h1>
+    <form action="login.php" method="post" id="loginForm">
+      <label for="username">Nombre de usuario:</label>
+      <input type="text" id="username" name="username" required autocomplete="username">
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" name="password" required autocomplete="current-password">
+      <span class="message"></span>
+      <input type="submit" value="Iniciar sesión">
+    </form>
+  </div>
+
+  <!-- Toast para mostrar mensajes -->
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const passwordInput = document.getElementById("password");
+    const messageElement = document.querySelector(".message");
+    const loginForm = document.getElementById("loginForm");
+    const toast = document.getElementById("toast");
+
+    passwordInput.addEventListener("input", () => {
+      const password = passwordInput.value;
+      const isPasswordValid = validatePassword(password);
+
+      if (isPasswordValid) {
+        showMessage("Contraseña válida", "valid");
+      } else {
+        showMessage("La contraseña debe tener al menos 8 caracteres", "invalid");
+      }
+    });
+
+    function validatePassword(password) {
+      // Validación básica de contraseña (al menos 8 caracteres)
+      return password.length >= 8;
+    }
+
+    function showMessage(message, type) {
+      messageElement.textContent = message;
+      messageElement.classList.remove("valid", "invalid");
+      messageElement.classList.add(type);
+
+      // Muestra el toast
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000); // Oculta el toast después de 3 segundos
+    }
+
+    // Evitar que el formulario se envíe si la contraseña no es válida
+    loginForm.addEventListener("submit", (event) => {
+      const password = passwordInput.value;
+      if (!validatePassword(password)) {
+        event.preventDefault(); // Evita que el formulario se envíe
+        showMessage("La contraseña debe tener al menos 8 caracteres", "invalid");
+      }
+    });
+  </script>
+</body>
+</html>
