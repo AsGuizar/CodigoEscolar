@@ -1,0 +1,48 @@
+const int buttonPinIncrement = 2; // Pin del botón de incremento
+const int buttonPinReset = 3; // Pin del botón de reset
+const int ledPins[] = {4, 5, 6, 7}; // Pines de los LEDs
+int contador = 0; // Contador actual
+
+void setup() {
+  // Inicializar pines de los LEDs como salida
+  for (int i = 0; i < 4; i++) {
+    pinMode(ledPins[i], OUTPUT);
+  }
+  
+  // Inicializar pines de los botones como entrada
+  pinMode(buttonPinIncrement, INPUT_PULLUP);
+  pinMode(buttonPinReset, INPUT_PULLUP);
+  
+  // Inicializar el puerto serial
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Verificar si se ha presionado el botón de incremento
+  if (digitalRead(buttonPinIncrement) == LOW) {
+    delay(50); // Debounce
+    if (contador < 16) {
+      contador++;
+      actualizarLEDs();
+    }
+    while (digitalRead(buttonPinIncrement) == LOW) {} // Esperar a que se suelte el botón
+  }
+  
+  // Verificar si se ha presionado el botón de reset
+  if (digitalRead(buttonPinReset) == LOW) {
+    delay(50); // Debounce
+    contador = 0;
+    actualizarLEDs();
+    while (digitalRead(buttonPinReset) == LOW) {} // Esperar a que se suelte el botón
+  }
+}
+
+void actualizarLEDs() {
+  // Mostrar el contador en los LEDs
+  for (int i = 0; i < 4; i++) {
+    digitalWrite(ledPins[i], (contador >> i) & 1); // Desplazamiento de bits
+  }
+  
+  // Mostrar el contador en el puerto serial
+  Serial.println(contador, BIN);
+}

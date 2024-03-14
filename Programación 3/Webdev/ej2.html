@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alternar clase invisible</title>
+<style>
+  .invisible {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="detalles" class="invisible">Detalles ocultos</div>
+<button id="btnToggle">Mostrar/Ocultar detalles</button>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Obtener el botón con el identificador "btnToggle"
+  var btnToggle = document.getElementById("btnToggle");
+
+  // Agregar un event listener para el evento "click"
+  btnToggle.addEventListener("click", function() {
+      // Obtener el elemento <div> con el id "detalles"
+      var detallesDiv = document.getElementById("detalles");
+
+      // Alternar el estado de la clase "invisible" en el elemento <div>
+      detallesDiv.classList.toggle("invisible");
+  });
+});
+</script>
+
+</body>
+</html>

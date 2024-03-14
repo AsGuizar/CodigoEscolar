@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #173F5F; /* Azul oscuro */
+            color: #FFFFFF; /* Blanco nieve */
+        }
+        .container {
+            background-color: #6C757D; /* Gris frío */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #A2DFF4; /* Azul claro */
+            border-color: #A2DFF4; /* Azul claro */
+        }
+        .btn-primary:hover {
+            background-color: #73C9F4; /* Azul más oscuro al pasar el ratón */
+            border-color: #73C9F4; /* Azul más oscuro al pasar el ratón */
+        }
+        .btn-secondary {
+            background-color: #CED4DA; /* Gris claro */
+            border-color: #CED4DA; /* Gris claro */
+        }
+        .btn-secondary:hover {
+            background-color: #AEB7C2; /* Gris más oscuro al pasar el ratón */
+            border-color: #AEB7C2; /* Gris más oscuro al pasar el ratón */
+        }
+        .card {
+            background-color: #808080; /* Blanco nieve */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <button id="btnAdd" class="btn btn-primary">Agregar Nuevo Usuario</button>
+        </div>
+        <div class="col">
+            <button id="btnList" class="btn btn-secondary">Listar Usuarios</button>
+        </div>
+    </div>
+    <div id="divInfo" class="mt-3"></div>
+    <div id="divNewUser" class="mt-3 d-none">
+        <form id="formNewUser">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="name">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="phone">
+            </div>
+            <div class="mb-3">
+                <label for="website" class="form-label">Sitio Web</label>
+                <input type="text" class="form-control" id="website">
+            </div>
+            <div class="mb-3">
+                <label for="companyName" class="form-label">Nombre de la Compañía</label>
+                <input type="text" class="form-control" id="companyName">
+            </div>
+            <button type="button" id="btnAgregar" class="btn btn-success">Agregar</button>
+            <button type="button" id="btnCancel" class="btn btn-danger">Cancelar</button>
+        </form>
+    </div>
+    <div id="divDetalles" class="mt-3"></div>
+</div>
+
+<!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- JS -->
+<script src="ex.js"></script>
+</body>
+</html>

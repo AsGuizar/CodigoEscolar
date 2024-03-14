@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Generator</title>
+</head>
+<body>
+  <div id='divAvisos'></div>
+  <input type="text" id='dato'>
+  <button type='button' id='btn'>Click</button>
+  <div id='divRes'></div>
+
+  <script>
+    const boton = document.getElementById("btn");
+
+    boton.addEventListener('click', () => {
+      let divRes = document.getElementById('divRes');
+      let dato = document.getElementById('dato').value;
+
+      // Input validation
+      if (isNaN(dato)) {
+        alert('Please enter a valid number.');
+        return;
+      }
+
+      dato = parseInt(dato);
+      
+      // Clear previous buttons
+      divRes.innerHTML = '';
+
+      for (let i = dato; i < dato + 10; i++) {
+        divRes.innerHTML += `<button type='button' onclick='avisar(${i}, this)' id='btn${i}'>${i}</button>`;
+      }
+    });
+
+  function avisar(numero, button) {
+  let divAv = document.getElementById('divAvisos');
+  let mensaje = `<p id="mensaje${numero}" onclick="eliminarMensaje(${numero})">Click on ${numero}</p>`;
+  divAv.innerHTML += mensaje;
+}
+
+function eliminarMensaje(numero) {
+  let mensaje = document.getElementById(`mensaje${numero}`);
+  if (mensaje) {
+    setTimeout(() => {
+      mensaje.remove();
+    }, 3000);
+  }
+}
+
+  </script>
+</body>
+</html>

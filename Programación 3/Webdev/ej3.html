@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actualizar Producto</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+  .card {
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <input type="text" id="txtId" class="form-control" placeholder="ID">
+    </div>
+    <div class="col-md-6">
+      <input type="text" id="txtNombre" class="form-control" placeholder="Nombre">
+    </div>
+    <div class="col-md-6">
+      <input type="text" id="txtCantidad" class="form-control" placeholder="Cantidad">
+    </div>
+    <div class="col-md-6">
+      <input type="text" id="txtPrecio" class="form-control" placeholder="Precio">
+    </div>
+    <div class="col-md-12">
+      <button id="update" class="btn btn-primary">Actualizar Producto</button>
+    </div>
+  </div>
+</div>
+
+<div id="productos" class="container"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    
+  // Obtener el botón con el identificador "update"
+  var btnUpdate = document.getElementById("update");
+
+  btnUpdate.addEventListener("click", function() {
+      var id = document.getElementById("txtId").value;
+      var nombre = document.getElementById("txtNombre").value;
+      var cantidad = document.getElementById("txtCantidad").value;
+      var precio = document.getElementById("txtPrecio").value;
+
+      // Crear un objeto JSON con los valores
+      var producto = {
+        id: id,
+        nombre: nombre,
+        cantidad: cantidad,
+        precio: precio
+      };
+
+      agregarTarjeta(producto);
+  });
+
+  // Función para agregar una tarjeta Bootstrap con la información del producto
+  function agregarTarjeta(producto) {
+    var productosDiv = document.getElementById("productos");
+    var tarjeta = document.createElement("div");
+    tarjeta.classList.add("card");
+    tarjeta.innerHTML = `
+      <div class="card-body">
+        <h5 class="card-title">ID: ${producto.id}</h5>
+        <p class="card-text">Nombre: ${producto.nombre}</p>
+        <p class="card-text">Cantidad: ${producto.cantidad}</p>
+        <p class="card-text">Precio: ${producto.precio}</p>
+      </div>
+    `;
+    productosDiv.appendChild(tarjeta);
+  }
+});
+</script>
+
+</body>
+</html>
