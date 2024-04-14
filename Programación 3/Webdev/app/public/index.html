@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Interfaz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Interfaz de API</h1>
+        
+        <div class="actions">
+            <button onclick="agregarNumero()">Agregar Número</button>
+            <button onclick="buscarNumero()">Buscar Número</button>
+            <button onclick="eliminarNumero()">Eliminar Número</button>
+        </div>
+
+        <div class="result">
+            <p id="response"></p>
+        </div>
+    </div>
+
+    <script>
+        async function agregarNumero() {
+            const numero = prompt('Introduce el número que deseas agregar:');
+            if (numero !== null) {
+                const response = await fetch('http://localhost:3000/numeros', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ num: parseInt(numero) })
+                });
+
+                const data = await response.json();
+                console.log(data);
+                document.getElementById('response').innerText = data.tipo === 'agregar' ? `Número ${numero} agregado correctamente` : data.error;
+            }
+        }
+
+        async function buscarNumero() {
+            const num = prompt('Introduce el número que deseas buscar:');
+            if (num !== null) {
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                };
+
+                try {
+                    const response = await fetch(`http://localhost:3000/numeros/${num}`, options);
+                    const responseData = await response.json();
+                    if (response.ok) {
+                        if (responseData.pos !== -1) {
+                            document.getElementById('response').innerText = `El número ${num} se encuentra en la posición ${responseData.pos}`;
+                        } else {
+                            document.getElementById('response').innerText = `El número ${num} no se encuentra en el array`;
+                        }
+                    } else {
+                        document.getElementById('response').innerText = responseData.error;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    document.getElementById('response').innerText = 'Error al buscar el número';
+                }
+            }
+        }
+
+        async function eliminarNumero() {
+            const num = prompt('Introduce el número que deseas eliminar:');
+            if (num !== null) {
+                const options = {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                };
+
+                try {
+                    const response = await fetch(`http://localhost:3000/numeros/${num}`, options);
+                    const responseData = await response.json();
+                    if (response.ok) {
+                        document.getElementById('response').innerText = `Número ${num} ${responseData.tipo}`;
+                    } else {
+                        document.getElementById('response').innerText = responseData.error;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    document.getElementById('response').innerText = 'Error al eliminar el número';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
