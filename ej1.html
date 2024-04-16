@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eliminar clase azulSuccess</title>
+<style>
+  .azulSuccess {
+    color: blue;
+  }
+</style>
+</head>
+<body>
+
+<div id="despliegue" class="azulSuccess">Este es el div con la clase azulSuccess</div>
+<button id="btnAdd">Click para quitar clase azulSuccess</button>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Obtener el botón con el identificador "btnAdd"
+  var btnAdd = document.getElementById("btnAdd");
+
+  // Agregar un event listener para el evento "click"
+  btnAdd.addEventListener("click", function() {
+      // Obtener el elemento <div> con el id "despliegue"
+      var despliegueDiv = document.getElementById("despliegue");
+
+      despliegueDiv.classList.remove("azulSuccess");
+  });
+});
+</script>
+
+</body>
+</html>

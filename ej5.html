@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menú y Recuerdos</title>
+<style>
+
+  .smallImage {
+    width: 150px;
+    height: auto;
+    margin: 10px;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div id="recuerdos"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var recuerdosDiv = document.getElementById("recuerdos");
+
+  // JSON de imágenes
+  var imagenes = [
+    {
+      "albumId": 1,
+      "id": 1,
+      "title": "accusamus beatae ad facilis cum similique qui sunt",
+      "url": "https://via.placeholder.com/600/92c952",
+      "thumbnailUrl": "https://via.placeholder.com/150/92c952"
+    },
+    {
+      "albumId": 1,
+      "id": 2,
+      "title": "reprehenderit est deserunt velit ipsam",
+      "url": "https://via.placeholder.com/600/771796",
+      "thumbnailUrl": "https://via.placeholder.com/150/771796"
+    },
+    {
+      "albumId": 1,
+      "id": 3,
+      "title": "officia porro iure quia iusto qui ipsa ut modi",
+      "url": "https://via.placeholder.com/600/24f355",
+      "thumbnailUrl": "https://via.placeholder.com/150/24f355"
+    },
+    {
+      "albumId": 1,
+      "id": 4,
+      "title": "culpa odio esse rerum omnis laboriosam voluptate repudiandae",
+      "url": "https://via.placeholder.com/600/d32776",
+      "thumbnailUrl": "https://via.placeholder.com/150/d32776"
+    },
+    {
+      "albumId": 1,
+      "id": 5,
+      "title": "natus nisi omnis corporis facere molestiae rerum in",
+      "url": "https://via.placeholder.com/600/f66b97",
+      "thumbnailUrl": "https://via.placeholder.com/150/f66b97"
+    }
+  ];
+
+  // Ciclo para agregar las imágenes al div "recuerdos"
+  for (var i = 0; i < imagenes.length; i++) {
+    var imagen = imagenes[i];
+    var imgDiv = document.createElement("div");
+    imgDiv.id = "img" + imagen.id;
+    var img = document.createElement("img");
+    img.src = imagen.thumbnailUrl;
+    img.alt = imagen.title;
+    img.classList.add("smallImage");
+    var pieImagen = document.createElement("p");
+    pieImagen.textContent = imagen.title;
+    imgDiv.appendChild(img);
+    imgDiv.appendChild(pieImagen);
+    recuerdosDiv.appendChild(imgDiv);
+  }
+});
+</script>
+
+</body>
+</html>

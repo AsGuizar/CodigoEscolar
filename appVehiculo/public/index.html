@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Vehículos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gestión de Vehículos</h1>
+        
+        <div class="actions">
+            <input type="text" id="placa" placeholder="Placa">
+            <input type="text" id="marca" placeholder="Marca">
+            <input type="text" id="modelo" placeholder="Modelo">
+            <button onclick="agregarVehiculo()">Agregar</button>
+            <button onclick="listarVehiculos()">Listar</button>
+            <button onclick="buscarVehiculo()">Buscar</button>
+            <button onclick="eliminarVehiculo()">Eliminar</button>
+        </div>
+
+        <div class="result">
+            <p id="response"></p>
+        </div>
+    </div>
+
+    <script>
+        async function agregarVehiculo() {
+            const placa = document.getElementById('placa').value;
+            const marca = document.getElementById('marca').value;
+            const modelo = document.getElementById('modelo').value;
+
+            const response = await fetch('http://localhost:3000/vehiculos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ placa, marca, modelo })
+            });
+
+            const data = await response.json();
+            document.getElementById('response').innerText = data.message;
+        }
+
+        async function listarVehiculos() {
+            const response = await fetch('http://localhost:3000/vehiculos');
+            const data = await response.json();
+            document.getElementById('response').innerText = JSON.stringify(data);
+        }
+
+        async function buscarVehiculo() {
+            const placa = document.getElementById('placa').value;
+
+            const response = await fetch(`http://localhost:3000/vehiculos/${placa}`);
+            const data = await response.json();
+            document.getElementById('response').innerText = JSON.stringify(data);
+        }
+
+        async function eliminarVehiculo() {
+            const placa = document.getElementById('placa').value;
+
+            const response = await fetch(`http://localhost:3000/vehiculos/${placa}`, {
+                method: 'DELETE'
+            });
+
+            const data = await response.json();
+            document.getElementById('response').innerText = data.message;
+        }
+    </script>
+</body>
+</html>

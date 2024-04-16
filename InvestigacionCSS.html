@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Original</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="08 - selectores.css">
+    <script src="modernizr-custom.js"></script>
+    <style>
+        /* Estilos para el elemento div */
+        div {
+            /* Contenido */
+            width: 200px; /* Ancho del contenido */
+            height: 100px; /* Alto del contenido */
+            background-color: lightblue; /* Color de fondo del contenido */
+            
+            /* Relleno */
+            padding: 20px; /* Espacio entre el contenido y el borde */
+            
+            /* Borde */
+            border: 2px solid blue; /* Grosor, estilo y color del borde */
+            
+            /* Margen */
+            margin: 30px; /* Espacio externo al borde */
+        }
+        
+        /* Estilos para aplicar bordes */
+
+        /* Bordes de color con 3 medidas absolutas diferentes */
+
+        /* Bordes para el primer párrafo con píxeles */
+        p#azul {
+            border: 2px solid blue;
+        }
+
+        /* Bordes para el segundo párrafo con pulgadas */
+        p.prueba {
+            border: 0.1in solid green;
+        }
+
+        /* Bordes para el tercer párrafo con centímetros y línea gris punteada */
+        p#grisaceo {
+            border: 0.2cm dashed grey;
+        }
+
+        /* Div para demostrar bordes en un contenedor */
+        div#contenedor {
+            border: 1px solid red;
+            padding: 10px;
+        }
+
+        /* Estilo para el artículo con bordes */
+        article {
+            border: 1px solid orange;
+            padding: 10px;
+        }
+
+        /* Estilo para los elementos con la clase "grande" */
+        .grande {
+            font-size: 2em;
+        }
+
+        /* Estilo para el span con la clase "azul" */
+        span.azul {
+            color: blue;
+        }
+
+        /* Selectores*/
+        
+        /* p + p: Estilo para párrafos adyacentes */
+        p + p {
+            margin-top: 20px;
+        }
+
+        /* div + p: Estilo para párrafos adyacentes a un div */
+        div + p {
+            font-weight: bold;
+        }
+
+        /* div > p: Estilo para párrafos que son descendientes directos de un div */
+        div > p {
+            color: red;
+        }
+
+        /* p ~ p: Estilo para párrafos precedidos por otro párrafo */
+        p ~ p {
+            font-style: italic;
+        }
+
+        /* h2[title ~= "otro"]: Estilo para h2 con el atributo title que contiene la palabra "otro" */
+        h2[title ~= "otro"] {
+            text-decoration: underline;
+        }
+
+        /* h2[lang |= "es"]: Estilo para h2 con el atributo lang que comienza con "es" o es igual a "es" */
+        h2[lang |= "es"] {
+            color: green;
+        }
+
+        /* Estilo para elementos con el atributo title, sin importar su valor */
+        [title] {
+            font-style: italic; /* Por ejemplo, hacerlos cursivos */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h2 title="main cabecera otro">Titulo secundario en cabecera</h2>
+            <h2 title="otro" class="grande">Titulo Secundario</h2>
+        </div>
+        
+    </header>
+    <h2 lang="es-MX">Titulo Secundario 2</h2>
+    <h2 title="otro">Titulo Secundario</h2>
+    <h2 lang="es-ES">Titulo Terciario</h2>
+
+    <p class="prueba grande">Texto con clase</p>
+    <p class="prueba">Texto con clase</p>
+
+    <div id="contenedor">
+        <!-- Div para demostrar bordes en un contenedor -->
+        <article>
+            <p class="prueba grande">Texto con clase</p>
+            <p class="rojo naranja" id="grisaceo">Texto con clase</p>
+            <p class="prueba">Texto con clase</p>
+        </article>
+    </div>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="azul">Sed vestibulum</span> ante ac enim iaculis, sed tempus mi consequat.</p>
+    <p>Texto de prueba</p>
+    <p id="azul">Texto de prueba</p>
+    <p>Texto de prueba</p>
+    <p>Texto de prueba</p>
+
+    <p class="prueba grande">Texto con clase</p>
+    <p class="prueba">Texto con clase</p>
+</body>
+</html>

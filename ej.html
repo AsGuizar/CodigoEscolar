@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Actividad</title>
+</head>
+<body>
+    <select id='mnuUsers'></select>
+    <button type='button' id='btnCargar'>Cargar</button>
+    <div id='tareas'></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mnuUsers = document.getElementById('mnuUsers');
+            const tareasDiv = document.getElementById('tareas');
+
+            // Función para cargar los usuarios en el select
+            function cargarUsuarios() {
+                fetch('https://jsonplaceholder.typicode.com/users')
+                .then(response => response.json())
+                .then(data => {
+                    mnuUsers.innerHTML = data.map(user => `<option value="${user.id}">${user.username}</option>`).join('');
+                    // Al cargar los usuarios, también cargamos las tareas del usuario con ID 3 (por defecto)
+                    cargarTareas();
+                })
+                .catch(error => console.error('Error al cargar usuarios:', error));
+            }
+
+            // Función para cargar las tareas del usuario seleccionado
+            function cargarTareas() {
+                const userId = mnuUsers.value || 3; // Por defecto, el usuario con ID 3
+                fetch(`https://jsonplaceholder.typicode.com/todos?userId=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    tareasDiv.innerHTML = `<ul>${data.map(tarea => `<li>${tarea.title}</li>`).join('')}</ul>`;
+                })
+                .catch(error => console.error('Error al cargar tareas:', error));
+            }
+
+            // Event listener para el botón de cargar
+            document.getElementById('btnCargar').addEventListener('click', cargarUsuarios);
+
+            // Event listener para el cambio en el select de usuarios
+            mnuUsers.addEventListener('change', cargarTareas);
+
+            // Cargar usuarios por defecto al cargar la página
+            cargarUsuarios();
+        });
+    </script>
+</body>
+</html>
