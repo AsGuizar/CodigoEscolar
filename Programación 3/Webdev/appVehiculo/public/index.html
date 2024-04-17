@@ -3,25 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Vehículos</title>
+    <title>Interfaz de Vehículos</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Gestión de Vehículos</h1>
+        <h1>Interfaz de Vehículos</h1>
         
-        <div class="actions">
-            <input type="text" id="placa" placeholder="Placa">
-            <input type="text" id="marca" placeholder="Marca">
-            <input type="text" id="modelo" placeholder="Modelo">
-            <button onclick="agregarVehiculo()">Agregar</button>
-            <button onclick="listarVehiculos()">Listar</button>
-            <button onclick="buscarVehiculo()">Buscar</button>
-            <button onclick="eliminarVehiculo()">Eliminar</button>
-        </div>
+        <form id="formVehiculo">
+            <div class="form-group">
+                <label for="placa">Placa:</label>
+                <input type="text" id="placa" name="placa" required>
+            </div>
+            <div class="form-group">
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" name="marca" required>
+            </div>
+            <div class="form-group">
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" name="modelo" required>
+            </div>
+            
+            <button type="button" onclick="agregarVehiculo()">Agregar</button>
+            <button type="button" onclick="listarVehiculos()">Listar</button>
+            <button type="button" onclick="buscarVehiculo()">Buscar</button>
+            <button type="button" onclick="eliminarVehiculo()">Eliminar</button>
+        </form>
 
         <div class="result">
-            <p id="response"></p>
+            <h2>Respuesta</h2>
+            <pre id="response"></pre>
         </div>
     </div>
 
@@ -31,41 +42,78 @@
             const marca = document.getElementById('marca').value;
             const modelo = document.getElementById('modelo').value;
 
-            const response = await fetch('http://localhost:3000/vehiculos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ placa, marca, modelo })
-            });
+            try {
+                const response = await fetch('http://localhost:3000/vehiculos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ placa, marca, modelo })
+                });
 
-            const data = await response.json();
-            document.getElementById('response').innerText = data.message;
+                const data = await response.json();
+                if (response.ok) {
+                    document.getElementById('response').innerText = `Vehículo agregado: ${data.vehiculo.placa} - ${data.vehiculo.marca} ${data.vehiculo.modelo}`;
+                } else {
+                    document.getElementById('response').innerText = data.error;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
 
         async function listarVehiculos() {
-            const response = await fetch('http://localhost:3000/vehiculos');
-            const data = await response.json();
-            document.getElementById('response').innerText = JSON.stringify(data);
+            try {
+                const response = await fetch('http://localhost:3000/vehiculos');
+                const data = await response.json();
+                if (response.ok) {
+                    let vehiculosInfo = 'Vehículos:\n';
+                    data.forEach(v => {
+                        vehiculosInfo += `Placa: ${v.placa}, Marca: ${v.marca}, Modelo: ${v.modelo}\n`;
+                    });
+                    document.getElementById('response').innerText = vehiculosInfo;
+                } else {
+                    document.getElementById('response').innerText = data.error;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
 
         async function buscarVehiculo() {
-            const placa = document.getElementById('placa').value;
-
-            const response = await fetch(`http://localhost:3000/vehiculos/${placa}`);
-            const data = await response.json();
-            document.getElementById('response').innerText = JSON.stringify(data);
+            const placa = prompt('Introduce la placa del vehículo:');
+            if (placa !== null) {
+                try {
+                    const response = await fetch(`http://localhost:3000/vehiculos/${placa}`);
+                    const data = await response.json();
+                    if (response.ok) {
+                        document.getElementById('response').innerText = `Vehículo encontrado: ${data.placa} - ${data.marca} ${data.modelo}`;
+                    } else {
+                        document.getElementById('response').innerText = data.error;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
         }
 
         async function eliminarVehiculo() {
-            const placa = document.getElementById('placa').value;
-
-            const response = await fetch(`http://localhost:3000/vehiculos/${placa}`, {
-                method: 'DELETE'
-            });
-
-            const data = await response.json();
-            document.getElementById('response').innerText = data.message;
+            const placa = prompt('Introduce la placa del vehículo que deseas eliminar:');
+            if (placa !== null) {
+                try {
+                    const response = await fetch(`http://localhost:3000/vehiculos/${placa}`, {
+                        method: 'DELETE',
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        document.getElementById('response').innerText = `Vehículo eliminado`;
+                    } else {
+                        document.getElementById('response').innerText = data.error;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
         }
     </script>
 </body>
