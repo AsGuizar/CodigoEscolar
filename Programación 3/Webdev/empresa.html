@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planos de la Empresa</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    .container {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+    .office-map {
+        position: relative;
+        width: 70%;
+        height: 400px;
+        border: 2px solid #333;
+        background-color: #fff;
+    }
+    .office {
+        position: absolute;
+        font-size: 14px;
+        text-align: center;
+    }
+    .area {
+        width: 150px;
+        height: 100px;
+        border: 2px solid #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    .legend {
+        width: 25%;
+        background-color: #fff;
+        border: 1px solid #333;
+        padding: 10px;
+    }
+    .legend ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .legend li {
+        margin-bottom: 10px;
+    }
+    .line {
+        position: absolute;
+        background-color: #333;
+        z-index: -1;
+        pointer-events: none;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="office-map">
+        <!-- Oficinas Administrativas -->
+        <div class="office" style="top: 20%; left: 20%;">
+            <div class="area" data-toggle="tooltip" data-placement="top" title="Oficinas Administrativas">OA</div>
+        </div>
+
+        <!-- Marketing y Publicidad -->
+        <div class="office" style="top: 10%; left: 50%;">
+            <div class="area" data-toggle="tooltip" data-placement="top" title="Marketing y Publicidad">MP</div>
+            <div class="line" style="top: 15%; left: 35%; height: 100px; width: 2px;"></div>
+        </div>
+
+        <!-- Producción de Contenido -->
+        <div class="office" style="top: 40%; left: 20%;">
+            <div class="area" data-toggle="tooltip" data-placement="top" title="Producción de Contenido">PC</div>
+            <div class="line" style="top: 35%; left: 25%; height: 70px; width: 2px;"></div>
+        </div>
+
+        <!-- Estudios de Grabación -->
+        <div class="office" style="top: 40%; left: 50%;">
+            <div class="area" data-toggle="tooltip" data-placement="top" title="Estudios de Grabación">EG</div>
+            <div class="line" style="top: 45%; left: 40%; height: 50px; width: 2px;"></div>
+        </div>
+
+        <!-- Desarrollo Tecnológico -->
+        <div class="office" style="top: 70%; left: 20%;">
+            <div class="area" data-toggle="tooltip" data-placement="top" title="Desarrollo Tecnológico">DT</div>
+            <div class="line" style="top: 65%; left: 10%; height: 80px; width: 2px;"></div>
+        </div>
+
+        <!-- Soporte Técnico -->
+        <div class="office" style="top: 70%; left: 50%;">
+            <div class="area" data-toggle="tooltip" data-placement="top" title="Soporte Técnico">ST</div>
+            <div class="line" style="top: 75%; left: 40%; height: 60px; width: 2px;"></div>
+        </div>
+
+        <!-- Contenido Musical -->
+        <div class="office" style="top: 20%; left: 75%;">
+            <div class="area" data-toggle="tooltip" data-placement="top" title="Contenido Musical">CM</div>
+            <div class="line" style="top: 15%; left: 75%; height: 70px; width: 2px;"></div>
+        </div>
+
+        <!-- Finanzas y Contabilidad -->
+        <div class="office" style="top: 10%; left: 75%;">
+            <div class="area" data-toggle="tooltip" data-placement="top" title="Finanzas y Contabilidad">FC</div>
+            <div class="line" style="top: 15%; left: 70%; height: 50px; width: 2px;"></div>
+        </div>
+
+        <!-- Salas de Reuniones -->
+        <div class="office" style="top: 55%; left: 75%;">
+            <div class="area" data-toggle="tooltip" data-placement="top" title="Salas de Reuniones">SR</div>
+            <div class="line" style="top: 50%; left: 70%; height: 40px; width: 2px;"></div>
+        </div>
+    </div>
+
+    <div class="legend">
+        <h5>Áreas de la Empresa</h5>
+        <ul>
+            <li><strong>OA:</strong> Oficinas Administrativas</li>
+            <li><strong>MP:</strong> Marketing y Publicidad</li>
+            <li><strong>PC:</strong> Producción de Contenido</li>
+            <li><strong>EG:</strong> Estudios de Grabación</li>
+            <li><strong>DT:</strong> Desarrollo Tecnológico</li>
+            <li><strong>ST:</strong> Soporte Técnico</li>
+            <li><strong>CM:</strong> Contenido Musical</li>
+            <li><strong>FC:</strong> Finanzas y Contabilidad</li>
+            <li><strong>SR:</strong> Salas de Reuniones</li>
+        </ul>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip(); 
+    });
+</script>
+
+</body>
+</html>

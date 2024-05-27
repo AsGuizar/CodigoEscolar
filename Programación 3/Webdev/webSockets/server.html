@@ -1,0 +1,14 @@
+<script>
+    let cliente = new  webSockets("ws://localhost:8001");
+
+    cliente.onopen = ()=> {
+        console.log("Conectado");
+
+        console.log("enviando mensaje");
+        cliente.send("soy goku");
+    };
+
+    cliente.message = (event)=>{
+        console.log("se recibio mensaje::: " + event.data);
+    }
+</script>

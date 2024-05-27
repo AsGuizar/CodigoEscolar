@@ -1,0 +1,17 @@
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'root',
+  database: 'users' // Replace with your actual database name
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting: ' + err.stack);
+    return;
+  }
+  console.log('Connected as id ' + connection.threadId);
+  connection.end(); // Close the connection after successful connection
+});

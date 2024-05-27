@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Alumnos API</title>
+</head>
+<body>
+
+<h1>Test Alumnos API</h1>
+
+<h2>GET /alumnos</h2>
+<button onclick="getAlumnos()">Obtener Alumnos</button>
+<div id="getAlumnosResult"></div>
+
+<hr>
+
+<h2>GET /alumnos/:numcuenta</h2>
+<form id="getAlumnoForm">
+    <label for="getAlumnoNumcuenta">Número de Cuenta:</label>
+    <input type="text" id="getAlumnoNumcuenta" name="numcuenta" required>
+    <button type="button" onclick="getAlumno()">Obtener Alumno</button>
+</form>
+<div id="getAlumnoResult"></div>
+
+<hr>
+
+<h2>POST /alumnos</h2>
+<form id="addAlumnoForm">
+    <label for="addAlumnoNumcuenta">Número de Cuenta:</label>
+    <input type="text" id="addAlumnoNumcuenta" name="numcuenta" required><br>
+    <label for="addAlumnoNombre">Nombre:</label>
+    <input type="text" id="addAlumnoNombre" name="nombre" required><br>
+    <label for="addAlumnoSemestre">Semestre:</label>
+    <input type="number" id="addAlumnoSemestre" name="semestre" required><br>
+    <button type="button" onclick="addAlumno()">Agregar Alumno</button>
+</form>
+<div id="addAlumnoResult"></div>
+
+<hr>
+
+<h2>PUT /alumnos/:numcuenta</h2>
+<form id="updateAlumnoForm">
+    <label for="updateAlumnoNumcuenta">Número de Cuenta:</label>
+    <input type="text" id="updateAlumnoNumcuenta" name="numcuenta" required><br>
+    <label for="updateAlumnoNombre">Nombre:</label>
+    <input type="text" id="updateAlumnoNombre" name="nombre"><br>
+    <label for="updateAlumnoSemestre">Semestre:</label>
+    <input type="number" id="updateAlumnoSemestre" name="semestre"><br>
+    <button type="button" onclick="updateAlumno()">Actualizar Alumno</button>
+</form>
+<div id="updateAlumnoResult"></div>
+
+<hr>
+
+<h2>DELETE /alumnos/:numcuenta</h2>
+<form id="deleteAlumnoForm">
+    <label for="deleteAlumnoNumcuenta">Número de Cuenta:</label>
+    <input type="text" id="deleteAlumnoNumcuenta" name="numcuenta" required>
+    <button type="button" onclick="deleteAlumno()">Eliminar Alumno</button>
+</form>
+<div id="deleteAlumnoResult"></div>
+
+<script>
+    async function getAlumnos() {
+        const response = await fetch('http://localhost:3000/alumnos');
+        const data = await response.json();
+        document.getElementById('getAlumnosResult').innerText = JSON.stringify(data, null, 2);
+    }
+
+    async function getAlumno() {
+        const numcuenta = document.getElementById('getAlumnoNumcuenta').value;
+        const response = await fetch(`http://localhost:3000/alumnos/${numcuenta}`);
+        const data = await response.json();
+        document.getElementById('getAlumnoResult').innerText = JSON.stringify(data, null, 2);
+    }
+
+    async function addAlumno() {
+        const numcuenta = document.getElementById('addAlumnoNumcuenta').value;
+        const nombre = document.getElementById('addAlumnoNombre').value;
+        const semestre = document.getElementById('addAlumnoSemestre').value;
+
+        const response = await fetch('http://localhost:3000/alumnos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ numcuenta, nombre, semestre })
+        });
+
+        const data = await response.json();
+        document.getElementById('addAlumnoResult').innerText = JSON.stringify(data, null, 2);
+    }
+
+    async function updateAlumno() {
+        const numcuenta = document.getElementById('updateAlumnoNumcuenta').value;
+        const nombre = document.getElementById('updateAlumnoNombre').value;
+        const semestre = document.getElementById('updateAlumnoSemestre').value;
+
+        const response = await fetch(`http://localhost:3000/alumnos/${numcuenta}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nombre, semestre })
+        });
+
+        const data = await response.json();
+        document.getElementById('updateAlumnoResult').innerText = JSON.stringify(data, null, 2);
+    }
+
+    async function deleteAlumno() {
+        const numcuenta = document.getElementById('deleteAlumnoNumcuenta').value;
+
+        const response = await fetch(`http://localhost:3000/alumnos/${numcuenta}`, {
+            method: 'DELETE'
+        });
+
+        const data = await response.json();
+        document.getElementById('deleteAlumnoResult').innerText = JSON.stringify(data, null, 2);
+    }
+</script>
+
+</body>
+</html>
