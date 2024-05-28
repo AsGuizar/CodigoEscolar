@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
             background-color: #f5f5f5;
+            color: #333;
         }
 
         .container {
@@ -20,7 +21,7 @@
         }
 
         header {
-            background-color: #333;
+            background-color: #6a11cb; /* Purple color */
             color: #fff;
             padding: 20px 0;
             text-align: center;
@@ -46,6 +47,11 @@
         nav ul li a {
             color: #fff;
             text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #2575fc; /* Sky blue color */
         }
 
         main {
@@ -66,15 +72,22 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 200px;
             text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
         }
 
         .product-item h2 {
             margin: 0;
             font-size: 18px;
+            color: #6a11cb; /* Purple color */
         }
 
         .product-item p {
             margin: 10px 0;
+            color: #666;
         }
 
         .product-item button {
@@ -82,21 +95,44 @@
             font-size: 16px;
             border: none;
             border-radius: 5px;
-            background-color: #2575fc;
+            background-color: #2575fc; /* Sky blue color */
             color: #ffffff;
             cursor: pointer;
             transition: background 0.3s;
         }
 
         .product-item button:hover {
-            background-color: #6a11cb;
+            background-color: #6a11cb; /* Purple color */
         }
 
         footer {
-            background-color: #333;
+            background-color: #6a11cb; /* Purple color */
             color: #fff;
             text-align: center;
             padding: 10px 0;
+        }
+
+        /* Toast Styles */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 9999;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-50%) translateY(-50px);
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+            }
         }
     </style>
 </head>
@@ -112,6 +148,8 @@
                     <li><a href="cart.html">Cart</a></li>
                 </ul>
             </nav>
+            <input type="text" id="searchInput" placeholder="Search products by name or ID">
+            <button onclick="searchProducts()">Search</button>
         </div>
     </header>
 
@@ -131,42 +169,72 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    const products = [
-        { id: 1, name: 'Product 1', description: 'Description of product 1', price: '$10', image: 'path/to/image1.jpg' },
-        { id: 2, name: 'Product 2', description: 'Description of product 2', price: '$20', image: 'path/to/image2.jpg' },
-        { id: 3, name: 'Product 3', description: 'Description of product 3', price: '$30', image: 'path/to/image3.jpg' },
-    ];
+            const products = [
+                { id: 1, name: 'Product 1', description: 'Description of product 1', price: '$10', image: 'path/to/image1.jpg' },
+                { id: 2, name: 'Product 2', description: 'Description of product 2', price: '$20', image: 'path/to/image2.jpg' },
+                { id: 3, name: 'Product 3', description: 'Description of product 3', price: '$30', image: 'path/to/image3.jpg' },
+            ];
 
-    const productList = document.getElementById('productList');
+            const productList = document.getElementById('productList');
 
-    products.forEach(product => {
-        const productItem = document.createElement('div');
-        productItem.className = 'product-item';
-        productItem.innerHTML = `
-            <h2>${product.name}</h2>
-            <p>${product.description}</p>
-            <p>${product.price}</p>
-            <button onclick="addToCart(${product.id})">Add to Cart</button>
-        `;
-        productList.appendChild(productItem);
-    });
+            function displayProducts(products) {
+                productList.innerHTML = '';
+                products.forEach(product => {
+                    const productItem = document.createElement('div');
+                    productItem.className = 'product-item';
+                    productItem.innerHTML = `
+                        <h2>${product.name}</h2>
+                        <p>${product.description}</p>
+                        <p>${product.price}</p>
+                        <button onclick="addToCart(${product.id})">Add to Cart</button>
+                    `;
+                    productList.appendChild(productItem);
+                });
+            }
 
-    window.addToCart = function(productId) {
-    const product = products.find(p => p.id === productId);
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartItem = cart.find(item => item.id === productId);
-    if (cartItem) {
-        cartItem.quantity++;
-    } else {
-        cart.push({ ...product, quantity: 1 });
-    }
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert('Product added to cart');
-    renderCart();
-};
+            displayProducts(products);
 
-});
+            window.addToCart = function(productId) {
+                const product = products.find(p => p.id === productId);
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const cartItem = cart.find(item => item.id === productId);
+                if (cartItem) {
+                    cartItem.quantity++;
+                } else {
+                    cart.push({ ...product, quantity: 1 });
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                showNotification('Product added to cart');
+                renderCart();
+            };
 
+            function searchProducts() {
+                const searchInput = document.getElementById('searchInput').value.toLowerCase();
+                const filteredProducts = products.filter(product => {
+                    return product.name.toLowerCase().includes(searchInput) || product.id.toString().includes(searchInput);
+                });
+                if (filteredProducts.length > 0) {
+                    displayProducts(filteredProducts);
+                    showNotification(`${filteredProducts.length} product(s) found.`);
+                } else {
+                    showNotification('No products found.');
+                }
+            }
+
+            function showNotification(message) {
+                const existingToast = document.querySelector('.toast');
+                if (existingToast) {
+                    document.body.removeChild(existingToast);
+                }
+                const toast = document.createElement('div');
+                toast.classList.add('toast');
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 3000);
+            }
+        });
     </script>
 </body>
 </html>
