@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shop</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Product Card Styles */
+        .product-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product-card h3 {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .product-card p {
+            color: #666;
+        }
+
+        .product-card span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .product-card button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .product-card button:hover {
+            background-color: #555;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>My Shop</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Featured Products</h2>
+            <ul id="productList">
+                <!-- Product items will be dynamically added here -->
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 My Shop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample product data
+        const products = [
+            {
+                name: "Product 1",
+                description: "Description of Product 1",
+                image: "product1.jpg",
+                price: 19.99
+            },
+            {
+                name: "Product 2",
+                description: "Description of Product 2",
+                image: "product2.jpg",
+                price: 24.99
+            },
+            // Add more products as needed
+        ];
+
+        // Function to generate HTML for product cards
+        function generateProductCards() {
+            const productList = document.getElementById("productList");
+            products.forEach(product => {
+                const productCard = document.createElement("div");
+                productCard.classList.add("product-card");
+
+                const img = document.createElement("img");
+                img.src = product.image;
+                img.alt = product.name;
+
+                const productName = document.createElement("h3");
+                productName.textContent = product.name;
+
+                const productDesc = document.createElement("p");
+                productDesc.textContent = product.description;
+
+                const productPrice = document.createElement("span");
+                productPrice.textContent = `$${product.price}`;
+
+                const addToCartBtn = document.createElement("button");
+                addToCartBtn.textContent = "Add to Cart";
+
+                productCard.appendChild(img);
+                productCard.appendChild(productName);
+                productCard.appendChild(productDesc);
+                productCard.appendChild(productPrice);
+                productCard.appendChild(addToCartBtn);
+
+                productList.appendChild(productCard);
+            });
+        }
+
+        // Call the function to generate product cards
+        generateProductCards();
+    </script>
+</body>
+</html>
