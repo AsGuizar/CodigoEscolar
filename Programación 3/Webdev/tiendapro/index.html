@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online</title>
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .formulario {
+            margin-bottom: 20px;
+        }
+
+        .producto {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .boton {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .boton:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tienda Online</h1>
+    </header>
+    <main>
+        <section id="registro">
+            <h2>Registro</h2>
+            <div class="formulario">
+                <label for="registroEmail">Correo electrónico:</label>
+                <input type="email" id="registroEmail">
+            </div>
+            <div class="formulario">
+                <label for="registroPassword">Contraseña:</label>
+                <input type="password" id="registroPassword">
+            </div>
+            <button class="boton" onclick="registrarse()">Registrarse</button>
+        </section>
+        <section id="login">
+            <h2>Iniciar sesión</h2>
+            <div class="formulario">
+                <label for="loginEmail">Correo electrónico:</label>
+                <input type="email" id="loginEmail">
+            </div>
+            <div class="formulario">
+                <label for="loginPassword">Contraseña:</label>
+                <input type="password" id="loginPassword">
+            </div>
+            <button class="boton" onclick="iniciarSesion()">Iniciar sesión</button>
+        </section>
+        <section id="productos">
+            <h2>Productos</h2>
+            <div id="listaProductos"></div>
+        </section>
+        <section id="carrito">
+            <h2>Carrito de compras</h2>
+            <div id="listaCarrito"></div>
+            <button class="boton" onclick="crearPedido()">Crear pedido</button>
+        </section>
+        <section id="pedido">
+            <h2>Crear pedido</h2>
+            <div class="formulario">
+                <label for="direccion">Dirección de envío:</label>
+                <input type="text" id="direccion">
+            </div>
+            <button class="boton" onclick="finalizarPedido()">Finalizar pedido</button>
+        </section>
+        
+    </main>
+    <script>
+        const apiUrl = 'http://localhost:3310/api';
+
+        async function registrarse() {
+            const email = document.getElementById('registroEmail').value;
+            const password = document.getElementById('registroPassword').value;
+
+            try {
+                const response = await fetch(`${apiUrl}/clientes/registro`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password, tipo: 2 })
+                });
+
+                if (response.ok) {
+                    alert('Registro exitoso');
+                } else {
+                    const data = await response.json();
+                    alert(data.error || 'Error en el registro');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error en el registro');
+            }
+        }
+
+        async function iniciarSesion() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const response = await fetch(`${apiUrl}/clientes/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('token', data.token);
+                    alert('Inicio de sesión exitoso');
+                    window.location.reload();
+                } else {
+                    const data = await response.json();
+                    alert(data.error || 'Error en el inicio de sesión');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error en el inicio de sesión');
+            }
+        }
+
+            async function cargarProductos() {
+        try {
+            const response = await fetch(`${apiUrl}/clientes/productos`);
+            if (response.ok) {
+                const productos = await response.json();
+                const listaProductos = document.getElementById('listaProductos');
+                listaProductos.innerHTML = '';
+                productos.forEach(producto => {
+                    const productoElement = document.createElement('div');
+                    productoElement.classList.add('producto');
+                    productoElement.innerHTML = `
+                        <h3>${producto.nombre}</h3>
+                        <p>Precio: ${producto.precio}</p>
+                        <button class="boton" onclick="agregarProductoAlCarrito(${producto.id}, '${producto.nombre}', ${producto.precio})">Agregar al carrito</button>
+                    `;
+                    listaProductos.appendChild(productoElement);
+                });
+            } else {
+                alert('Error al cargar los productos');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al cargar los productos');
+        }
+    }
+
+
+        async function agregarProductoAlCarrito(id, nombre, precio) {
+            try {
+                // Aquí debes implementar la lógica para agregar el producto al carrito,
+                // por ejemplo, puedes almacenar los datos en localStorage
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al agregar producto al carrito');
+            }
+        }
+
+        async function crearPedido() {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    alert('Debe iniciar sesión para crear un pedido');
+                    return;
+                }
+
+                const productosEnCarrito = obtenerProductosEnCarrito(); // Obtener productos del carrito (de localStorage)
+
+                if (productosEnCarrito.length === 0) {
+                    alert('El carrito está vacío');
+                    return;
+                }
+
+                const response = await fetch(`${apiUrl}/clientes/nuevo_pedido`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ productos: productosEnCarrito })
+                });
+
+                if (response.ok) {
+                    alert('Pedido creado exitosamente');
+                    // Limpiar el carrito después de crear el pedido
+                    limpiarCarrito();
+                    // Recargar la lista de productos para reflejar los cambios
+                    cargarProductos();
+                } else {
+                    const data = await response.json();
+                    alert(data.error || 'Error al crear pedido');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al crear pedido');
+            }
+        }
+
+        async function finalizarPedido() {
+            try {
+                const direccion = document.getElementById('direccion').value;
+                if (!direccion) {
+                    alert('Por favor, ingrese una dirección de envío');
+                    return;
+                }
+
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    alert('Debe iniciar sesión para finalizar el pedido');
+                    return;
+                }
+
+                const response = await fetch(`${apiUrl}/clientes/finalizar_pedido`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ direccion })
+                });
+
+                if (response.ok) {
+                    alert('Pedido finalizado exitosamente');
+                    // Limpiar el carrito después de finalizar el pedido
+                    limpiarCarrito();
+                    // Recargar la lista de productos para reflejar los cambios
+                    cargarProductos();
+                } else {
+                    const data = await response.json();
+                    alert(data.error || 'Error al finalizar pedido');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al finalizar pedido');
+            }
+        }
+
+        async function agregarProductoAlCarrito(id, nombre, precio) {
+    try {
+        // Obtener los productos en el carrito del localStorage
+        let productosEnCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        // Verificar si el producto ya está en el carrito
+        const productoExistente = productosEnCarrito.find(producto => producto.id === id);
+        if (productoExistente) {
+            // Si el producto ya está en el carrito, aumentar la cantidad
+            productoExistente.cantidad++;
+        } else {
+            // Si el producto no está en el carrito, agregarlo con cantidad 1
+            productosEnCarrito.push({ id, nombre, precio, cantidad: 1 });
+        }
+
+        // Guardar el carrito actualizado en el localStorage
+        localStorage.setItem('carrito', JSON.stringify(productosEnCarrito));
+
+        // Actualizar la visualización del carrito
+        mostrarCarrito(productosEnCarrito);
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al agregar producto al carrito');
+    }
+}
+
+    function mostrarCarrito(productosEnCarrito) {
+        const listaCarrito = document.getElementById('listaCarrito');
+        listaCarrito.innerHTML = '';
+
+        productosEnCarrito.forEach(producto => {
+            const productoElement = document.createElement('div');
+            productoElement.classList.add('producto-en-carrito');
+            productoElement.innerHTML = `
+                <h3>${producto.nombre}</h3>
+                <p>Precio: ${producto.precio}</p>
+                <p>Cantidad: ${producto.cantidad}</p>
+                <button onclick="eliminarProductoDelCarrito(${producto.id})">Eliminar</button>
+            `;
+            listaCarrito.appendChild(productoElement);
+        });
+    }
+
+    function eliminarProductoDelCarrito(id) {
+        try {
+            // Obtener los productos en el carrito del localStorage
+            let productosEnCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+            // Filtrar los productos para eliminar el que coincide con el ID dado
+            productosEnCarrito = productosEnCarrito.filter(producto => producto.id !== id);
+
+            // Guardar el carrito actualizado en el localStorage
+            localStorage.setItem('carrito', JSON.stringify(productosEnCarrito));
+
+            // Actualizar la visualización del carrito
+            mostrarCarrito(productosEnCarrito);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al eliminar producto del carrito');
+        }
+    }
+
+    // Función para limpiar el carrito (eliminar productos del almacenamiento local)
+    function limpiarCarrito() {
+        localStorage.removeItem('carrito');
+    }
+
+
+        // Cargar lista de productos al cargar la página
+        window.onload = cargarProductos;
+    </script>
+</body>
+</html>
