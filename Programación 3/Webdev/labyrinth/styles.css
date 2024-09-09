@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #000;
+}
+
+#labyrinth {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+  border: 2px solid #fff;
+  background-color: #222;
+}
+
+#labyrinth div {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+}
+
+.wall {
+  background-color: #555;
+}
+
+#player {
+  background-image: url("Flores.jpeg");
+  background-size: cover; /* Ensure the image covers the player block */
+  background-position: center; /* Center the image in the block */
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
