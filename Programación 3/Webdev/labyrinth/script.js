@@ -1,3 +1,4 @@
+// HTML elements
 const labyrinth = document.getElementById('labyrinth');
 const player = document.getElementById('player');
 
@@ -19,6 +20,11 @@ const layout = [
 let playerPosition = { x: 1, y: 0 };
 const gridSize = 10;
 const cellSize = 50;
+
+// sound files
+const movementSound = new Audio('./sounds/movement.mp3');
+const collisionSound = new Audio('./sounds/collision.mp3');
+const finishSound = new Audio('./sounds/finish.mp3');
 
 // Function to render the labyrinth layout
 function renderLabyrinth() {
@@ -54,12 +60,18 @@ function movePlayer(dx, dy) {
     const newY = playerPosition.y + dy;
 
     if (newX >= 0 && newX < gridSize && newY >= 0 && newY < gridSize) {
-        if (layout[newY][newX] === 0 || layout[newY][newX] === 'F') {
+        const targetCell = layout[newY][newX];
+
+        if (targetCell === 0 || targetCell === 'F') {
+            // Valid move
             playerPosition = { x: newX, y: newY };
             player.style.top = `${newY * cellSize}px`;
             player.style.left = `${newX * cellSize}px`;
 
-            if (layout[newY][newX] === 'F') {
+            movementSound.play(); // Play movement sound
+
+            if (targetCell === 'F') {
+                finishSound.play(); // Play finish sound
                 setTimeout(() => {
                     const restart = confirm("You reached the finish! Do you want to play again?");
                     if (restart) {
@@ -67,10 +79,17 @@ function movePlayer(dx, dy) {
                     }
                 }, 100); // Small delay to allow player to reach finish visually
             }
+        } else {
+            // Collision with a wall
+            collisionSound.play(); // Play collision sound
         }
+    } else {
+        // Out of bounds (also treated as collision)
+        collisionSound.play(); // Play collision sound
     }
 }
 
+// Remaining unchanged code
 layout.forEach((row, r) => {
     row.forEach((cell, c) => {
         const div = document.createElement('div');
@@ -98,13 +117,11 @@ let startY = 0;
 
 function handleSwipe(dx, dy) {
     if (Math.abs(dx) > Math.abs(dy)) {
-        // Horizontal swipe
         if (Math.abs(dx) > swipeThreshold) {
             if (dx > 0) movePlayer(1, 0); // Swipe right
             else movePlayer(-1, 0); // Swipe left
         }
     } else {
-        // Vertical swipe
         if (Math.abs(dy) > swipeThreshold) {
             if (dy > 0) movePlayer(0, 1); // Swipe down
             else movePlayer(0, -1); // Swipe up
@@ -112,7 +129,7 @@ function handleSwipe(dx, dy) {
     }
 }
 
-// Handle touch events (mobile and touch-enabled devices)
+// Handle touch events
 window.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
@@ -125,7 +142,7 @@ window.addEventListener('touchend', (e) => {
     handleSwipe(endX - startX, endY - startY);
 });
 
-// Handle mouse events (PC and trackpad)
+// Handle mouse events
 window.addEventListener('pointerdown', (e) => {
     startX = e.clientX;
     startY = e.clientY;
@@ -138,7 +155,7 @@ window.addEventListener('pointerup', (e) => {
     handleSwipe(endX - startX, endY - startY);
 });
 
-// Handle keyboard controls on desktop
+// Handle keyboard controls
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
         case 'ArrowUp':
