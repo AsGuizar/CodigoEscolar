@@ -3,7 +3,7 @@
   width: 500px; /* Adjust based on grid size */
   height: 500px;
   margin: auto;
-  border: 3px solid #fff;
+  border: 3px solid #ffffff;
   background-color: #222;
 }
 
@@ -29,13 +29,13 @@ div {
 
 /* Start point */
 .start {
-  background-color: #51ab03; /* Bright yellow for start point */
+  background-color: #2a5a00; /* Bright yellow for start point */
   border: 2px solid #ffffff;
 }
 
 /* Finish point */
 .finish {
-  background-color: #fa0505; /* Bright blue for finish point */
+  background-color: #c80202; /* Bright blue for finish point */
   border: 2px solid #ffffff;
 }
 
